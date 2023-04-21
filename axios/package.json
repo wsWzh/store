@@ -1,6 +1,6 @@
 {
   "name": "@wangzhengheng/axios",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "异步请求",
   "main": "index.js",
   "keywords": [
@@ -13,6 +13,7 @@
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@wangzhengheng/utils": "0.0.1"
+    "@wangzhengheng/utils": "0.0.1",
+    "vite": "^4.0.0"
   }
 }

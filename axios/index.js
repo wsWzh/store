@@ -4,6 +4,9 @@ import { resolveResponse, rejectResponse } from "./interceptors/beforeResponse.j
 
 export function createAxios(options = {}) {
     const axios = Axios.create({
+        delay: 0,//限制最低反馈时间(作用于优化页面交互效果)
+        silent: false, // 值为真时不显示预设异常提示
+        intact: false, // 值为真时异步请求结果返回完整结果
         timeout: 7 * 1000,
         ...options
     })
@@ -15,17 +18,17 @@ export function createAxios(options = {}) {
     axios.interceptors.response.use(resolveResponse, rejectResponse)
 
     /**
- * @param proxyHttpOptions { object }
- * @param isSimple { boolean } 值为真时,只返回 result
- * @returns {Promise<unknown>}
-    */
-    function proxyAxios(proxyHttpOptions, isSimple = false) {
-        const { delay = 500 } = Object.assign({}, options, proxyHttpOptions)
+     * 外部调用函数
+     * @param proxyHttpOptions { object }
+     * @returns {Promise<*>}
+     */
+    function proxyAxios(proxyHttpOptions) {
+        const { delay, intact } = Object.assign({}, options, proxyHttpOptions)
         const datetime = Date.now() + delay
         const awaitNext = fn => setTimeout(fn, datetime - Date.now())
         return new Promise((resolve, reject) => {
             axios(proxyHttpOptions).then(res => {
-                awaitNext(() => resolve(isSimple ? res?.result : res))
+                awaitNext(() => resolve(intact ? res : res?.result))
             }).catch(error => {
                 awaitNext(() => reject(error))
             })
@@ -33,22 +36,20 @@ export function createAxios(options = {}) {
     }
 
     proxyAxios.delete = (url, params, config) => {
-        proxyAxios({ url, params, method: 'delete', ...config }, true)
+        proxyAxios({ url, params, method: 'delete', delay: 500, ...config })
     }
     proxyAxios.get = (url, params, config) => {
-        return proxyAxios({ url, params, method: 'get', ...config }, true)
+        return proxyAxios({ url, params, method: 'get', delay: 500, ...config })
 
     }
     proxyAxios.put = (url, data, config) => {
-        return proxyAxios({ url, data, method: 'put', ...config }, true)
+        return proxyAxios({ url, data, method: 'put', delay: 500, ...config })
     }
     proxyAxios.post = (url, data, config) => {
-        return proxyAxios({ url, data, method: 'post', ...config }, true)
+        return proxyAxios({ url, data, method: 'post', delay: 500, ...config })
     }
-    
-    proxyAxios.axios=axios
 
-    proxyAxios.install = app => app.config.globalProperties.$http=proxyAxios
+    proxyAxios.interceptors = axios.interceptors
 
     return proxyAxios
 }
