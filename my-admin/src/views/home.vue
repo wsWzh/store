@@ -1,8 +1,8 @@
 <template>
   <a-row justify="center" align="center">
-    <!-- <router-link :to="{ name: 'Member' }"> -->
+    <router-link :to="{ name: 'Member' }">
       <a-image src="logo.png" width="100" :preview="false" />
-    <!-- </router-link> -->
+    </router-link>
   </a-row>
 </template>
 
