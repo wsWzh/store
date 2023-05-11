@@ -1,5 +1,5 @@
 import {debug,typeOf} from '@wangzhengheng/utils'
-import messageConfig from './message.config.js'
+import messageConfig from './messageConfig'
 
 // 成功返回
 export function resolveResponse (response){
