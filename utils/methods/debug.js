@@ -1,10 +1,13 @@
-export function debug(...args){
-    try{
-        const {pathname}=location
-        if(/^\/debug\//.test(pathname)){
-            console.warn(...args);
+/**
+ * 调试信息
+ * 配合 hash 路由使用
+ */
+export function debug(...args) {
+    try {
+        if (sessionStorage.getItem('debug') === 'true') {
+            console.warn(...args)
         }
-    }catch(err){
-
+    } catch (e) {
+        // server no sessionStorage
     }
 }
