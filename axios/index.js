@@ -1,4 +1,4 @@
-import { Axios } from "axios";
+import  Axios  from "axios";
 import { beforeRequest } from "./interceptors/beforeRequest.js";
 import { resolveResponse, rejectResponse } from "./interceptors/beforeResponse.js";
 
