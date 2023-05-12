@@ -8,6 +8,15 @@
 </template>
 
 <style lang="less">
+// body{
+//     --primary-1: 255,236,227 !important;
+//     --primary-2: 255,210,190 !important;
+//     --primary-3: 255,179,146 !important;
+//     --primary-4: 255,158,115 !important;
+//     --primary-5: 255,71,0 !important;
+//     --primary-6: 255,128,72 !important;
+//     --primary-7: 255,84,9 !important;
+// }
 #app {
   display: flex;
   flex-direction: column;
