@@ -2,7 +2,7 @@
   <div>
     基础组件
     <my-tips success error>
-      <a-button @click="useResolve">tips提交按钮</a-button>
+      <my-button @click="useResolve">tips提交按钮</my-button>
     </my-tips>
   </div>
 </template>
