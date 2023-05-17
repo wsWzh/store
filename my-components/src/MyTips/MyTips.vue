@@ -47,7 +47,6 @@ export default {
 
         // 提示信息
         const showTips = info => {
-            console.log(info);
             debug('MyTips.showTips', info)
             state.message = info.message
             state.backgroundColor = typeOf(info, 'error') ? '#F7676F' : '#25C550'
@@ -86,15 +85,12 @@ export default {
         return () => {
 
             const { visible, disabled, backgroundColor } = state
-            console.log(backgroundColor, 123);
             // 获取插槽中的子组件
             let items = slots.default?.()
-
             // 空插槽
             if (empty(items)) {
                 return []
             }
-
             // 多个子组件
             if (items.length > 1) {
                 const children = items.map(item => {
@@ -114,7 +110,6 @@ export default {
                 backgroundColor,
                 ...attrs,
             }
-
             const _slots = {
                 // 泡泡弹窗提内容
                 content: () => state.message,
@@ -135,7 +130,6 @@ export default {
                     return Object.assign(btn, { props })
                 },
             }
-
             return <a-tooltip {..._attrs} v-slots={_slots} />
         }
     }
