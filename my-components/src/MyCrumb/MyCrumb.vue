@@ -39,7 +39,6 @@ export default {
             // 面包屑
             const breadcrumbItems = items.map((route, index) => {
                 const { title } = route.meta
-                       console.log(route.meta, 123);
 
                 if (len > index + 1) {
                     return [

@@ -1,5 +1,5 @@
 import { debug, empty } from '@wangzhengheng/utils'
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 
 
 //处理页面缓存
@@ -15,8 +15,9 @@ export const keepaliveItems = ref([])
  */
 
 export function removeKeepalive(name) {
-    keepaliveItems.value = keepaliveItems.value.filter(item => item.name !== name)
+    keepaliveItems.value = keepaliveItems.value.filter(item => item !== name)
 }
+
 
 //添加缓存
 export default function (to, from) {
