@@ -1,15 +1,15 @@
 <script lang="jsx">
 import { mergeProps, reactive, watch } from 'vue'
-import { empty, typeOf } from '@wangzhengheng/utils'
-import { debug } from '@wangzhengheng/utils'
+import { empty, typeOf, debug } from '@wangzhengheng/utils'
 
 /**
  * 通用操作提示
  * 配合子组件的 onError 、 onSuccess 事件提示信息
  */
+
 export default {
     name: 'MyTips',
-    emits: ['update:disabled', 'update:visible'],
+    emits: ['update:disabled', 'update:visible'],//更新父组件disabled和visible值
     inheritAttrs: false,
     props: {
         delay: { type: Number, default: 1500 }, // 信息窗停留时间
@@ -17,7 +17,6 @@ export default {
         error: [Boolean, String], // 开/关 错误提示 (字符串时替换提示信息)
     },
     setup(props, { attrs, slots, emit }) {
-
         const state = reactive({
             disabled: false,
             visible: false,
@@ -87,6 +86,7 @@ export default {
             const { visible, disabled, backgroundColor } = state
             // 获取插槽中的子组件
             let items = slots.default?.()
+
             // 空插槽
             if (empty(items)) {
                 return []
@@ -94,15 +94,13 @@ export default {
             // 多个子组件
             if (items.length > 1) {
                 const children = items.map(item => {
-                    const _attrs = { syncDisabled: disabled, 'onUpdate:disabled': syncDisabled, ...props, ...attrs }
+                    const _attrs = { inheritDisabled: disabled, 'onUpdate:disabled': syncDisabled, ...props, ...attrs }
                     const _slots = { default: () => item }
                     return <MyTips {..._attrs} v-slots={_slots} />
                 })
                 return <a-space>{children}</a-space>
             }
-
             // my-tips
-
             const _attrs = {
                 popperClass: 'my-tips',
                 popupVisible: visible,
@@ -121,8 +119,8 @@ export default {
                     }
                     const props = {
                         ...btn.props,
-                        'onUpdate:loading': bool => state.disabled = bool,
-                        disabled: disabled || attrs.syncDisabled || btn.props.disabled,
+                        'onUpdate:loading': syncDisabled,
+                        disabled: disabled || attrs.inheritDisabled || btn.props.disabled,
                         onSuccess,
                         onError,
                     }

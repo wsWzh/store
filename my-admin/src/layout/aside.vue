@@ -18,6 +18,7 @@ export default {
 
       const openKeys = ref([])
       const disabled = ref(false)
+      const doUpdateDisabled = bool => disabled.value = bool
 
       // 将路由数组转成键值对
       const routes = router.getRoutes().reduce((routes, route) => {
@@ -37,9 +38,8 @@ export default {
       })
       // 点击菜单
       const doMenuItemClick = name => {
-         console.log(name);
          if (disabled.value) {
-            return
+            return // 提示过程中不做跳转
          }
          if (empty(routes[name])) {
             return Promise.reject(new Error('不存在的路由'))
@@ -49,17 +49,17 @@ export default {
 
       //菜单展开or收起
       const onSubMenuClick = (name, items) => {
-         console.log(openKeys.value, items);
          if (disabled.value) {
             return // 提示过程中不做改动
          }
          openKeys.value = items
       }
       // 重构子组件的 click 事件，添加异常反馈。配合 my-tips 组件做出提示
-      const tempMenuItem = ({ onClick }, { slots, emit }) => {
+      const tempMenuItem = (props, { slots, emit }) => {
+         const { onClick } = props
          const items = slots.default()
          items[0].props.onClick = () => {
-            onClick()?.catch(error => emit('error', error))
+            onClick[0]()?.catch(error => emit('error', error))
          }
          return items
       }
@@ -86,9 +86,11 @@ export default {
                   itemSlots.icon = () => <Icon />
                }
                return [
-                  <tempMenuItem onClick={()=> doMenuItemClick(routeName)}>
-                     <a-menu-item key={routeName} v-slots={itemSlots} />
-                  </tempMenuItem>
+                  <my-tips error position="right" onUpdate:visible={doUpdateDisabled}>
+                     <tempMenuItem onClick={() => doMenuItemClick(routeName)}>
+                        <a-menu-item key={routeName} v-slots={itemSlots} />
+                     </tempMenuItem>
+                  </my-tips>
                ]
             }
             //a-sub-menu

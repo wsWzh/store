@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref, watch,computed } from 'vue'
 import { typeOf } from '@wangzhengheng/utils'
 /**
  * my-button 添加了 loading
@@ -14,7 +14,9 @@ export default {
         loadingText:{type:String,default:'正在处理'}
     },
     setup(props, { attrs, slots, emit }) {
+
         const loading = ref(false)
+
         const useLoading = () => {
             loading.value = true
             return () => loading.value = false
@@ -24,7 +26,6 @@ export default {
         watch(loading, bool => {
             emit('update:loading', bool)
         })
-
 
         //按钮单击
         const onClick = (...args) => {
@@ -36,22 +37,25 @@ export default {
             }
         }
 
-
+        // 按钮文字
+        const buttonText = computed(()=>{
+            return loading.value ? props.loadingText : slots.default()[0].children
+        })
 
         return () => {
 
-            const _attrs = {
+            const attrs = {
                 class: 'my-button',
                 loading: loading.value,
-                disabled: loading.value ? false : props.disabled,
-                onClick
+                disabled: loading.value ? true : props.disabled,
+                onClick,
             }
-            const text = loading.value ? props.loadingText : slots.default()[0].children
+
             const _slots ={
                 ...slots,
-                default: () => text
+                default: () => buttonText.value
             }
-            return <a-button {..._attrs} v-slots={ _slots}></a-button>
+            return <a-button {...attrs} v-slots={ _slots}></a-button>
         }
     }
 }

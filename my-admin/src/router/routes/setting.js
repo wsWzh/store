@@ -1,18 +1,20 @@
-import { IconArrowDown } from '@arco-design/web-vue/es/icon'
+import { IconSettings } from '@arco-design/web-vue/es/icon'
 
-// 用户管理
+/**
+ * 设置管理
+ */
 export default {
     path: '/setting',
     name: 'Setting',
-    meta: { title: '管理', icon: IconArrowDown },
+    meta: { title: '系统管理', icon: IconSettings },
     component: () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue'),
-    redirect: { name: 'Setting' },
+    redirect: { name: 'SettingProduct' },
     children: [
         {
             path: '',
             name: 'SettingProduct',
-            meta: { title: '用户列表' },
-            component: () => import(/* webpackChunkName: "member" */ '@/views/setting/index.vue'),
-        }
+            meta: { title: '商品设置' },
+            component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/index.vue'),
+        },
     ]
 }
