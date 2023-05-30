@@ -4,11 +4,11 @@
 {个人前端查看}
 
 #### 软件架构
-软件架构说明
-axios:二次封装异步请求
-utils:常用的函数
-my-components:基于Arco Dsign二次封装的组件 文档地址:https://arco.design/vue/docs/start
-my-admin:后台模版
+
+1.  axios:二次封装异步请求
+2.  utils:常用的函数
+3.  my-components:基于Arco Dsign二次封装的组件 文档地址:https://arco.design/vue/docs/start
+4.  my-admin:后台模版
 
 #### 安装教程
 
