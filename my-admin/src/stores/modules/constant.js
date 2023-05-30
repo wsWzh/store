@@ -13,12 +13,14 @@ const apis = Object.values(keys)
 
 function buff(key) {
     return defineStore(key, () => {
+
         const defData = JSON.parse(sessionStorage.getItem(key)) || { }
 
         const data = reactive({ ...defData })
 
         const getters = () => {
-            if (empty(data.value) || data.datetime < Date.now()) {
+            //数据空时或超过缓存时间调用actions重新拿值
+            if (empty(data.value) || Date.now() > data.datetime ) {
                 return actions()
             }
             return data.value || []

@@ -32,7 +32,7 @@
     </a-space>
     <a-space>
       选项组件
-      <a-select :options="options"></a-select>
+      <a-select :options="options" :field-names="{value:'key',label:'name'}"></a-select>
     </a-space>
   </a-space>
 </template>
@@ -80,14 +80,10 @@ const handleConfirm = () => {
 }
 
 const options=computed(()=>{
-  return [
-    {value:'测试',label:'测试'},
-    { value: '测试1', label: '测试1' },
-  ]
+  return stores[GET_OPTIONS]().getters()
 })
 
-  http.get(GET_OPTIONS)
-console.log(http, GET_USER_INFO, GET_OPTIONS);
+console.log(options.value);
 
 </script>
 <style scoped lang='less'></style>
