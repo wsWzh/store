@@ -18,6 +18,7 @@ export function createDate(target) {
     if (typeOf(target, 'string')) {
         const items = /^(\d{4})-(\d{2})-(\d{2})(\s(\d{2}):(\d{2}):(\d{2}))?$/.exec(target)
         if (items) {
+            console.log(+items[1], +items[2] - 1, +items[3], +items[5] || 0, +items[6] || 0, +items[7] || 0);
             return new Date(+items[1], +items[2] - 1, +items[3], +items[5] || 0, +items[6] || 0, +items[7] || 0)
         }
         console.warn('createDate.error', items, target)
@@ -26,7 +27,9 @@ export function createDate(target) {
     return new Date()
 
 }
-
+console.log(
+    createDate('2022-01-22 20:01:10')
+);
 /**
  * 时间格式化
  * @param target { string | number | Date }

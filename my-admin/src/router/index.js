@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import {debug} from '@wangzhengheng/utils'
-import  keepalive  from './keepalive'
-
 
 const mods = import.meta.globEager('./routes/*.js')
 
@@ -16,5 +14,17 @@ const router = createRouter({
 
 export default router
 
-// 路由改变后
+import _401 from './before_each/401'
+//登录校验
+router.beforeEach(_401)
+
+import keepalive from './keepalive'
+// 路由缓存
 router.afterEach(keepalive)
+
+import { onError } from './error'
+//错误处理
+router.onError(onError)
+
+
+// beforeEach => afterEach => onError//执行顺序

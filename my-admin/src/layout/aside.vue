@@ -4,7 +4,7 @@
 import { ref, computed } from 'vue'
 import { GET_MENUS } from "@/http/apis/user"
 import { IconApps } from '@arco-design/web-vue/es/icon'
-import { menuStore } from "@/stores/module/menu"
+import menuPinia from "@/stores/modules/menu"
 import { useRoute, useRouter } from 'vue-router'
 import { empty } from '@wangzhengheng/utils'
 
@@ -14,7 +14,7 @@ export default {
       const route = useRoute()
       const router = useRouter()
 
-      const store = menuStore()
+
 
       const openKeys = ref([])
       const disabled = ref(false)
@@ -32,10 +32,14 @@ export default {
          openKeys.value = route.meta?.matched?.(items) || items
          return items
       })
+
+      const menuStore = menuPinia()
+
       // 菜单数据
       const menuItems = computed(() => {
-         return store.items
+         return menuStore.data
       })
+
       // 点击菜单
       const doMenuItemClick = name => {
          if (disabled.value) {

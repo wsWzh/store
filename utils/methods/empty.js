@@ -2,7 +2,7 @@ import { typeOf } from "./typeOf.js";
 
 
 // 判断参数是否为空
-export function empty(){
+export function empty() {
     if (arguments.length > 1) {
         // 多个值的时候判断都为空
         return [...arguments].every(v => empty(v))

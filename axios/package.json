@@ -13,7 +13,7 @@
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@wangzhengheng/utils": "0.0.1",
+    "@/utils": "0.0.1",
     "vite": "^4.0.0"
   }
 }

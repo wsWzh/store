@@ -30,6 +30,10 @@
         </template>
       </my-confirm>
     </a-space>
+    <a-space>
+      选项组件
+      <a-select :options="options"></a-select>
+    </a-space>
   </a-space>
 </template>
 
@@ -40,10 +44,11 @@ export default {
 </script>
 
 <script setup>
-import { ref, reactive, toRefs, onBeforeMount, onMounted } from 'vue'
-import { http } from '@/http'
-import { GET_USER_INFO } from '@/http/apis/user'
+import { ref, computed } from 'vue'
+import { http , GET_USER_INFO, GET_OPTIONS  } from '@/http'
 import { removeKeepalive } from '../../router/keepalive'
+import {stores} from '@/stores'
+
 const name = ref('')
 setTimeout(() => name.value = '基础组件', 2000)
 const successBtn = () => {
@@ -73,6 +78,16 @@ const handleConfirm = () => {
     }, 1000)
   })
 }
+
+const options=computed(()=>{
+  return [
+    {value:'测试',label:'测试'},
+    { value: '测试1', label: '测试1' },
+  ]
+})
+
+  http.get(GET_OPTIONS)
+console.log(http, GET_USER_INFO, GET_OPTIONS);
 
 </script>
 <style scoped lang='less'></style>
