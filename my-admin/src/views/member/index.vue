@@ -14,10 +14,20 @@ export default {
 }
 </script>
 <script setup>
-import { reactive, ref, toRefs, onBeforeMount, onMounted } from 'vue'
+import {  ref,computed  } from 'vue'
+import {stores} from '@/stores'
+import { GET_OPTIONS } from '@/http';
+
 const name = ref('')
 setTimeout(() => {
   name.value = '用户列表'
 },2000)
+
+const options=computed(()=>{
+  return stores[GET_OPTIONS]().getters()
+})
+
+console.log(options.value);
+
 </script>
 <style scoped lang='less'></style>
