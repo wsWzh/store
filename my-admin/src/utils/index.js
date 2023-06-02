@@ -1,6 +1,5 @@
-import * as methods from '@/utils'
-export * from '@/utils'
-
+import * as methods from '../../../utils'
+export * from '../../../utils'
 
 export default {
     install(app){

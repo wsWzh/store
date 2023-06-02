@@ -3,7 +3,6 @@ import { empty } from '@wangzhengheng/utils'
 
 const mods = import.meta.globEager("./modules/*.js"); //glob pattern matching, so all files ending in.ts will be loaded as JavaScript files.
 
-
 function getStores(mods) {
     return Object.keys(mods).reduce((map, path) => {
         const pathName = /\/(\w+)\.js/.exec(path)[1]
@@ -16,16 +15,6 @@ function getStores(mods) {
     }, {})
 
 }
-
-
-// Object.keys(mods).reduce((map, path) => {
-//     const pathName = /\/(\w+)\.js/.exec(path)[1]
-//     const module = mods[path]?.default
-//     if (empty(module?.$id)) {
-//         return { ...map, [pathName]: module }
-//     }
-//     return { ...map, [module.$id]: module }
-// }, {})
 
 
 export const stores = getStores(mods)

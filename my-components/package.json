@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "@wangzhengheng/utils": "^0.0.1"
   }
 }

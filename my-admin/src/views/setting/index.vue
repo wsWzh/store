@@ -29,10 +29,14 @@
           </my-tips>
         </template>
       </my-confirm>
+      <a-button @click="csfd">测试防抖</a-button>
+      <a-button @click="csjl">测试节流</a-button>
     </a-space>
     <a-space>
       选项组件
-      <a-select :options="options" :field-names="{value:'key',label:'name'}"></a-select>
+      <!-- <a-select :options="options" :field-names="{value:'key',label:'name'}"></a-select> -->
+      <my-area-picker v-model="area"></my-area-picker>
+      <my-checkbox v-model="checkbox" :options="checkboxOptions" formatter="id,name" @change="change"></my-checkbox>
     </a-space>
   </a-space>
 </template>
@@ -44,13 +48,14 @@ export default {
 </script>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { http , GET_USER_INFO, GET_OPTIONS  } from '@/http'
+import { ref, computed, nextTick } from 'vue'
+import { http, GET_USER_INFO, GET_OPTIONS } from '@/http'
 import { removeKeepalive } from '../../router/keepalive'
-import {stores} from '@/stores'
+import { stores } from '@/stores'
+import { debounce, throttle } from '@/utils'
 
 const name = ref('')
-setTimeout(() => name.value = '基础组件', 2000)
+
 const successBtn = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -79,11 +84,34 @@ const handleConfirm = () => {
   })
 }
 
-const options=computed(()=>{
-  return stores[GET_OPTIONS]().getters()
+const options = computed(() => {
+  return stores[GET_OPTIONS]().getters() || []
 })
 
-console.log(options.value);
+const area = ref('')
+const checkbox = ref(['2'])
+const checkboxOptions = [
+  { id: 1, name: '选项一' },
+  { id: 2, name: '选项二' },
+  { id: 3, name: '选项三' },
+]
+const change = value => {
+  console.log(value);
+  console.log(checkbox.value);
+}
+
+
+const timeout = ref()
+
+const cs = () => {
+  console.log('Hi');
+  console.log('JSConfEU')
+
+}
+
+const csfd = debounce(cs, 2000)
+
+const csjl = throttle(cs, 2000)
 
 </script>
 <style scoped lang='less'></style>

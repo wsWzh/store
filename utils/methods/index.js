@@ -1,3 +1,5 @@
 export * from './debug.js'
 export * from './empty.js'
 export * from './typeOf.js'
+export * from './debounce.js'
+export * from './throttle.js'
