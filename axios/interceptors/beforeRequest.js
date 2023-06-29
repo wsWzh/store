@@ -1,4 +1,4 @@
-import { empty, debug,typeOf } from '@wangzhengheng/utils'
+import { empty, debug,typeOf } from '@my-wzh/utils'
 import  { stringify } from 'qs'
 
 // 处理 post 和 put 请求时的参数

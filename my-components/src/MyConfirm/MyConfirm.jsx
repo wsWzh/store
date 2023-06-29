@@ -1,5 +1,5 @@
 import { ref, reactive, watch } from 'vue'
-import { empty } from '@wangzhengheng/utils'
+import { empty } from '@my-wzh/utils'
 import { MyButton } from '../MyButton'
 import { MyTips } from '../MyTips'
 

@@ -85,8 +85,10 @@ const handleConfirm = () => {
 }
 
 const options = computed(() => {
-  return stores[GET_OPTIONS]().getters() || []
+  return stores[GET_OPTIONS]().getters()
 })
+
+
 
 const area = ref('')
 const checkbox = ref(['2'])
@@ -112,6 +114,7 @@ const cs = () => {
 const csfd = debounce(cs, 2000)
 
 const csjl = throttle(cs, 2000)
+
 
 </script>
 <style scoped lang='less'></style>

@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { mergeProps, reactive, watch } from 'vue'
-import { empty, typeOf, debug } from '@wangzhengheng/utils'
+import { empty, typeOf, debug } from '@my-wzh/utils'
 
 /**
  * 通用操作提示

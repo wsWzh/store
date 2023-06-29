@@ -1,4 +1,4 @@
-import {debug,typeOf} from '@wangzhengheng/utils'
+import {debug,typeOf} from '@my-wzh/utils'
 import messageConfig from './messageConfig'
 
 // 成功返回

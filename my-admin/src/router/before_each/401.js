@@ -1,4 +1,4 @@
-import { debug,empty } from '@wangzhengheng/utils'
+import { debug,empty } from '@my-wzh/utils'
 import { apis } from '@/http'
 import { stores } from '@/stores'
 

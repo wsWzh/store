@@ -13,6 +13,7 @@ const createModule = () => {
     const data = ref()
 
     const actions = () => {
+    //   return  http.get(GET_USER_INFO)
         data.value = {
             name: '更新后的数据'
         }

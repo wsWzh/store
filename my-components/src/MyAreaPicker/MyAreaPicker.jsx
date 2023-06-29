@@ -1,5 +1,5 @@
 import options from './options'
-import { empty } from '@wangzhengheng/utils'
+import { empty } from '@my-wzh/utils'
 
 export default {
     name: 'MyAreaPicker',
@@ -20,7 +20,7 @@ export default {
             emit('change', label)
         }
         return () => {
-            
+
             const { modelValue } = props
 
             const _attrs = {

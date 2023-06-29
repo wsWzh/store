@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { empty, typeOf } from '@wangzhengheng/utils'
+import { empty, typeOf } from '@my-wzh/utils'
 import mixin from '../_mixins/options'
 import { formatValue } from '../_utils'
 

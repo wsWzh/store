@@ -1,5 +1,5 @@
 import { ref, watch,computed } from 'vue'
-import { typeOf } from '@wangzhengheng/utils'
+import { typeOf } from '@my-wzh/utils'
 /**
  * my-button 添加了 loading
  * loading : onClick 事件返回的是一个 promise 时自动触发 loading 效果

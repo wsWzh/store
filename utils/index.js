@@ -1,9 +1,10 @@
-import * as methods from './methods/index.js'
-export * from './methods/index.js'
+export * from './methods/debounce.js'
+export * from './methods/debug.js'
+export * from './methods/empty.js'
+export * from './methods/float.js'
+export * from './methods/formatDate.js'
+export * from './methods/reduceProps.js'
+export * from './methods/throttle.js'
+export * from './methods/typeOf.js'
 
 
-export default {
-    install(app){
-        Object.assign(app.config.globalProperties, methods)
-    }
-}

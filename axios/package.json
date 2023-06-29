@@ -1,5 +1,5 @@
 {
-  "name": "@wangzhengheng/axios",
+  "name": "@my-wzh/axios",
   "version": "0.0.2",
   "description": "异步请求",
   "main": "index.js",
@@ -13,7 +13,7 @@
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@/utils": "0.0.1",
+    "@my-wzh/utils": "0.0.1",
     "vite": "^4.0.0"
   }
 }

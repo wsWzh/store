@@ -1,4 +1,4 @@
-import { debug, empty } from '@wangzhengheng/utils'
+import { debug, empty } from '@my-wzh/utils'
 import { ref,watch } from 'vue'
 
 

@@ -6,7 +6,7 @@ import { GET_MENUS } from "@/http/apis/user"
 import { IconApps } from '@arco-design/web-vue/es/icon'
 import menuPinia from "@/stores/modules/menu"
 import { useRoute, useRouter } from 'vue-router'
-import { empty } from '@wangzhengheng/utils'
+import { empty } from '@my-wzh/utils'
 
 export default {
    name: "LayoutAside",

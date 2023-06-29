@@ -1,5 +1,5 @@
-import { debug } from '@wangzhengheng/utils'
-// import { createAxios } from '@wangzhengheng/axios'
+import { debug } from '@my-wzh/utils'
+// import { createAxios } from '@my-wzh/axios'
 import { createAxios } from '../../../axios'
 
 const mods = import.meta.globEager('./apis/*.js')

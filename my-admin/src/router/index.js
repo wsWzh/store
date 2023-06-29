@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import {debug} from '@wangzhengheng/utils'
+import {debug} from '@my-wzh/utils'
 
 const mods = import.meta.globEager('./routes/*.js')
 
