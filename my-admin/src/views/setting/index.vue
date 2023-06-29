@@ -29,8 +29,9 @@
           </my-tips>
         </template>
       </my-confirm>
-      <a-button @click="csfd">测试防抖</a-button>
-      <a-button @click="csjl">测试节流</a-button>
+      <a-button @click="onDebounce">测试防抖</a-button>
+      <a-button @click="onThrottle">测试节流</a-button>
+      <a-button @click="onCopy">测试复制</a-button>
     </a-space>
     <a-space>
       选项组件
@@ -52,8 +53,8 @@ import { ref, computed, nextTick } from 'vue'
 import { http, GET_USER_INFO, GET_OPTIONS } from '@/http'
 import { removeKeepalive } from '../../router/keepalive'
 import { stores } from '@/stores'
-import { debounce, throttle } from '@/utils'
-
+import { debounce, throttle, empty  } from '@/utils'
+import { copyText } from '../../../../utils'
 const name = ref('')
 
 const successBtn = () => {
@@ -103,17 +104,16 @@ const change = value => {
 }
 
 
-const timeout = ref()
 
-const cs = () => {
-  console.log('Hi');
-  console.log('JSConfEU')
+const onDebounce = debounce(() => console.log('防抖'), 2000)
 
+const onThrottle = throttle(() => console.log('节流'), 2000)
+
+
+const onCopy=async()=>{
+  const res=await copyText('测试复制1')
+  console.log(res);
 }
-
-const csfd = debounce(cs, 2000)
-
-const csjl = throttle(cs, 2000)
 
 
 </script>

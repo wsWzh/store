@@ -6,5 +6,6 @@ export * from './methods/formatDate.js'
 export * from './methods/reduceProps.js'
 export * from './methods/throttle.js'
 export * from './methods/typeOf.js'
+export * from './methods/copyText.js'
 
 

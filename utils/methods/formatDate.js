@@ -18,7 +18,6 @@ export function createDate(target) {
     if (typeOf(target, 'string')) {
         const items = /^(\d{4})-(\d{2})-(\d{2})(\s(\d{2}):(\d{2}):(\d{2}))?$/.exec(target)
         if (items) {
-            console.log(+items[1], +items[2] - 1, +items[3], +items[5] || 0, +items[6] || 0, +items[7] || 0);
             return new Date(+items[1], +items[2] - 1, +items[3], +items[5] || 0, +items[6] || 0, +items[7] || 0)
         }
         console.warn('createDate.error', items, target)
@@ -27,9 +26,7 @@ export function createDate(target) {
     return new Date()
 
 }
-console.log(
-    createDate('2022-01-22 20:01:10')
-);
+
 /**
  * 时间格式化
  * @param target { string | number | Date }
@@ -54,16 +51,22 @@ export function formatDate(target, fmt = 'yyyy-MM-dd') {
         'S': innerDate.getMilliseconds() //毫秒
     }
     fmt = ([true].includes(fmt)) ? 'yyyy-MM-dd hh:mm:ss' : fmt
+    //匹配连续出现的yyyy并替换成innerDate.getFullYear()
     fmt = fmt.replace(/(y+)/, v => {
         return (''+innerDate.getFullYear()).substr(4 - v.length)
     })
     for (const key in config) {
         fmt = fmt.replace(new RegExp(`(${key})`) , v => {
+            console.log(v, config[key]);
             if (v.length === 1) {
                 return config[key]
             }
+            
             return ('00' + config[key]).substr((''+config[key]).length)
         })
     }
     return fmt
 }
+console.log(
+    formatDate('2022-12-29 17:30:10', 'yy-MM-m')
+);

@@ -1,7 +1,7 @@
 import { createPinia } from "pinia";
 import { empty } from '@my-wzh/utils'
 
-const mods = import.meta.globEager("./modules/*.js"); //glob pattern matching, so all files ending in.ts will be loaded as JavaScript files.
+const mods = import.meta.globEager("./modules/*.js"); 
 
 function getStores(mods) {
     return Object.keys(mods).reduce((map, path) => {
