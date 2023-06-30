@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "异步请求",
   "main": "index.js",
+  "type": "module",
   "keywords": [
     "axios"
   ],
@@ -14,6 +15,5 @@
   },
   "devDependencies": {
     "@my-wzh/utils": "1.0.0",
-    "vite": "^4.0.0"
   }
 }

@@ -1,7 +1,11 @@
 import {debug,typeOf} from '@my-wzh/utils'
 import messageConfig from './messageConfig'
 
-// 成功返回
+/**
+ * 处理成功返回
+ * @param response
+ * @returns {Promise<*>|*}
+ */
 export function resolveResponse (response){
     debug('axios.interceptors.response>>>',response)
     const {data,config}=response
@@ -18,8 +22,12 @@ export function resolveResponse (response){
     // 错误处理
     return Promise.reject(error)
 }
+console.log(new Error('请求错误'));
 
-// 失败返回
+/**
+ * 处理请求失败
+ * @param error {{ message:string , response: object } }
+ */
 export function rejectResponse (error){
     const {response} =error
     error.message=messageConfig[response?.status || 500]
