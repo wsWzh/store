@@ -1,6 +1,6 @@
 {
   "name": "@my-wzh/axios",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "异步请求",
   "main": "index.js",
   "keywords": [
@@ -13,7 +13,7 @@
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@my-wzh/utils": "0.0.1",
+    "@my-wzh/utils": "1.0.0",
     "vite": "^4.0.0"
   }
 }
