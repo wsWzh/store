@@ -1,3 +1,9 @@
+/**
+ * 节流函数
+ * @param {Function} func 执行的函数
+ * @param {Number} limit 节流时间
+ * @returns {Promise}
+ */
 export function throttle(func, limit) {
     // 初始化变量，用于保存上一次函数调用和调用的时间
     let lastFunc, lastRan;

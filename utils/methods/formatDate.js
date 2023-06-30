@@ -55,18 +55,14 @@ export function formatDate(target, fmt = 'yyyy-MM-dd') {
     fmt = fmt.replace(/(y+)/, v => {
         return (''+innerDate.getFullYear()).substr(4 - v.length)
     })
+    //补0 5月 M=>5 MM=>05
     for (const key in config) {
         fmt = fmt.replace(new RegExp(`(${key})`) , v => {
-            console.log(v, config[key]);
             if (v.length === 1) {
                 return config[key]
             }
-            
             return ('00' + config[key]).substr((''+config[key]).length)
         })
     }
     return fmt
 }
-console.log(
-    formatDate('2022-12-29 17:30:10', 'yy-MM-m')
-);
