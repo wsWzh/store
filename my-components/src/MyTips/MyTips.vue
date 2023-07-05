@@ -10,13 +10,14 @@ import { empty, typeOf, debug } from '@my-wzh/utils'
 export default {
     name: 'MyTips',
     emits: ['update:disabled', 'update:visible'],//更新父组件disabled和visible值
-    inheritAttrs: false,
+    inheritAttrs: false, //不继承父组件的非props属性。
     props: {
         delay: { type: Number, default: 1500 }, // 信息窗停留时间
         success: [Boolean, String], // 开/关 成功提示 (字符串时替换提示信息)
         error: [Boolean, String], // 开/关 错误提示 (字符串时替换提示信息)
     },
     setup(props, { attrs, slots, emit }) {
+
         const state = reactive({
             disabled: false,
             visible: false,
@@ -78,12 +79,14 @@ export default {
             if (typeOf(error, 'string')) {
                 message = error
             }
+            //new Error(message)错误对象
             await showTips(new Error(message))
         }
 
         return () => {
 
             const { visible, disabled, backgroundColor } = state
+
             // 获取插槽中的子组件
             let items = slots.default?.()
 
@@ -91,7 +94,11 @@ export default {
             if (empty(items)) {
                 return []
             }
-            // 多个子组件
+            //  多个子元素
+            //  <my-tips>
+            //     <my-tips>1</my-tips>
+            //     <my-tips>2</my-tips>
+            // </my-tips>
             if (items.length > 1) {
                 const children = items.map(item => {
                     const _attrs = { inheritDisabled: disabled, 'onUpdate:disabled': syncDisabled, ...props, ...attrs }
@@ -100,6 +107,7 @@ export default {
                 })
                 return <a-space>{children}</a-space>
             }
+            // 单个元素
             // my-tips
             const _attrs = {
                 popperClass: 'my-tips',
@@ -113,13 +121,14 @@ export default {
                 content: () => state.message,
                 // 子组件
                 default: () => {
-                    const btn = items.find(({ props }) => !empty(props))
+                    const btn = items.find(({ props }) => !empty(props)) //找到props不是空的元素
                     if (empty(btn)) {
                         return items
                     }
                     const props = {
-                        ...btn.props,
+                        ...btn.props,//注入子组件的props 例如button的type status
                         'onUpdate:loading': syncDisabled,
+                        //优先级 外层tips的disabled>内层disabled>按钮本身disabled
                         disabled: disabled || attrs.inheritDisabled || btn.props.disabled,
                         onSuccess,
                         onError,

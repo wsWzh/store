@@ -12,15 +12,18 @@ const createModule = () => {
 
     const data = ref()
 
-    const actions = () => {
-    //   return  http.get(GET_USER_INFO)
-        data.value = {
-            name: '更新后的数据'
-        }
+    const actions = async () => {
+        data.value = await http.get(GET_USER_INFO)
     }
-    const name = GET_USER_INFO
 
-    return { data, actions, name }
+    const getters = () => {
+        if (empty(data.value)) {
+            actions()
+        }
+        return data.value
+    }
+
+    return { data, actions, getters }
 }
 
 const userPinia = defineStore(GET_USER_INFO, createModule)

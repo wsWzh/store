@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6",
+    "@arco-design/web-vue": "~2.46.0",
     "@my-wzh/utils": "^1.0.0"
   }
 }

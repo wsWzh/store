@@ -4,7 +4,7 @@
 import { ref, computed } from 'vue'
 import { GET_MENUS } from "@/http/apis/user"
 import { IconApps } from '@arco-design/web-vue/es/icon'
-import menuPinia from "@/stores/modules/menu"
+import { getStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
 import { empty } from '@my-wzh/utils'
 
@@ -33,11 +33,10 @@ export default {
          return items
       })
 
-      const menuStore = menuPinia()
 
       // 菜单数据
       const menuItems = computed(() => {
-         return menuStore.data
+         return getStore(GET_MENUS).data
       })
 
       // 点击菜单

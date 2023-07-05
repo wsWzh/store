@@ -1,13 +1,17 @@
 import { createPinia } from "pinia";
-import { empty } from '@my-wzh/utils'
 
-const mods = import.meta.globEager("./modules/*.js"); 
+const mods = import.meta.globEager("./modules/*.js");
 
-function getStores(mods) {
+/**
+ * 从模块对象中获取存储对象
+ * @param {Object} mods - 模块对象
+ * @returns {Object} - 存储对象
+ */
+function extractStores(mods) {
     return Object.keys(mods).reduce((map, path) => {
         const pathName = /\/(\w+)\.js/.exec(path)[1]
         const module = mods[path]?.default
-        if (pathName ==='constant') {
+        if (pathName === 'constant') {
             return { ...map, ...module }
         }
         return { ...map, [module.$id]: module }
@@ -15,9 +19,11 @@ function getStores(mods) {
 
 }
 
-
-export const stores = getStores(mods)
-console.log(stores, 'stores');
+export const stores = extractStores(mods)
+console.log(stores,'stores');
+export function getStore(key){
+    return stores[key]()
+}
 
 const pinia = createPinia()
 

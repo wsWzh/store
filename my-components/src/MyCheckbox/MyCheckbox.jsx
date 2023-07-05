@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import { empty, typeOf } from '@my-wzh/utils'
 import mixin from '../_mixins/options'
 import { formatValue } from '../_utils'
+import { CheckboxGroup as ACheckboxGroup, Checkbox as ACheckbox } from '@arco-design/web-vue'
 
 
 /**
@@ -23,7 +24,7 @@ export default {
                 return []
             }
             if (typeOf(modelValue, 'string') || typeOf(modelValue, 'number')) {
-                modelValue = String(modelValue).split(',')
+                modelValue = String(modelValue).split(',') //number不能split
             }
             if (typeOf(modelValue, 'array')) {
                 return modelValue.map(formatValue)
@@ -31,8 +32,7 @@ export default {
             return []
         })
 
-
-
+        //onChange,onUpdate,formatOptions来自mixin
         return ({ onUpdate, formatOptions }) => {
             const { onChange }=props
             const _slots = {
@@ -43,7 +43,7 @@ export default {
                             value,
                             disabled
                         }
-                        return <a-checkbox {..._attrs}>{label}</a-checkbox>
+                        return <ACheckbox {..._attrs}>{label}</ACheckbox>
                     })
                     return options?.concat(slots.default?.())
                 }
@@ -54,7 +54,7 @@ export default {
                 'onUpdate:modelValue': onUpdate,
                 onChange
             }
-            return <a-checkbox-group {..._attrs} v-slots={_slots} />
+            return <ACheckboxGroup {..._attrs} v-slots={_slots} />
         }
     }
 }

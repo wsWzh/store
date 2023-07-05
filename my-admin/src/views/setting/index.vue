@@ -4,8 +4,8 @@
   </my-crumb-slot>
   <a-space direction="vertical">
     <div>{{ name }}</div>
-    <a-space>
-      按钮组件
+    按钮组件
+    <a-space :size="20">
       <my-tips success error>
         <my-button type="primary" status="success" @click="successBtn">成功提示按钮</my-button>
       </my-tips>
@@ -13,7 +13,7 @@
         <my-button type="primary" status="danger" @click="errorBtn">失败提示按钮</my-button>
       </my-tips>
       <my-button type="primary" @click="lodingBtn">加载按钮</my-button>
-      <my-confirm status="danger" @confirm="handleConfirm" title="确认要删除?">确认删除按钮</my-confirm>
+      <my-confirm status="danger" @confirm="handleConfirm" title="确认要删除?">删除</my-confirm>
       <my-confirm type="primary">
         <template #default>
           <a-button>自定义插槽</a-button>
@@ -33,11 +33,29 @@
       <a-button @click="onThrottle">测试节流</a-button>
       <a-button @click="onCopy">测试复制</a-button>
     </a-space>
-    <a-space>
-      选项组件
+    选项组件
+    <a-space :size="20" wrap>
       <!-- <a-select :options="options" :field-names="{value:'key',label:'name'}"></a-select> -->
-      <my-area-picker v-model="area"></my-area-picker>
-      <my-checkbox v-model="checkbox" :options="checkboxOptions" formatter="id,name" @change="change"></my-checkbox>
+      地址选项:<my-area-picker v-model="area" />
+      时间区间:<my-date-range v-model:end="endTime" v-model:start="startTime" />
+      复选框:<my-checkbox v-model="checkbox" :options="options" :formatter="({ id, name }) => [id, name]" />
+      单选框:<my-radio v-model="radio" :options="options" formatter="id,name"></my-radio>
+      <a-space :size="20">
+        下拉选项:<my-select placeholder="请选择下拉选项" :options="options" formatter="id,name" v-model="select" multiple allowClear @change="selectChage">
+          <a-option :value="4">选项4</a-option>
+        </my-select>
+      </a-space>
+    </a-space>
+    上传,下载组件
+    <a-space :size="20">
+      <my-download type="primary" @click="download">下载</my-download>
+    </a-space>
+    输入框组件
+    <a-space :size="20">
+      数字输入框:<my-input v-model="inputValue" :pattern="/[1-9]$/" />
+      字母输入框:<my-input v-model="inputValue1" :pattern="/^[a-zA-Z]$/" />
+      金额输入框:<my-input v-model="inputValue3" :pattern="/^\d+(\.\d{0,2})?$/" />
+      手机号输入框:<my-input v-model="inputValue4" :pattern="/^1([3-9](\d{0,9})?)?$/" />
     </a-space>
   </a-space>
 </template>
@@ -50,10 +68,10 @@ export default {
 
 <script setup>
 import { ref, computed, nextTick } from 'vue'
-import { http, GET_USER_INFO, GET_OPTIONS } from '@/http'
+import { http, GET_USER_INFO, GET_OPTIONS, GET_DOWNLOAD } from '@/http'
 import { removeKeepalive } from '../../router/keepalive'
-import { stores } from '@/stores'
-import { debounce, throttle, empty  } from '@/utils'
+import { getStore } from '@/stores'
+import { debounce, throttle, empty } from '@/utils'
 import { copyText } from '../../../../utils'
 const name = ref('')
 
@@ -85,24 +103,20 @@ const handleConfirm = () => {
   })
 }
 
-const options = computed(() => {
-  return stores[GET_OPTIONS]().getters()
+const getOptions = computed(() => {
+  return getStore(GET_OPTIONS).getters()
 })
 
 
-
 const area = ref('')
-const checkbox = ref(['2'])
-const checkboxOptions = [
+const checkbox = ref('1,2,3')
+const options = [
   { id: 1, name: '选项一' },
   { id: 2, name: '选项二' },
   { id: 3, name: '选项三' },
 ]
-const change = value => {
-  console.log(value);
-  console.log(checkbox.value);
-}
 
+const radio = ref(1)
 
 
 const onDebounce = debounce(() => console.log('防抖'), 2000)
@@ -110,11 +124,32 @@ const onDebounce = debounce(() => console.log('防抖'), 2000)
 const onThrottle = throttle(() => console.log('节流'), 2000)
 
 
-const onCopy=async()=>{
-  const res=await copyText('测试复制1')
+const onCopy = async () => {
+  const res = await copyText('测试复制1')
   console.log(res);
 }
 
+const endTime = ref()
+const startTime = ref()
+
+const download = async () => {
+  return await http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
+}
+
+const inputValue = ref()
+const inputValue1 = ref()
+const inputValue3 = ref()
+const inputValue4 = ref()
+
+const select = ref('1,2,3')
+
+const selectChage=(val)=>{
+  console.log(val);
+}
 
 </script>
-<style scoped lang='less'></style>
+<style >
+.my-select {
+  width: 180px;
+}
+</style>

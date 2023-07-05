@@ -1,6 +1,6 @@
 {
   "name": "@my-wzh/axios",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "异步请求",
   "main": "index.js",
   "type": "module",
@@ -14,6 +14,6 @@
     "qs": "^6.11.0"
   },
   "devDependencies": {
-    "@my-wzh/utils": "1.0.0",
+    "@my-wzh/utils": "1.0.0"
   }
 }

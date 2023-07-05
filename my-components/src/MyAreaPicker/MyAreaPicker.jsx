@@ -1,5 +1,6 @@
 import options from './options'
 import { empty } from '@my-wzh/utils'
+import { Cascader as ACascader } from '@arco-design/web-vue' //兼容异步打开弹窗引入组件
 
 export default {
     name: 'MyAreaPicker',
@@ -17,7 +18,7 @@ export default {
 
         const onChange = (code) => {
             const label = getLabel(options, code)
-            emit('change', label)
+            emit('change', label) //自定义导出值
         }
         return () => {
 
@@ -31,7 +32,7 @@ export default {
                 'onUpdate:modelValue': v => emit('update:modelValue', v),
                 onChange
             }
-            return  <a-cascader {..._attrs} v-slots={slots} />
+            return <ACascader {..._attrs} v-slots={slots} />
         }
     }
 }

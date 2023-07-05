@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { onError, createLodingDoc, closeLoading } from './error'
 import {debug} from '@my-wzh/utils'
 
 const mods = import.meta.globEager('./routes/*.js')
@@ -14,15 +15,19 @@ const router = createRouter({
 
 export default router
 
+router.beforeEach(createLodingDoc)
+
 import _401 from './before_each/401'
 //登录校验
 router.beforeEach(_401)
 
 import keepalive from './keepalive'
-// 路由缓存
+// 页面缓存
 router.afterEach(keepalive)
 
-import { onError } from './error'
+// close loading
+router.afterEach(closeLoading)
+
 //错误处理
 router.onError(onError)
 

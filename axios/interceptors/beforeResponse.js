@@ -9,9 +9,7 @@ import messageConfig from './messageConfig'
 export function resolveResponse (response){
     debug('axios.interceptors.response>>>',response)
     const {data,config}=response
-    const message = data?.msg || data?.message || '服务异常'
-    const success = data?.succ || data?.success
-    Object.assign(data,{message,success})
+    const { success, message } = data
     if (success){
         return data
     }
@@ -22,7 +20,6 @@ export function resolveResponse (response){
     // 错误处理
     return Promise.reject(error)
 }
-console.log(new Error('请求错误'));
 
 /**
  * 处理请求失败

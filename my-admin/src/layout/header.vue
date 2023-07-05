@@ -1,5 +1,5 @@
 <script lang="jsx">
-import userPinia from '@/stores/modules/user'
+import { getStore } from '../stores'
 import { GET_USER_INFO } from '@/http/apis/user'
 import { computed } from 'vue'
 
@@ -12,9 +12,8 @@ export default {
   setup() {
     const circleUrl = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 
-    const userStore = userPinia()
     const userInfo = computed(() => {
-      return userStore.data
+      return getStore(GET_USER_INFO).data
     })
 
     return () => {
@@ -27,7 +26,7 @@ export default {
             </a-row>
           </router-link>
           <a-row justify="end" align="center">
-            <a-avatar size={26} src={circleUrl} onClick={userStore.GET_USER_INFO}/>
+            <a-avatar size={26} src={circleUrl} />
             <a-divider direction="vertical" />
             <h5>{ userInfo.value?.name}</h5>
           </a-row>

@@ -1,5 +1,7 @@
 import { ref, watch,computed } from 'vue'
 import { typeOf } from '@my-wzh/utils'
+import { Button as AButton } from '@arco-design/web-vue'
+
 /**
  * my-button 添加了 loading
  * loading : onClick 事件返回的是一个 promise 时自动触发 loading 效果
@@ -30,7 +32,8 @@ export default {
         //按钮单击
         const onClick = (...args) => {
             const click = props.onClick
-            const promise = (click[0] || click)(...args)
+            const promise = (click[0] || click)(...args) //执行函数
+            //如果返回promise
             if (typeOf(promise, 'promise')) {
                 const closeLoading = useLoading()
                 promise.then(res => emit('success', res)).catch(error => emit('error', error)).finally(closeLoading)
@@ -55,7 +58,7 @@ export default {
                 ...slots,
                 default: () => buttonText.value
             }
-            return <a-button {...attrs} v-slots={ _slots}></a-button>
+            return <AButton {...attrs} v-slots={ _slots} />
         }
     }
 }

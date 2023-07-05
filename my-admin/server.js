@@ -133,6 +133,12 @@ http.createServer(function (request, response) {
             setTimeout(() => {
                 post = querystring.parse(post)
                 switch (pathname) {
+                    case '/get/user/info':
+                        const userInfo={
+                            name:'wzh',
+                            age:18
+                        }
+                        return doOutput(success(userInfo))
                     case '/delete': // 删除
                         const deleteState = items.some(({ id }, index) => {
                             if (id === params.id) {

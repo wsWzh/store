@@ -40,13 +40,20 @@ const createModule = () => {
     ]
     const data = ref([])
 
-
-    const actions = async () => {
+    const actions = () => {
+        console.log('触发401', '401');
         data.value = defItems
         // data.value = await http.get(GET_MENUS)
     }
-    const name = GET_MENUS //刚需数据标识
-    return { data, actions, name }
+
+    const getters = () => {
+        if (empty(data.value)) {
+            actions()
+        }
+        return data.value
+    }
+
+    return { data, actions, getters }
 }
 
 

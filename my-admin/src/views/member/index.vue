@@ -1,7 +1,7 @@
 <template>
   <div>
       <my-crumb-slot key="member">
-      <a-button @click="cs">重制</a-button>
+      <a-button >重制</a-button>
       <a-button >更新</a-button>
       <my-button >搜索</my-button>
     </my-crumb-slot>
@@ -15,14 +15,12 @@ export default {
 </script>
 <script setup>
 import {  ref,computed  } from 'vue'
-import {stores} from '@/stores'
 import { http,GET_OPTIONS } from '@/http';
 
 const name = ref('')
 setTimeout(() => {
   name.value = '用户列表'
 },2000)
-
 
 
 </script>

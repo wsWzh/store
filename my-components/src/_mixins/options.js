@@ -19,13 +19,13 @@ export default {
         onChange: Function
     },
     computed: {
-        // 处理返回值
+        // 处理返回值 retunr 一个函数接收一个参数 value 。这个 value 表示选择组件的新值。
         onUpdate({ modelValue }) {
             const doUpdate = v => {
-                console.log(v);
                 this.$emit('update:modelValue', v)
             }
             return value => {
+                //传入值和返回值类型保持一致
                 if (typeOf(value, 'array')) {
                     if (typeOf(modelValue, 'array')) {
                         return doUpdate(value)
@@ -37,13 +37,15 @@ export default {
         },
         //处理组件选项
         formatOptions({ formatter, options }) {
+            console.log(formatter, options);
             return options.map(option => {
                 // formatter=({id,name})=>[id,name]
                 if (typeOf(formatter, 'function')) {
                     const _props = formatter(option)
                     if (typeOf(_props, 'array')) {
                         const value = formatValue(_props[0])
-                        return { value, label: _props[_props.length - 1] }
+                        const label = _props[_props.length - 1]
+                        return { value, label }
                     }
                     return {}
                 }
