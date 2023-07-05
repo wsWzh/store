@@ -41,14 +41,21 @@
       复选框:<my-checkbox v-model="checkbox" :options="options" :formatter="({ id, name }) => [id, name]" />
       单选框:<my-radio v-model="radio" :options="options" formatter="id,name"></my-radio>
       <a-space :size="20">
-        下拉选项:<my-select placeholder="请选择下拉选项" :options="options" formatter="id,name" v-model="select" multiple allowClear @change="selectChage">
+        下拉选项:<my-select placeholder="请选择下拉选项" :options="options" formatter="id,name" v-model="select" multiple allowClear
+          @change="selectChage">
           <a-option :value="4">选项4</a-option>
         </my-select>
       </a-space>
+      开关:
+        <my-tips success>
+          <my-switch v-model="status" @change="statusChange" />
+        </my-tips>
+       {{ status }}
     </a-space>
     上传,下载组件
     <a-space :size="20">
       <my-download type="primary" @click="download">下载</my-download>
+      <my-upload />
     </a-space>
     输入框组件
     <a-space :size="20">
@@ -143,8 +150,15 @@ const inputValue4 = ref()
 
 const select = ref('1,2,3')
 
-const selectChage=(val)=>{
+const selectChage = (val) => {
   console.log(val);
+}
+
+const status = ref(1)
+
+const statusChange = async (status) => {
+  console.log(status);
+ return await http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
 }
 
 </script>

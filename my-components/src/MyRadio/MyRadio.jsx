@@ -17,6 +17,7 @@ export default {
                 class: 'my-radio',
                 modelValue: (modelValue),
                 'onUpdate:modelValue': onUpdate,
+                onChange,
                 ...attrs
             }
 

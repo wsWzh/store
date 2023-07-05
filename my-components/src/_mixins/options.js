@@ -37,7 +37,6 @@ export default {
         },
         //处理组件选项
         formatOptions({ formatter, options }) {
-            console.log(formatter, options);
             return options.map(option => {
                 // formatter=({id,name})=>[id,name]
                 if (typeOf(formatter, 'function')) {

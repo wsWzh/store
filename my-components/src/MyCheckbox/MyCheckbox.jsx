@@ -33,8 +33,7 @@ export default {
         })
 
         //onChange,onUpdate,formatOptions来自mixin
-        return ({ onUpdate, formatOptions }) => {
-            const { onChange }=props
+        return ({ onUpdate, formatOptions, onChange }) => {
             const _slots = {
                 ...slots,
                 default: () => {

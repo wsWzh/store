@@ -1,9 +1,16 @@
-import { Select as ASelect ,Option as AOption} from "@arco-design/web-vue"
+import { Select as ASelect, Option as AOption } from "@arco-design/web-vue"
 import mixin from '../_mixins/options'
 import { computed } from 'vue'
 import { empty, typeOf } from '@my-wzh/utils'
 import { formatValue } from '../_utils'
 
+
+/**
+ * 下拉选择
+ * 添加 props.options 作为选项数据
+ * 通过设置 props.formatter 指定真实值和显示值
+ * 将多选值改造成 v,v,v... 的格式
+ */
 export default {
     name: 'MySelect',
     emits: [],
@@ -17,10 +24,12 @@ export default {
         const modelValue = computed(() => {
 
             const { modelValue, multiple, options } = props
+
             //没有选项时不做预设填充
             if (empty(modelValue) || empty(options, slots.default)) {
                 return multiple ? [] : undefined
             }
+
             // 多选
             if (multiple) {
                 if (empty(modelValue)) {
@@ -33,16 +42,17 @@ export default {
                 }
                 return modelValue
             }
+
             //单选
             return formatValue(modelValue)
         })
-        return ({ formatOptions, onUpdate, onChange }) => {
 
-            const { placeholder, multiple } = props
+
+        return ({ formatOptions, onUpdate, onChange, placeholder, multiple }) => {
+
             const _attrs = {
                 class: 'my-select',
                 placeholder,
-                options: formatOptions,
                 multiple,
                 modelValue: modelValue.value,
                 'onUpdate:modelValue': onUpdate,
@@ -59,17 +69,18 @@ export default {
                 ...attrs,
             }
 
-            const _slots={
+            const _slots = {
                 ...slots,
-               default:()=>{
-                    const options = formatOptions.map(({value,label,disabled})=>{
+                default: () => {
+                    const options = formatOptions.map(({ value, label, disabled }) => {
                         const optionAttrs = { value, label, disabled }
-                        return <AOption {...optionAttrs}/>
+                        return <AOption {...optionAttrs} />
                     })
                     return options.concat(slots.default?.())
-               }
+                }
             }
-            console.log(_slots.default());
+
+
             return <ASelect {..._attrs} v-slots={_slots} />
         }
     }

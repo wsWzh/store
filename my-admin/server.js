@@ -12,7 +12,7 @@ const path = require('path')
 const apiPort = 4000
 
 // 等待输出时间（s）
-const tickTime = 1
+const tickTime = 2
 
 const state = {}
 
