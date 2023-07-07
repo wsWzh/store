@@ -3,11 +3,11 @@
     <my-layout-header />
     <a-layout class="arco-layout-has-sider">
       <my-layout-aside />
-      <a-layout>
+      <a-layout class="main-wrap">
         <my-crumb>
           <a-button size="mini" type="primary" @click="handleKeepalive">常驻按钮</a-button>
         </my-crumb>
-        <a-layout  class="main-wrap">
+        <a-layout>
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepaliveItems">
               <component :is="Component" />
@@ -40,14 +40,12 @@ const handleKeepalive = () => {
 
 </script>
 <style scoped lang='less'>
-.my-layout,
-.my-layout>.arco-layout,
-:deep(.arco-table-element) {
+.my-layout,.my-layout>.arco-layout,:deep(.arco-table-element){
   overflow: hidden;
 }
-
-.main-wrap {
+:deep(.main-wrap>.arco-layout){
   overflow: auto;
   padding: 20px;
+  align-items: flex-start;
 }
 </style>

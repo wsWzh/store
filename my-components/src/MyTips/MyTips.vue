@@ -130,10 +130,10 @@ export default {
                         'onUpdate:loading': syncDisabled,
                         //优先级 外层tips的disabled>内层disabled>按钮本身disabled
                         disabled: disabled || attrs.inheritDisabled || btn.props.disabled,
-                        onSuccess,
-                        onError,
+                        onSuccess,//给插槽添加onSuccess
+                        onError,//给插槽添加onError
                     }
-                    // 将 tips 状态变化嵌入 子组件
+                    // 将 tips 状态变化嵌入 子组件 props覆盖插槽外部
                     return Object.assign(btn, { props })
                 },
             }

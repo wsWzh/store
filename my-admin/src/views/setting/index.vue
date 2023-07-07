@@ -2,168 +2,194 @@
   <my-crumb-slot key="setting">
     <a-button size="mini" type="primary" @click="removeKeepalive('MemberList')">测试删除列表缓存</a-button>
   </my-crumb-slot>
-  <a-space direction="vertical">
-    <div>{{ name }}</div>
-    按钮组件
-    <a-space :size="20">
-      <my-tips success error>
-        <my-button type="primary" status="success" @click="successBtn">成功提示按钮</my-button>
-      </my-tips>
-      <my-tips success error>
-        <my-button type="primary" status="danger" @click="errorBtn">失败提示按钮</my-button>
-      </my-tips>
-      <my-button type="primary" @click="lodingBtn">加载按钮</my-button>
-      <my-confirm status="danger" @confirm="handleConfirm" title="确认要删除?">删除</my-confirm>
-      <my-confirm type="primary">
-        <template #default>
-          <a-button>自定义插槽</a-button>
-        </template>
-        <template #cancel="attrs">
-          <my-tips error success>
-            <my-button @click="errorBtn" type="primary" status="warning">自定义取消</my-button>
-          </my-tips>
-        </template>
-        <template #confirm="attrs">
-          <my-tips error success>
-            <my-button @click="successBtn" type="primary" status="success">自定义确定</my-button>
-          </my-tips>
-        </template>
-      </my-confirm>
-      <a-button @click="onDebounce">测试防抖</a-button>
-      <a-button @click="onThrottle">测试节流</a-button>
-      <a-button @click="onCopy">测试复制</a-button>
-    </a-space>
-    选项组件
-    <a-space :size="20" wrap>
-      <!-- <a-select :options="options" :field-names="{value:'key',label:'name'}"></a-select> -->
-      地址选项:<my-area-picker v-model="area" />
-      时间区间:<my-date-range v-model:end="endTime" v-model:start="startTime" />
-      复选框:<my-checkbox v-model="checkbox" :options="options" :formatter="({ id, name }) => [id, name]" />
-      单选框:<my-radio v-model="radio" :options="options" formatter="id,name"></my-radio>
-      <a-space :size="20">
-        下拉选项:<my-select placeholder="请选择下拉选项" :options="options" formatter="id,name" v-model="select" multiple allowClear
-          @change="selectChage">
-          <a-option :value="4">选项4</a-option>
-        </my-select>
-      </a-space>
-      开关:
-        <my-tips success>
-          <my-switch v-model="status" @change="statusChange" />
+  <a-layout class="list-wrap">
+    <a-form :model="params">
+      <a-form-item label="限制输入字母">
+        <my-input v-model="params.name" :pattern="/^[a-zA-Z]{0,20}$/" />
+      </a-form-item>
+      <a-form-item label="限制输入金额">
+        <my-input v-model="params.money" :pattern="/^(\d{1,10})?(\.([0-9]{0,2}))?$/" />
+      </a-form-item>
+      <a-form-item label="限制输入数字">
+        <my-input v-model="params.number" :pattern="/^\d{1,20}$/" />
+      </a-form-item>
+      <a-form-item label="限制输入手机号">
+        <my-input v-model="params.mobile" :pattern="/^1([3-9](\d{0,9})?)?$/" />
+      </a-form-item>
+      <a-form-item label="下拉框单选">
+        <my-select v-model="params.type" :options="options" :formatter="({ id, name }) => [+id, name]" />
+      </a-form-item>
+      <a-form-item label="下拉框多选">
+        <my-select v-model="params.types" :options="options" formatter="id,name" multiple @change="handleChange" />
+      </a-form-item>
+      <a-form-item label="日期区间">
+        <my-date-range v-model:start="params.dateStart" v-model:end="params.dateEnd" />
+      </a-form-item>
+      <a-form-item label="地址选">
+        <my-area-picker v-model="params.area" />
+      </a-form-item>
+      <a-form-item label="单选框">
+        <my-radio v-model="params.radio" :options="options" formatter="id,name" />
+      </a-form-item>
+      <a-form-item label="复选框">
+        <my-checkbox v-model="params.checkbox" :options="options" :formatter="({ id, name }) => [id, name]" />
+      </a-form-item>
+      <a-form-item label="开关">
+        <my-tips error success>
+          <my-switch v-model="params.switch" @change="useResolve" />
         </my-tips>
-       {{ status }}
-    </a-space>
-    上传,下载组件
-    <a-space :size="20">
-      <my-download type="primary" @click="download">下载</my-download>
-      <my-upload />
-    </a-space>
-    输入框组件
-    <a-space :size="20">
-      数字输入框:<my-input v-model="inputValue" :pattern="/[1-9]$/" />
-      字母输入框:<my-input v-model="inputValue1" :pattern="/^[a-zA-Z]$/" />
-      金额输入框:<my-input v-model="inputValue3" :pattern="/^\d+(\.\d{0,2})?$/" />
-      手机号输入框:<my-input v-model="inputValue4" :pattern="/^1([3-9](\d{0,9})?)?$/" />
-    </a-space>
-  </a-space>
+      </a-form-item>
+      <a-form-item label="图片上传">
+        <my-tips error position="right">
+          <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload" origin="https://static-nk.liux.co" style="width: unset" />
+        </my-tips>
+      </a-form-item>
+    </a-form>
+    <a-row style="padding-left: 50px;">
+      <a-space wrap style="width: 600px;">
+        <a-button @click="$router.back()">返回</a-button>
+        <my-button @click="useResolve">提交按钮</my-button>
+        <my-tips success>
+          <my-button @click="useResolve">tips提交按钮</my-button>
+        </my-tips>
+        <my-tips success error>
+          <my-button type="primary" @click="useResolve">操作成功</my-button>
+          <my-button type="primary" status="warning" @click="useReject">操作失败</my-button>
+        </my-tips>
+        <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">删除</my-confirm>
+        <my-confirm type="primary">
+          <template #default>
+            <a-button type="primary">审核</a-button>
+          </template>
+          <template #cancel="attrs">
+            <my-tips error success>
+              <my-button @click="useReject" type="primary" status="warning">不通过</my-button>
+            </my-tips>
+          </template>
+          <template #confirm="attrs">
+            <my-tips error success>
+              <my-button @click="useResolve" type="primary" status="success">通过</my-button>
+            </my-tips>
+          </template>
+        </my-confirm>
+        <my-tips error success>
+          <!-- 子组件包含多个按钮时，同步所有子组件的状态 -->
+          <my-download type="primary" @click="handleDownload">
+            <template #icon><icon-download /></template>
+            下载
+          </my-download>
+          <my-download type="outline" @click="handleExport({ abc: 123 })">
+            <template #icon><icon-export /></template>
+            导出
+          </my-download>
+          <my-upload :action="handleUpload">
+            <template #upload-button="{ loading, disabled }">
+              <a-button type="primary" :loading="loading" :disabled="disabled">
+                <template #icon><icon-upload /></template>
+                {{ loading ? '正在处理' : '点击上传' }}
+              </a-button>
+            </template>
+          </my-upload>
+        </my-tips>
+      </a-space>
+    </a-row>
+  </a-layout>
 </template>
-
 <script>
 export default {
-  name: 'SettingProduct'
+  name: 'SettingProduct',
 }
 </script>
-
 <script setup>
-import { ref, computed, nextTick } from 'vue'
-import { http, GET_USER_INFO, GET_OPTIONS, GET_DOWNLOAD } from '@/http'
+import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '../../http/apis/user'
+import { http } from '@/http'
+import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
-import { getStore } from '@/stores'
-import { debounce, throttle, empty } from '@/utils'
-import { copyText } from '../../../../utils'
-const name = ref('')
 
-const successBtn = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({ message: '我去，居然成功了' })
-    }, 1000)
-  })
-}
 
-const errorBtn = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      reject({ message: '我去居然失败了' })
-    }, 1000)
-  })
-}
-
-const lodingBtn = async () => {
-  return await http.get(GET_USER_INFO)
-}
-
-const handleConfirm = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({ message: '删除成功' })
-    }, 1000)
-  })
-}
-
-const getOptions = computed(() => {
-  return getStore(GET_OPTIONS).getters()
+const params = reactive({
+  name: 'Master',
+  money: 999.999,
+  number: 999,
+  mobile: '18888888888',
+  radio: '1',
+  checkbox: '2',
+  type: '2',
+  switch: '',
+  image: '',
+  types: '1,2',
+  // types :  [1,3] ,
 })
 
+setTimeout(() => {
+  params.image = 'https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg'
+}, 1000)
 
-const area = ref('')
-const checkbox = ref('1,2,3')
+watch(params, params => {
+  console.log('params:', toRaw(params))
+})
+
 const options = [
-  { id: 1, name: '选项一' },
-  { id: 2, name: '选项二' },
+  { id: '1', name: '选项一' },
+  { id: 2, name: '选项二', disabled: true },
   { id: 3, name: '选项三' },
 ]
 
-const radio = ref(1)
-
-
-const onDebounce = debounce(() => console.log('防抖'), 2000)
-
-const onThrottle = throttle(() => console.log('节流'), 2000)
-
-
-const onCopy = async () => {
-  const res = await copyText('测试复制1')
-  console.log(res);
+const useResolve = () => {
+  return http.delete(POST_SUCCESS, { name: 'admin', password: 123456 })
+  // return new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve({ message : '我去，居然成功了' })
+  //   } , 1000)
+  // })
 }
 
-const endTime = ref()
-const startTime = ref()
-
-const download = async () => {
-  return await http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
+const useReject = async () => {
+  const res = await http({ url: POST_ERROR, params: { id: '999' } })
+  console.log('useReject', res)
+  return res
 }
 
-const inputValue = ref()
-const inputValue1 = ref()
-const inputValue3 = ref()
-const inputValue4 = ref()
-
-const select = ref('1,2,3')
-
-const selectChage = (val) => {
-  console.log(val);
+const handleChange = (v, e) => {
+  console.log('handleChange', v, e)
 }
 
-const status = ref(1)
 
-const statusChange = async (status) => {
-  console.log(status);
- return await http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
+const handleOk = close => {
+  // setTimeout(close , 2000)
+  return false
 }
 
+const handleDownload = () => {
+  return http({ url: GET_DOWNLOAD, responseType: 'blob' })
+}
+
+const handleExport = params => {
+  return http({ url: GET_DOWNLOAD, responseType: 'blob', params })
+}
+
+const handleUpload = (formData, config) => {
+  return http.post(POST_UPLOAD, formData, config)
+}
 </script>
-<style >
-.my-select {
-  width: 180px;
-}
-</style>
+
+<style scoped lang="less">
+.list-wrap {
+  padding: 50px;
+
+  &>.a-row {
+    margin-top: 20px;
+  }
+
+  :deep(.my-input),
+  :deep(.my-select),
+  :deep(.my-date-range),
+  :deep(.arco-select-view) {
+    width: 300px;
+  }
+
+  .my-button+.my-button {
+    margin-left: 10px;
+  }
+}</style>
