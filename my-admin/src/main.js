@@ -6,7 +6,7 @@ import pinia from './stores'
 import utils from './utils'
 
 import components from './components'
-
+import '@arco-themes/vue-siku/index.less'
 
 const app = createApp(App)
 
