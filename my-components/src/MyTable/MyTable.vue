@@ -18,7 +18,7 @@ import { stringify } from '../_utils/index'
  */
 export default {
     name: 'MyTable',
-    emits: ['update:loading', 'change', 'update:selections'],
+    emits: ['update:loading', 'change', 'update:selections', 'update:history'],
     props: {
         onRequest: { type: Function, require: true },//数据源
         selections: [Boolean, Array], // 复选框
@@ -67,7 +67,8 @@ export default {
             if (!empty(query)) {
                 url += `?${stringify(query)}`
             }
-            history.replaceState(history.state, '', url)
+            //更新浏览器的历史记录，并修改当前 URL 的路径
+            history.replaceState(history.state, '', url)//这样做可以更新浏览器的地址栏 URL，但不会导致页面的刷新或重新加载。
             emit('update:history', query)
         })
 
@@ -108,8 +109,8 @@ export default {
 
         // 刷新数据
         const reload = () => {
-            const pageNo = dataInfo.value?.pageNo
-            const pageSize = dataInfo.value?.pageSize
+            const pageNo = dataInfo.value?.pageNo //当前页码
+            const pageSize = dataInfo.value?.pageSize //当前每页展示的数据条数
             return search({ pageNo, pageSize })
         }
 
@@ -120,6 +121,14 @@ export default {
 
         return () => {
             const { rowKey, selections, columns, bordered } = props
+
+            // 重写render 将reload(刷新数据)注入render
+            columns.map(item => {
+                const fn = item.render
+                if (!empty(fn)) {
+                    item.render = rowInfo => fn(rowInfo, { reload })
+                }
+            })
 
             //预设插槽
             const {
@@ -167,8 +176,6 @@ export default {
                 Object.assign(tabelAttrs, selectAttrs)
             }
 
-            console.log(tabelAttrs);
-
             const tableSlots = {
                 ...slots,
                 empty: () => slotEmpty({ loading: loading.value })
@@ -186,6 +193,27 @@ export default {
 .my-table {
     flex: 1;
     overflow: hidden;
+
+    :deep(.arco-table-container) {
+        height: 100%;
+
+        .arco-scrollbar-type-embed:last-child {
+            flex: 1;
+
+            .arco-table-tr-empty>td {
+                border: unset;
+
+                .empty-wrap {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    color: #888;
+                }
+            }
+        }
+    }
 
     &+.my-pagination {
         margin: 20px auto 0;

@@ -7,11 +7,11 @@
   <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"  v-model:selections="selections">
     <template #params="{ params, search }">
       <a-form :model="params" layout="inline" auto-label-width>
-        <a-form-item label="名称">
+        <a-form-item label="用户名1">
           <a-input v-model="params.name"></a-input>
         </a-form-item>
-        <a-form-item label="名称">
-          <a-input v-model="params.name"></a-input>
+        <a-form-item label="用户名2">
+          <a-input v-model="params.name2"></a-input>
         </a-form-item>
         <a-space align="start">
           <a-button @click="search" type="primary" :loading="loading">查询</a-button>
@@ -32,7 +32,7 @@ import { http, GET_OPTIONS, GET_PAGE } from '@/http';
 import { columns } from './columns'
 
 const requestApi = async params => {
-  const rs = await http.get(GET_PAGE, params)
+  const rs = await http.get(GET_PAGE+`/inde`, params)
   console.log(rs)
   return rs
 }

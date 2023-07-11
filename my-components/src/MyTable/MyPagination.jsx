@@ -19,7 +19,7 @@ export default {
         return () => {
             const { data } = props
 
-            const { totalRecord=0, pageNo, pageSize } = data
+            const { totalRecord, pageNo, pageSize } = data
 
             const _attrs = {
                 class: 'my-pagination',

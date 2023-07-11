@@ -5,20 +5,13 @@ export const columns = [
     width: 200,
     fixed: 'left',
     slots: {
-      header({ $index , _self , column , store }) {
+      header({ $index, _self, column, store }) {
         return '哈哈'
       },
       default() {
         return <span>123</span>
       }
     }
-  },
-  {
-    title: '全选',
-    dataIndex: 'ab',
-    type: 'selection',
-    fixed: 'left',
-    width: 60,
   },
   {
     dataIndex: 'name',
@@ -45,6 +38,7 @@ export const columns = [
     fixed: 'right',
     width: 100,
     align: 'center',
-    slotName : 'actions' ,
+    slotName: 'actions',
+    render: ({ record }, { reload }) => <a-button onClick={reload}>刷新</a-button>
   }
 ]
