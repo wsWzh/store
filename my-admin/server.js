@@ -24,7 +24,7 @@ const randomId = len => {
 }
 
 // 测试数据
-const items = Array(10).fill('').map((_, index) => {
+const items = Array(20).fill('').map((_, index) => {
     const id = randomId(16)
     const year = 2000 + Math.ceil(Math.random() * 22)
     const month = Math.ceil(Math.random() * 12)
@@ -166,7 +166,8 @@ http.createServer(function (request, response) {
                         Object.assign(changeItem, params, { updateTime })
                         return doOutput(success())
                     case '/get/page': // 列表查询
-                        const { pageNo = 1, pageSize = 20 } = getParams(query)
+                        const { pageNo = 1, pageSize = 10 } = getParams(query)
+                        console.log(pageNo, pageSize, query);
                         const _items = items.filter(item => {
                             const { name = '', status } = params
                             if (status != null && item.status !== +status) {

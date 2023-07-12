@@ -46,11 +46,11 @@ export default {
             }
         })
         return () => {
-            const { value: loadingValue } = toRefs(loading)
+
             const _attrs = {
                 class: 'my-button',
-                loading: loadingValue,
-                disabled: loadingValue ? true : attrs.disabled,
+                loading: loading.value,
+                disabled: loading.value ? true : attrs.disabled,
                 onClick
             }
             const _slots = {
@@ -58,7 +58,7 @@ export default {
                 default: () => buttonText.value
             }
             return (
-                <AButton v-bind={_attrs} v-slots={_slots} />
+                <AButton {..._attrs} v-slots={_slots} />
             )
         }
     }

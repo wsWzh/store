@@ -41,8 +41,12 @@
       </a-form-item>
       <a-form-item label="图片上传">
         <my-tips error position="right">
-          <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload" origin="https://static-nk.liux.co" style="width: unset" />
+          <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload" origin="https://static-nk.liux.co"
+            style="width: unset" />
         </my-tips>
+      </a-form-item>
+      <a-form-item label="下拉分页的下拉框">
+        <asyncSelect/>
       </a-form-item>
     </a-form>
     <a-row style="padding-left: 50px;">
@@ -106,7 +110,7 @@ import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '../../http/
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
-
+import {asyncSelect} from '@/components'
 
 const params = reactive({
   name: 'Master',

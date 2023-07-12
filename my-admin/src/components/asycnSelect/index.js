@@ -1,0 +1,1 @@
+export { default as asyncSelect } from './asyncSelect.vue'
