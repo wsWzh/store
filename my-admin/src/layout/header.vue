@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { getStore } from '../stores'
-import { GET_USER_INFO } from '@/http/apis/user'
+import { GET_USER_INFO } from '@/http'
 import { computed } from 'vue'
 
 /**

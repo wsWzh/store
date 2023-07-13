@@ -1,6 +1,6 @@
 //用户信息
 import { http } from '@/http'
-import { GET_USER_INFO } from '@/http/apis/user'
+import { GET_USER_INFO } from '@/http'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 

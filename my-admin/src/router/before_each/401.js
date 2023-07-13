@@ -1,5 +1,4 @@
 import { debug,empty } from '@my-wzh/utils'
-import { apis } from '@/http'
 import { getStore } from '@/stores'
 import { GET_MENUS, GET_USER_INFO } from '@/http'
 

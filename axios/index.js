@@ -7,10 +7,9 @@ export function createAxios(options = {}) {
         type: 'form', // 传参格式，可选值[form|json]
         delay: 0,//限制最低反馈时间(作用于优化页面交互效果)
         intact: false, // 值为真时异步请求结果返回完整结果(默认返回result)
-        timeout: 1000 * 7,
+        timeout: 1000 * 7, //超时时间 7s
         ...options
     })
-
     // 请求拦截器 request
     axios.interceptors.request.use(beforeRequest)
 

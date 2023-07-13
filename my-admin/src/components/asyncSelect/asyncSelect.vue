@@ -3,6 +3,7 @@
 import { ref, reactive, computed } from 'vue'
 import { empty } from '@/utils'
 import { http, GET_PAGE } from '@/http'
+import { Select as ASelect } from '@arco-design/web-vue'
 export default {
     name: 'asyncSelect',
     emits: [],
@@ -110,11 +111,17 @@ export default {
                 getDataInfo(params)
             }
             if (!empty(params.name)) {
-                await getDataInfo(params);
                 params.name = '';
+                await getDataInfo(params);
             }
         }
 
+        const onSearch=async(keyword)=>{
+            dataInfo.value=null
+            params.pageNo=1
+            params.name= keyword
+            await getDataInfo(params)
+        }
 
         return () => {
 
@@ -124,10 +131,13 @@ export default {
                 placeholder: '请选择',
                 onFocus,
                 onDropdownScroll: dropdownScroll,
+                onSearch,
                 fieldNames,
+                allowSearch:true,
+                allowClear:true,
                 ...attrs
             }
-            return <a-select {..._attrs} v-slots={slots} />
+            return <ASelect {..._attrs} v-slots={slots} />
         }
     }
 }

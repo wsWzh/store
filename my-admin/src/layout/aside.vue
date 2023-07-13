@@ -2,7 +2,7 @@
 
 <script lang="jsx">
 import { ref, computed } from 'vue'
-import { GET_MENUS } from "@/http/apis/user"
+import { GET_MENUS } from "@/http"
 import { IconApps } from '@arco-design/web-vue/es/icon'
 import { getStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'

@@ -1,6 +1,6 @@
 //菜单数据
 import { http } from '@/http'
-import { GET_MENUS } from '@/http/apis/user'
+import { GET_MENUS } from '@/http'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 

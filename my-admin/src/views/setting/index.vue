@@ -106,7 +106,7 @@ export default {
 </script>
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '../../http/apis/user'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '@/http'
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
