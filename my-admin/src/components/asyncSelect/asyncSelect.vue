@@ -16,7 +16,7 @@ export default {
         // 加载标识
         const loading = ref(false)
 
-        // 组件使用 loading 样式，当前分页加载时不显示组件 loading 样式
+        // 只有初始化才需要loading
         const useLoading = computed(() => {
             if (empty(dataInfo.value)) {
                 return loading.value;

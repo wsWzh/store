@@ -110,7 +110,6 @@ import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '../../http/
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
-import {asyncSelect} from '@/components'
 
 const params = reactive({
   name: 'Master',
@@ -166,7 +165,7 @@ const handleOk = close => {
 }
 
 const handleDownload = () => {
-  return http({ url: GET_DOWNLOAD, responseType: 'blob' })
+  return http({ url: GET_DOWNLOAD, responseType: 'blob', intact:true })
 }
 
 const handleExport = params => {
