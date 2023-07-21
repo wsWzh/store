@@ -4,7 +4,8 @@
     <a-button>更新</a-button>
     <my-button>搜索</my-button>
   </my-crumb-slot>
-  <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"  v-model:selections="selections">
+  <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
+    v-model:selections="selections">
     <template #params="{ params, search }">
       <a-form :model="params" layout="inline" auto-label-width>
         <a-form-item label="用户名1">
@@ -20,6 +21,7 @@
       </a-form>
     </template>
   </my-table>
+
 </template>
 <script>
 export default {
@@ -32,24 +34,26 @@ import { http, GET_OPTIONS, GET_PAGE } from '@/http';
 import { columns } from './columns'
 
 const requestApi = async params => {
-  const rs = await http.get(GET_PAGE+`/inde`, params)
+  const rs = await http.get(GET_PAGE + `/inde`, params)
   console.log(rs)
   return rs
 }
 
-const loading=ref(false)
+const loading = ref(false)
 
-const change=(value,params)=>{
+const change = (value, params) => {
   console.log(value, params);
 }
 
-const selections=ref([{
+const selections = ref([{
   "id": "aji7ss357jg62b81",
   "name": "测试aji7ss357jg62b81",
   "createTime": "2018-4-01 39:31:03",
   "status": 1,
   "picture": "https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg"
 }])
+
+
 
 </script>
 <style scoped lang='less'></style>

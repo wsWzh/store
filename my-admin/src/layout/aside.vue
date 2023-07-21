@@ -11,10 +11,9 @@ import { empty } from '@my-wzh/utils'
 export default {
    name: "LayoutAside",
    setup() {
+
       const route = useRoute()
       const router = useRouter()
-
-
 
       const openKeys = ref([])
       const disabled = ref(false)

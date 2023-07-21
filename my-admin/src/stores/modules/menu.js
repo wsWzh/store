@@ -8,8 +8,17 @@ import { defineStore } from 'pinia'
 const createModule = () => {
     const defItems = [
         {
-            name: '基础组件',
-            routeName: 'SettingProduct'
+            name: '组件',
+            routeName: 'Components',
+            children: [
+                {
+                    name: '基础组件',
+                    routeName: 'BasicsComponents'
+                }, {
+                    name: '调试组件(用于测试)',
+                    routeName: 'testComponents'
+                }
+            ]
         },
         {
             name: '用户管理',

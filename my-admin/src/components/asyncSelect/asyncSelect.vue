@@ -111,6 +111,7 @@ export default {
                 getDataInfo(params)
             }
             if (!empty(params.name)) {
+                dataInfo.value={}
                 params.name = '';
                 await getDataInfo(params);
             }

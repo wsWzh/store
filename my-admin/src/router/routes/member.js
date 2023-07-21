@@ -9,7 +9,7 @@ export default {
     redirect: { name:'MemberList'},
     children:[
         {
-            path:'',
+            path:'/list',
             name:'MemberList',
             meta:{title:'用户列表'},
             component: () => import(/* webpackChunkName: "member" */ '@/views/member/index.vue'),

@@ -45,9 +45,7 @@
             style="width: unset" />
         </my-tips>
       </a-form-item>
-      <a-form-item label="下拉分页的下拉框">
-        <asyncSelect/>
-      </a-form-item>
+
     </a-form>
     <a-row style="padding-left: 50px;">
       <a-space wrap style="width: 600px;">
@@ -61,7 +59,7 @@
           <my-button type="primary" status="warning" @click="useReject">操作失败</my-button>
         </my-tips>
         <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">删除</my-confirm>
-        <my-confirm type="primary">
+        <my-confirm type="primary" title="请选择审核状态">
           <template #default>
             <a-button type="primary">审核</a-button>
           </template>
@@ -101,7 +99,7 @@
 </template>
 <script>
 export default {
-  name: 'SettingProduct',
+  name: 'BasicsComponents',
 }
 </script>
 <script setup>
@@ -134,6 +132,7 @@ watch(params, params => {
 })
 
 const options = [
+  { id: 'aaa', name: 'aaa' },
   { id: '1', name: '选项一' },
   { id: 2, name: '选项二', disabled: true },
   { id: 3, name: '选项三' },
@@ -165,7 +164,7 @@ const handleOk = close => {
 }
 
 const handleDownload = () => {
-  return http({ url: GET_DOWNLOAD, responseType: 'blob', intact:true })
+  return http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
 }
 
 const handleExport = params => {
@@ -195,4 +194,5 @@ const handleUpload = (formData, config) => {
   .my-button+.my-button {
     margin-left: 10px;
   }
-}</style>
+}
+</style>

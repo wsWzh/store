@@ -9,7 +9,6 @@ import { Popover as APopover, Space as ASpace, Row as ARow, Button as AButton } 
  * 确认操作气泡卡片
  * 一般用于删除等操作
  */
-
 export default {
     name: 'MyConfirm',
     props: {
@@ -25,6 +24,7 @@ export default {
             disabled: false
         })
 
+        // 同步外部的visible
         watch(() => state.visible, bool => {
             emit('update:visible', bool)
         })
@@ -33,21 +33,29 @@ export default {
             setTimeout(() => state.visible = false)
         }
 
-        const onDisabled = bool => state.disabled = bool
-
-        const setVisible = bool => {
-            //disabled时禁止改变visible
-            if (!state.disabled) {
-                state.visible = bool
-            }
+        const onDisabled = bool => {
+            console.log(123);
+            state.disabled = bool
         }
 
-        const onUpdateVisible = bool => state.visible = bool
+        const setVisible = bool => {
+            //执行时禁止改变visible
+            if (state.disabled) {
+                return
+            }
+            state.visible = bool
+        }
+
+        // 同步tips visible状态
+        const onUpdateVisible = bool =>  state.visible = bool
+
 
         return () => {
             const { title, onConfirm = onHide, onCancel = onHide } = props
             const { visible, disabled } = state
 
+            // 预设 confirm cancel 插槽
+            // 预设的插槽不添加props arrts属性 因为可能会被自定义插槽覆盖
             const {
                 //取消按钮
                 cancel = () => [
@@ -62,7 +70,7 @@ export default {
             } = slots
 
             const {
-                //预设插槽
+                //预设content插槽
                 content = () => {
                     {
                          // 同步按钮禁用状态
@@ -70,31 +78,35 @@ export default {
                             disabled,
                             'onUpdate:loading': onDisabled,
                         }
+
                         // 组装功能按钮
                         const content = cancel().concat(confirm()).map(item => {
+                            // item.type=>组件的信息 name=>组件的名称
                             if (item.type?.name === 'MyTips') {
                                 // 带提示按钮
-                                const myBtn = item.children.default().find(item => item.type?.name === 'MyButton')
+                                const myBtn = item.children.default().find(btn => btn.type?.name === 'MyButton')
                                 if (!empty(myBtn)) {
                                     // 修改 MyTips 组件中的 MyButton 属性
-                                    Object.assign(myBtn.props, item.props)
+                                    // item是mytips mybutton是tips里的按钮
+                                    // Object.assign(myBtn.props, item.props)
+                                    // 限制mytips只显示一个按钮
                                     item.children.default = () => [myBtn]
                                     // 按钮禁用联动
                                     const tipsAttrs = {
-                                        inheritDisabled: disabled,
+                                        btnDisabled: disabled,
                                         'onUpdate:disabled': onDisabled,
                                         'onUpdate:visible': onUpdateVisible,
                                     }
-                                    Object.assign(item.props, tipsAttrs, item.props)
+                                    Object.assign(item.props, tipsAttrs)
                                 }
                             } else {
                                 // 普通按钮
-                                Object.assign(item.props, btnAttrs, item.props)
+                                Object.assign(item.props, btnAttrs)
                             }
                             return item
                         })
                         // 间距调整
-                        const paddingTop = empty(slots.title, attrs.title) ? 0 : 6 + 'px'
+                        const paddingTop = empty(slots.title, props.title) ? 0 : 6 + 'px'
                         //
                         return [
                             <ARow type="flex" justify="end" style={{ paddingTop }} >
@@ -124,11 +136,10 @@ export default {
                     if (empty(slotsDefault)) {
                         return
                     }
+                    // 如果插入的是button 同步disabled
                     if (slotsDefault.find(item => {
                         if (['Button', 'MyButton'].includes(item?.type?.name)) {
-                            const props = { ...item.props }
-                            Object.assign(props, { disabled }, item?.props, attrs)
-
+                            Object.assign(item.props, { disabled }, attrs)
                             return true
                         }
                     })) {
@@ -138,7 +149,6 @@ export default {
                 },
                 content
             }
-
             return <APopover  {..._attrs} v-slots={_slots} />
         }
     }

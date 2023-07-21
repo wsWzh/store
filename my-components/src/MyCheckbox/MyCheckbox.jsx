@@ -17,8 +17,9 @@ export default {
     mixins: [mixin],
     setup(props, { attrs, slots, emit }) {
 
-        //转为array
+        //转为array ACheckboxGroup的modelValue只接收数组
         const modelValue = computed(() => {
+            //自定义组件 modelValue可以为string或者数组
             let { modelValue } = props
             if (empty(modelValue)) {
                 return []
@@ -27,6 +28,7 @@ export default {
                 modelValue = String(modelValue).split(',') //number不能split
             }
             if (typeOf(modelValue, 'array')) {
+                // 转为number的数组
                 return modelValue.map(formatValue)
             }
             return []

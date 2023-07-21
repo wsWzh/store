@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
 import './error.css'
 
 </script>

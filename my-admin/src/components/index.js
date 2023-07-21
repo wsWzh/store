@@ -1,5 +1,6 @@
 import ArcoVue from "@arco-design/web-vue/es/arco-vue";
-import '@arco-design/web-vue/dist/arco.css'
+// import '@arco-design/web-vue/dist/arco.css'//默认主题
+import '@arco-themes/vue-siku/index.less'//自定义主题
 import * as components from '../../../my-components'
 export * from './asyncSelect/index'
 import { asyncSelect } from './asyncSelect'
@@ -11,6 +12,6 @@ export default {
         for (const name in components) {
             app.component(name, components[name])
         }
-        app.component('asyncSelect', asyncSelect)
+        app.component('asyncSelect', asyncSelect)//全局组件
     }
 }

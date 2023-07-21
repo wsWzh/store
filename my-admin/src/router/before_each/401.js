@@ -15,8 +15,7 @@ const witelist = [
 export default async function  (to, from) {
     debug('router.beforeEach.401 >>>', to, from)
     const { name } = to
-    //GET_USER_INFO
-    const needItems = [ GET_MENUS] //刚需数据
+    const needItems = [GET_MENUS, GET_USER_INFO] //刚需数据
     if (witelist.includes(name)) {
         return true //白名单放行
     }

@@ -1,20 +1,26 @@
 import { IconSettings } from '@arco-design/web-vue/es/icon'
 
 /**
- * 设置管理
+ * 组件管理
  */
 export default {
-    path: '/setting',
-    name: 'Setting',
-    meta: { title: '系统管理', icon: IconSettings },
+    path: '/components',
+    name: 'Components',
+    meta: { title: '组件', icon: IconSettings },
     component: () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue'),
-    redirect: { name: 'SettingProduct' },
+    redirect: { name: 'BasicsComponents' },
     children: [
         {
-            path: '',
-            name: 'SettingProduct',
-            meta: { title: '商品设置' },
+            path: 'basics',
+            name: 'BasicsComponents',
+            meta: { title: '基础组件' },
             component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/index.vue'),
+        },
+        {
+            path: 'test',
+            name: 'testComponents',
+            meta: { title: '调试组件' },
+            component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/test.vue'),
         },
     ]
 }

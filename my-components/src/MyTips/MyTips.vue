@@ -1,12 +1,11 @@
 <script lang="jsx">
-import { mergeProps, reactive, watch } from 'vue'
-import { empty, typeOf, debug } from '@my-wzh/utils'
+import {  reactive, watch } from 'vue'
+import { empty, typeOf } from '@my-wzh/utils'
 
 /**
  * 通用操作提示
  * 配合子组件的 onError 、 onSuccess 事件提示信息
  */
-
 export default {
     name: 'MyTips',
     emits: ['update:disabled', 'update:visible'],//更新父组件disabled和visible值
@@ -25,7 +24,7 @@ export default {
             backgroundColor: '', // 提示窗口的背景色
         })
 
-        // 同步状态(标识当前按钮为凶手，其他)
+        // 同步状态(标识当前按钮为凶手) 凶手组件才会触发 onUpdate:disabled
         watch(() => state.disabled, bool => {
             emit('update:disabled', bool)
         })
@@ -47,7 +46,6 @@ export default {
 
         // 提示信息
         const showTips = info => {
-            debug('MyTips.showTips', info)
             state.message = info.message
             state.backgroundColor = typeOf(info, 'error') ? '#F7676F' : '#25C550'
             return new Promise(resolve => {
@@ -94,14 +92,13 @@ export default {
             if (empty(items)) {
                 return []
             }
-            //  多个子元素
-            //  <my-tips>
+            //  多个子元素 共用一个disabled
             //     <my-tips>1</my-tips>
             //     <my-tips>2</my-tips>
-            // </my-tips>
             if (items.length > 1) {
+                // 给每个元素套上my-yips 添加 btnDisabled 属性 用于控制多个子元素同时disabled
                 const children = items.map(item => {
-                    const _attrs = { inheritDisabled: disabled, 'onUpdate:disabled': syncDisabled, ...props, ...attrs }
+                    const _attrs = { btnDisabled: disabled, 'onUpdate:disabled': syncDisabled, ...props, ...attrs }
                     const _slots = { default: () => item }
                     return <MyTips {..._attrs} v-slots={_slots} />
                 })
@@ -121,19 +118,21 @@ export default {
                 content: () => state.message,
                 // 子组件
                 default: () => {
-                    const btn = items.find(({ props }) => !empty(props)) //找到props不是空的元素
+                    //找到props不是空的元素
+                    const btn = items.find(({ props }) => !empty(props))
                     if (empty(btn)) {
                         return items
                     }
                     const props = {
                         ...btn.props,//注入子组件的props 例如button的type status
                         'onUpdate:loading': syncDisabled,
-                        //优先级 外层tips的disabled>内层disabled>按钮本身disabled
-                        disabled: disabled || attrs.inheritDisabled || btn.props.disabled,
-                        onSuccess,//给插槽添加onSuccess
-                        onError,//给插槽添加onError
+                        //优先级 mytips的disabled  attrs.btnDisabled自身的disabled  按钮默认的btn.props.disabled
+                        // 例子: 元素1 元素2 点击元素1影响不了元素2的state.disabled 但是能影响元素2的btnDisabled 因为他们来源与同一个state
+                        disabled: disabled || attrs.btnDisabled || btn.props.disabled,
+                        onSuccess,//重写插槽的@success
+                        onError,//重写插槽的@error
                     }
-                    // 将 tips 状态变化嵌入 子组件 props覆盖插槽外部
+                    // 将 tips 状态变化嵌入子组件 覆盖插槽外部props
                     return Object.assign(btn, { props })
                 },
             }

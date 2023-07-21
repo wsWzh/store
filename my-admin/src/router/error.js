@@ -1,13 +1,14 @@
 import { h, render, createVNode } from 'vue'
 import ErrorComponent from '@/views/error/500.vue'
 import { Spin } from '@arco-design/web-vue'
+
 /**
  * 显示错误界面
  * @param error
  */
 export function createErrorDoc(error) {
-    const vnode = createVNode(ErrorComponent, error)
-    render(vnode, document.getElementById('app'))
+    const Vnode = createVNode(ErrorComponent, error)
+    render(Vnode, document.getElementById('app'))
 }
 
 /**
@@ -26,8 +27,8 @@ export function createLodingDoc(context) {
         justifyContent: 'center',
         alignItems: 'center',
     }
-    const vnode = h('div', { id: 'page-loading', style }, h(Spin, { size: 30, context }))
-    render(createVNode(vnode), document.body)
+    const Vnode = h('div', { id: 'page-loading', style }, h(Spin, { size: 30, context }))
+    render(createVNode(Vnode), document.body)
 }
 
 /**
@@ -47,4 +48,5 @@ export function closeLoading() {
 export function onError(error, to, from) {
     console.log('router.onError', error, to, from)
     createErrorDoc(error)
+    closeLoading()
 }
