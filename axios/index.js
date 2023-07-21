@@ -2,6 +2,11 @@ import Axios from "axios";
 import { beforeRequest } from "./interceptors/beforeRequest.js";
 import { resolveResponse, rejectResponse } from "./interceptors/beforeResponse.js";
 
+/**
+ *
+ * @param {object} options 外部预设的参数
+ * @returns proxyAxios
+ */
 export function createAxios(options = {}) {
     const axios = Axios.create({
         type: 'form', // 传参格式，可选值[form|json]
@@ -18,7 +23,7 @@ export function createAxios(options = {}) {
 
     /**
      * 外部调用函数
-     * @param proxyHttpOptions { object }
+     * @param proxyHttpOptions { object } 实际请求的参数
      * @returns {Promise<*>}
      */
     function proxyAxios(proxyHttpOptions) {
@@ -27,8 +32,10 @@ export function createAxios(options = {}) {
         const awaitNext = fn => setTimeout(fn, datetime - Date.now())
         return new Promise((resolve, reject) => {
             axios(proxyHttpOptions).then(res => {
+                console.log(res);
                 awaitNext(() => resolve(intact ? res : res?.result))
             }).catch(error => {
+                console.log(error);
                 awaitNext(() => reject(error))
             })
         })
@@ -38,11 +45,9 @@ export function createAxios(options = {}) {
 
     proxyAxios.get = (url, params, config) => proxyAxios({ url, params, method: 'get', delay: 500, ...config })
 
-
     proxyAxios.put = (url, data, config) => proxyAxios({ url, data, method: 'put', delay: 500, ...config })
 
-    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, method: 'post', delay: 500, ...config })
-
+    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, method: 'post', delay: 3000, ...config })
 
     proxyAxios.interceptors = axios.interceptors
 

@@ -34,7 +34,7 @@ import { http, GET_OPTIONS, GET_PAGE } from '@/http';
 import { columns } from './columns'
 
 const requestApi = async params => {
-  const rs = await http.get(GET_PAGE + `/inde`, params)
+  const rs = await http.get(GET_PAGE , params)
   console.log(rs)
   return rs
 }

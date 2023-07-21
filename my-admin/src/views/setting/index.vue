@@ -49,6 +49,8 @@
     </a-form>
     <a-row style="padding-left: 50px;">
       <a-space wrap style="width: 600px;">
+        <my-button @click="onJsonPost">json提交</my-button>
+          <my-button @click="onFormPost">form提交</my-button>
         <a-button @click="$router.back()">返回</a-button>
         <my-button @click="useResolve">提交按钮</my-button>
         <my-tips success>
@@ -104,7 +106,7 @@ export default {
 </script>
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD } from '@/http'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE } from '@/http'
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
@@ -174,6 +176,15 @@ const handleExport = params => {
 const handleUpload = (formData, config) => {
   return http.post(POST_UPLOAD, formData, config)
 }
+
+const onJsonPost=async ()=>{
+  return http.post(POST_CHANGE, params,{type:'json'})
+}
+
+const onFormPost = async () => {
+  return await http.post(POST_CHANGE, params)
+}
+
 </script>
 
 <style scoped lang="less">
