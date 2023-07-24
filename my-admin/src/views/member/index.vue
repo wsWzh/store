@@ -1,26 +1,29 @@
 <template>
-  <my-crumb-slot key="member">
-    <a-button>重制</a-button>
-    <a-button>更新</a-button>
-    <my-button>搜索</my-button>
-  </my-crumb-slot>
-  <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
-    v-model:selections="selections">
-    <template #params="{ params, search }">
-      <a-form :model="params" layout="inline" auto-label-width>
-        <a-form-item label="用户名1">
-          <a-input v-model="params.name"></a-input>
-        </a-form-item>
-        <a-form-item label="用户名2">
-          <a-input v-model="params.name2"></a-input>
-        </a-form-item>
-        <a-space align="start">
-          <a-button @click="search" type="primary" :loading="loading">查询</a-button>
-          <a-button @click="search(null)" :loading="loading" type="outline">重置</a-button>
-        </a-space>
-      </a-form>
-    </template>
-  </my-table>
+  <div>
+    <my-crumb-slot key="member">
+      <a-button>重制</a-button>
+      <a-button>更新</a-button>
+      <my-button>搜索</my-button>
+    </my-crumb-slot>
+    <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
+      v-model:selections="selections">
+      <template #params="{ params, search }">
+        <a-form :model="params" layout="inline" auto-label-width>
+          <a-form-item label="用户名1">
+            <a-input v-model="params.name"></a-input>
+          </a-form-item>
+          <a-form-item label="用户名2">
+            <a-input v-model="params.name2"></a-input>
+          </a-form-item>
+          <a-space align="start">
+            <a-button @click="search" type="primary" :loading="loading">查询</a-button>
+            <a-button @click="search(null)" :loading="loading" type="outline">重置</a-button>
+          </a-space>
+        </a-form>
+      </template>
+    </my-table>
+  </div>
+
 
 </template>
 <script>

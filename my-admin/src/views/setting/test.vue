@@ -57,13 +57,21 @@
         <a-col :span="8">
           <a-form-item label="确定操作">
             <my-confirm title="确定要删除?">
-                删除
+              删除
             </my-confirm>
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="测试pinia数据持久化">
             {{ options }}
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试axios拦截">
+            <a-space>
+              <a-button @click="testAxios">发送请求</a-button>
+              <a-button @click="testProxyAxios">二次封装axios的拦截器</a-button>
+            </a-space>
           </a-form-item>
         </a-col>
       </a-row>
@@ -78,13 +86,14 @@ export default {
 </script>
 
 <script setup>
-import { ref, shallowRef , computed } from 'vue'
+import { ref, shallowRef, computed } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
 import testModelValue from './components/testModelValue.vue';//组件的v-model
 import { getStore } from '@/stores'
-import { GET_OPTIONS } from '@/http'
+import { GET_OPTIONS, POST_CHANGE } from '@/http'
+import Axios from 'axios'
 
 const model = ref({})
 
@@ -124,9 +133,58 @@ const componentOptions = {
 const testValue = ref('初始值')
 
 
-const options=computed(()=>{
+const options = computed(() => {
   return getStore(GET_OPTIONS).getters()
 })
+
+const axios = Axios.create({
+  baseURL:'/api',
+  timeout: 70000,
+})
+axios.interceptors.response.use(res=>{
+  console.log(res, '我是拦截器');
+  const suce=res.data.success
+  if(suce){
+    return res
+  }
+    return Promise.reject({message:'虽然你成功了,但是我要让你走catch'})
+
+},err=>{
+  console.log(err, '我是拦截器');
+})
+
+const ProxyAxios=()=>{
+  return new Promise((resolve,reject)=>{
+    axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res=>{
+      console.log(res);
+      resolve(res)
+    }).catch(err=>{
+      reject(err)
+    })
+  })
+}
+ProxyAxios.interceptors=axios.interceptors
+ProxyAxios.interceptors.response.use(res=>res,err=>{
+  return Promise.reject({message:'不好意思我又封装了一层'})
+})
+
+
+const testAxios = () => {
+  axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res=>{
+    // 成功了但是suce是false 想成功也走catch用拦截器
+    console.log(res);
+  }).catch(err=>{
+    console.log(err);
+  })
+}
+
+const testProxyAxios=()=>{
+  ProxyAxios().then(res=>{
+    console.log(res,'我是二次封装的axios');
+  }).catch(err=>{
+    console.log(err, '我是二次封装的axios');
+  })
+}
 
 </script>
 <style scoped lang='less'>

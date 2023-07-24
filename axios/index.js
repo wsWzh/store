@@ -8,6 +8,7 @@ import { resolveResponse, rejectResponse } from "./interceptors/beforeResponse.j
  * @returns proxyAxios
  */
 export function createAxios(options = {}) {
+
     const axios = Axios.create({
         type: 'form', // 传参格式，可选值[form|json]
         delay: 0,//限制最低反馈时间(作用于优化页面交互效果)
@@ -15,6 +16,7 @@ export function createAxios(options = {}) {
         timeout: 1000 * 7, //超时时间 7s
         ...options
     })
+
     // 请求拦截器 request
     axios.interceptors.request.use(beforeRequest)
 
@@ -32,22 +34,20 @@ export function createAxios(options = {}) {
         const awaitNext = fn => setTimeout(fn, datetime - Date.now())
         return new Promise((resolve, reject) => {
             axios(proxyHttpOptions).then(res => {
-                console.log(res);
                 awaitNext(() => resolve(intact ? res : res?.result))
             }).catch(error => {
-                console.log(error);
                 awaitNext(() => reject(error))
             })
         })
     }
 
-    proxyAxios.delete = (url, params, config) => proxyAxios({ url, params, method: 'delete', delay: 500, ...config })
+    proxyAxios.delete = (url, params, config) => proxyAxios({ url, params, delay: 500, ...config, method: 'delete' })
 
-    proxyAxios.get = (url, params, config) => proxyAxios({ url, params, method: 'get', delay: 500, ...config })
+    proxyAxios.get = (url, params, config) => proxyAxios({ url, params, delay: 500, ...config, method: 'get'})
 
-    proxyAxios.put = (url, data, config) => proxyAxios({ url, data, method: 'put', delay: 500, ...config })
+    proxyAxios.put = (url, data, config) => proxyAxios({ url, data, delay: 500, ...config, method: 'put' })
 
-    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, method: 'post', delay: 3000, ...config })
+    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, delay: 5000, ...config, method: 'post' })
 
     proxyAxios.interceptors = axios.interceptors
 

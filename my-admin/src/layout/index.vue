@@ -8,11 +8,13 @@
           <a-button size="mini" type="primary" @click="handleKeepalive">常驻按钮</a-button>
         </my-crumb>
         <a-layout>
-            <router-view v-slot="{ Component }">
+          <router-view #default="{ route, Component }">
+            <transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
               <keep-alive :include="keepaliveItems">
                 <component :is="Component" />
               </keep-alive>
-            </router-view>
+            </transition>
+          </router-view>
         </a-layout>
       </a-layout>
     </a-layout>
@@ -50,5 +52,15 @@ const handleKeepalive = () => {
   overflow: auto;
   padding: 20px;
   align-items: flex-start;
+}
+.e-from{
+  opacity: 0;
+}
+.e-to{
+  opacity: 1;
+
+}
+.e-active {
+  transition: all 0.5s;
 }
 </style>
