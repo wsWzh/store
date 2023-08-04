@@ -8,7 +8,7 @@ import { empty, typeOf } from "@my-wzh/utils"
  */
 export default {
     name: 'MyDownload',
-    emits: [],
+    emits: ['success'],
     props: {},
     setup(props, { attrs, slots, emit }) {
 
@@ -28,7 +28,6 @@ export default {
             console.log('MyDownload.onError',error);
         }
         const onSuccess = (response) => {
-            console.log(response);
             if (empty(response)) {
                 return console.log('MyDownload.onSuccess : response is null')
             }

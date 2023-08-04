@@ -34,7 +34,6 @@ export default {
         }
 
         const onDisabled = bool => {
-            console.log(123);
             state.disabled = bool
         }
 
@@ -46,7 +45,7 @@ export default {
             state.visible = bool
         }
 
-        // 同步tips visible状态
+        // 同步tips visible状态 tips关闭时关闭气泡卡片
         const onUpdateVisible = bool =>  state.visible = bool
 
 
@@ -87,9 +86,9 @@ export default {
                                 const myBtn = item.children.default().find(btn => btn.type?.name === 'MyButton')
                                 if (!empty(myBtn)) {
                                     // 修改 MyTips 组件中的 MyButton 属性
-                                    // item是mytips mybutton是tips里的按钮
+                                    // item是mytips myBtn是tips里的按钮
                                     // Object.assign(myBtn.props, item.props)
-                                    // 限制mytips只显示一个按钮
+                                    // 限制mytips只显示第一个按钮
                                     item.children.default = () => [myBtn]
                                     // 按钮禁用联动
                                     const tipsAttrs = {

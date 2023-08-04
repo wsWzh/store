@@ -1,9 +1,10 @@
 <script lang="jsx">
 import MyPagination from './MyPagination'
-import { Row as ARow, Table as ATable, Spin as ASpin, Space as ASpace } from '@arco-design/web-vue'
+import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
 import { ref, watch, reactive, onMounted, computed, toRaw } from 'vue'
 import { reduceProps, empty, typeOf } from '@my-wzh/utils'
 import { stringify } from '../_utils/index'
+import router from '@/router'
 
 /**
  * 表格组件
@@ -34,33 +35,39 @@ export default {
 
         const useLoading = () => {
             loading.value = true
-            return () => {
-                loading.value = false
-            }
+            return () => loading.value = false
         }
 
         // 将 loading 同步到父组件
         watch(loading, bool => emit('update:loading', bool))
 
-        // 获取 url中的参数 location.hash => #/member 获取#之后的值 decodeURIComponent  特殊字符=>原始字符
+        // 首次进入页面,获取url中的参数
+        // location.hash => #/member 获取#之后的值 decodeURIComponent  特殊字符=>原始字符
         const query = /\?(.+)$/.exec(location.hash)?.[1].split('&').reduce((_, str) => {
             const vs = str.split('=')
-            if (empty(vs) || empty(vs[1])) {
+            console.log(vs, 123);
+            const key = vs[0], value = vs[1]
+            if (vs || value) {
                 return _
             }
-            return { ..._, [vs[0]]: decodeURIComponent(vs[1]) }
+            return { ..._, [key]: decodeURIComponent(value) }
         }, {})
 
         // 查询条件 去掉分页的参数
-        const params = reactive(reduceProps(query, ({ key }) => ['pageNo', 'pageSize'].includes(key)))
+        const params = reactive({})
+        
+        if (props.history) {
+            Object.assign(params, reduceProps(query, ({ name }) => ['pageNo', 'pageSize'].includes(name)))
+        }
 
+        // 保存查询时使用的参数
         const paramsHistory = ref({})
 
         watch(paramsHistory, value => {
             if (!props.history) {
                 return
             }
-            const query = reduceProps(value, ({ value }) => empty(value))
+            const query = reduceProps(value, ({ value }) => empty(value))//删减空参数
             if (value?.pageNo === 1) delete query.pageNo // 删减非必要参数
             if (value?.pageSize === 10) delete query.pageSize // 删减非必要参数
             let url = location.hash.split('?')[0]

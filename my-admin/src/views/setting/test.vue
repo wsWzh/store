@@ -5,8 +5,8 @@
         <a-col :span="8">
           <a-form-item label="状态同步的按钮">
             <asyncStatus>
-              <my-button type="primary" @click="cs">触发的按钮</my-button>
-              <my-button status="danger" @click="cs">被影响的按钮</my-button>
+              <my-button type="primary" @click="async">触发的按钮</my-button>
+              <my-button status="danger" @click="async">被影响的按钮</my-button>
             </asyncStatus>
           </a-form-item>
         </a-col>
@@ -74,17 +74,28 @@
             </a-space>
           </a-form-item>
         </a-col>
+        <a-col :span="8">
+          <a-form-item label="请求错误">
+            <a-button @click="testErr">发送失败</a-button>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="滚动更新位置">
+            <div style="width: 400px; height: 100px;overflow-y: auto;background-color: aliceblue;">
+              <a-tooltip  trigger="click" content="滚动更新位置" background-color="#722ED1" :update-at-scroll="true">
+                <template #content>
+                  我是content插槽
+                </template>
+                <a-button style="margin: 100px;">tooltip</a-button>
+              </a-tooltip>
+            </div>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
 
   </div>
 </template>
-<script>
-export default {
-  name: "testComponents",
-}
-</script>
-
 <script setup>
 import { ref, shallowRef, computed } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
@@ -92,12 +103,16 @@ import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
 import testModelValue from './components/testModelValue.vue';//组件的v-model
 import { getStore } from '@/stores'
-import { GET_OPTIONS, POST_CHANGE } from '@/http'
+import { GET_OPTIONS, POST_CHANGE, POST_ERROR, http } from '@/http'
 import Axios from 'axios'
+
+defineOptions({
+  name:'testComponents'
+})
 
 const model = ref({})
 
-const cs = async () => {
+const async = async () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({ message: '我去，居然成功了' })
@@ -138,63 +153,74 @@ const options = computed(() => {
 })
 
 const axios = Axios.create({
-  baseURL:'/api',
+  baseURL: '/api',
   timeout: 70000,
 })
-axios.interceptors.response.use(res=>{
+axios.interceptors.response.use(res => {
   console.log(res, '我是拦截器');
-  const suce=res.data.success
-  if(suce){
+  const suce = res.data.success
+  if (suce) {
     return res
   }
-    return Promise.reject({message:'虽然你成功了,但是我要让你走catch'})
+  return Promise.reject({ message: '虽然你成功了,但是我要让你走catch' })
 
-},err=>{
+}, err => {
   console.log(err, '我是拦截器');
+  return Promise.reject(err)
 })
 
-const ProxyAxios=()=>{
-  return new Promise((resolve,reject)=>{
-    axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res=>{
+const ProxyAxios = () => {
+  return new Promise((resolve, reject) => {
+    axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res => {
       console.log(res);
-      resolve(res)
-    }).catch(err=>{
-      reject(err)
+      setTimeout(() => {
+        resolve(res)
+      }, 5000)
+    }).catch(err => {
+      setTimeout(() => {
+        reject(err)
+      }, 5000)
     })
   })
 }
-ProxyAxios.interceptors=axios.interceptors
-ProxyAxios.interceptors.response.use(res=>res,err=>{
-  return Promise.reject({message:'不好意思我又封装了一层'})
+ProxyAxios.interceptors = axios.interceptors
+//这里的拦截器是被axios拦截器影响后的  请求成功也不一定是res
+ProxyAxios.interceptors.response.use(res => res, err => {
+  return Promise.reject({ err, message: '不好意思我又封装了一层' })
 })
 
 
 const testAxios = () => {
-  axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res=>{
+  axios({ url: POST_CHANGE, data: { age: 123 }, method: 'POST' }).then(res => {
     // 成功了但是suce是false 想成功也走catch用拦截器
     console.log(res);
-  }).catch(err=>{
+  }).catch(err => {
     console.log(err);
   })
 }
 
-const testProxyAxios=()=>{
-  ProxyAxios().then(res=>{
-    console.log(res,'我是二次封装的axios');
-  }).catch(err=>{
+const testProxyAxios = () => {
+  ProxyAxios().then(res => {
+    console.log(res, '我是二次封装的axios');
+  }).catch(err => {
     console.log(err, '我是二次封装的axios');
   })
 }
 
+const testErr = () => {
+  axios({ url: POST_ERROR }).catch(err => {
+    console.log(err);
+  })
+  http.get(POST_ERROR)
+}
+
 </script>
 <style scoped lang='less'>
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active {
   transition: opacity 0.5s ease;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from {
   opacity: 0;
 }
 </style>

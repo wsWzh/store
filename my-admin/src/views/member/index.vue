@@ -5,7 +5,7 @@
       <a-button>更新</a-button>
       <my-button>搜索</my-button>
     </my-crumb-slot>
-    <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
+    <my-table  history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
       v-model:selections="selections">
       <template #params="{ params, search }">
         <a-form :model="params" layout="inline" auto-label-width>
@@ -26,15 +26,14 @@
 
 
 </template>
-<script>
-export default {
-  name: 'MemberList'
-}
-</script>
 <script setup>
 import { ref, computed } from 'vue'
 import { http, GET_OPTIONS, GET_PAGE } from '@/http';
 import { columns } from './columns'
+
+defineOptions({
+  name:'MemberList'
+})
 
 const requestApi = async params => {
   const rs = await http.get(GET_PAGE , params)

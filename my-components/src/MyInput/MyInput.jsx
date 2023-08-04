@@ -17,7 +17,6 @@ export default {
             emit('update:modelValue', value)
         }
 
-
         const doUpdateModelValue = value => {
             if (empty(value)) {
                 return doUpdate(value)
@@ -25,7 +24,6 @@ export default {
             const { pattern } = props //通过正则匹配限制正则输入
             if (typeOf(pattern, 'regexp') && !pattern.test(value)) {
                 const { modelValue } = props
-
                 return doUpdate(modelValue) //不满足正则不更新值
             }
             doUpdate(value)

@@ -3,8 +3,8 @@ import { ref, watch } from 'vue'
 import { empty, typeOf } from '@my-wzh/utils'
 /**
  * 开关组件
- * props.checkedValue 添加默认值 0
- * props.uncheckedValue 添加默认值 1
+ * props.checkedValue 添加默认值 1
+ * props.uncheckedValue 添加默认值 0
  * 添加 loading 响应 onChange 事件
  */
 export default {
@@ -19,7 +19,7 @@ export default {
 
         const loading = ref(false)
 
-        watch(() => loading.value, bool => emit('update:loading', bool))
+        watch(loading, bool => emit('update:loading', bool))
 
         const showLoading = () => {
             loading.value = true
@@ -37,6 +37,7 @@ export default {
                     emit('success', res)
                 }).catch(error => {
                     emit('error', error)
+                    // catch时return 防止修改modelvalue
                     return Promise.reject(error)
                 }).finally(showLoading())
             }

@@ -58,7 +58,7 @@
             <my-button @click="useResolve">tips提交按钮</my-button>
           </my-tips>
           <my-tips success error>
-            <my-button type="primary" @click="useResolve">操作成功</my-button>
+            <my-button :disabled="true" type="primary" @click="useResolve">操作成功</my-button>
             <my-button type="primary" status="warning" @click="useReject">操作失败</my-button>
           </my-tips>
           <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">删除</my-confirm>
@@ -102,17 +102,17 @@
   </div>
 
 </template>
-<script>
-export default {
-  name: 'BasicsComponents',
-}
-</script>
+
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE } from '@/http'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , showNotification } from '@/http'
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
+
+defineOptions({
+  name:'BasicsComponents'
+})
 
 const params = reactive({
   name: 'Master',
@@ -147,7 +147,7 @@ const useResolve = () => {
   return http.delete(POST_SUCCESS, { name: 'admin', password: 123456 })
   // return new Promise((resolve, reject) => {
   //   setTimeout(() => {
-  //     resolve({ message : '我去，居然成功了' })
+  //     reject({ message : '我去，居然成功了' })
   //   } , 1000)
   // })
 }
@@ -181,7 +181,7 @@ const handleUpload = (formData, config) => {
 }
 
 const onJsonPost=async ()=>{
-  return http.post(POST_CHANGE, params,{type:'json'})
+  return await http.post(POST_CHANGE, params,{type:'json'})
 }
 
 const onFormPost = async () => {

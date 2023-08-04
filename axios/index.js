@@ -47,7 +47,7 @@ export function createAxios(options = {}) {
 
     proxyAxios.put = (url, data, config) => proxyAxios({ url, data, delay: 500, ...config, method: 'put' })
 
-    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, delay: 5000, ...config, method: 'post' })
+    proxyAxios.post = (url, data, config) => proxyAxios({ url, data, delay: 500, ...config, method: 'post' })
 
     proxyAxios.interceptors = axios.interceptors
 

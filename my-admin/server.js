@@ -9,10 +9,10 @@ const fs = require('fs')
 const path = require('path')
 
 // 端口
-const apiPort = 4000
+const apiPort = 4001
 
 // 等待输出时间（s）
-const tickTime = 2
+const tickTime = 0
 
 const state = {}
 
@@ -167,7 +167,6 @@ http.createServer(function (request, response) {
                         return doOutput(success())
                     case '/get/page': // 列表查询
                         const { pageNo = 1, pageSize = 10 } = getParams(query)
-                        console.log(pageNo, pageSize, query);
                         const _items = items.filter(item => {
                             const { name = '', status } = params
                             if (status != null && item.status !== +status) {

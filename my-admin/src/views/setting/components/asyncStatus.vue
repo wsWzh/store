@@ -10,6 +10,7 @@ export default {
         const disabled = ref(false)
 
         const setDisabled = (loading) => {
+            console.log(111);
             disabled.value = loading
         }
 
@@ -30,7 +31,6 @@ export default {
             }
             if (items.length > 1) {
                 const children = items.map(item => {
-
                     const _arrts = {
                         'onUpdate:disabled':(value)=> setOtherDisabled(value,item),
                         otherdisabled: disabled.value
@@ -57,12 +57,10 @@ export default {
                         "onUpdate:loading": setDisabled,
                         disabled: disabled.value || attrs.otherdisabled
                     }
-                    console.log(attrs.otherdisabled,disabled.value);
-                    console.log(btn.children.default()[0].children, 123);
                     return Object.assign(btn, { props })
                 }
             }
-
+            console.log(disabled.value, attrs.otherdisabled);
             return <a-space v-slots={_slots}></a-space>
         }
     }

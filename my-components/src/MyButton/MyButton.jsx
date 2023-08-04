@@ -23,7 +23,7 @@ export default {
             return () => (loading.value = false)
         }
 
-        // 同步状态
+        // 同步父组件状态
         watch(loading, bool => {
             emit('update:loading', bool)
         })
@@ -45,6 +45,7 @@ export default {
         const buttonText = computed(() => {
             return loading.value ? props.loadingText : slots.default()[0].children
         })
+
 
         return () => {
 

@@ -6,7 +6,7 @@ import { manualChunksPlugin } from 'vite-plugin-webpackchunkname'
 
 
 //代理地址
-const target = 'http://localhost:4000'
+const target = 'http://localhost:4001'
 
 
 console.log('proxy.target', target);

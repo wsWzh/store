@@ -8,8 +8,10 @@ import { empty, typeOf } from '@my-wzh/utils'
  */
 export default {
     name: 'MyTips',
-    emits: ['update:disabled', 'update:visible'],//更新父组件disabled和visible值
-    inheritAttrs: false, //不继承父组件的非props属性。
+    //更新父组件disabled和visible值
+    emits: ['update:disabled', 'update:visible'],
+    //不继承父组件的非props属性。
+    inheritAttrs: false,
     props: {
         delay: { type: Number, default: 1500 }, // 信息窗停留时间
         success: [Boolean, String], // 开/关 成功提示 (字符串时替换提示信息)
@@ -24,7 +26,7 @@ export default {
             backgroundColor: '', // 提示窗口的背景色
         })
 
-        // 同步状态(标识当前按钮为凶手) 凶手组件才会触发 onUpdate:disabled
+        // 同步状态(标识凶手) watch触发emit是因为disabled的值会被多种情况改变
         watch(() => state.disabled, bool => {
             emit('update:disabled', bool)
         })
@@ -34,11 +36,12 @@ export default {
             state.disabled = bool
         })
 
-        // 子组件同步父组件
+        // 按钮disabled同步到my-tips
         const syncDisabled = bool => {
             state.disabled = bool
         }
 
+        // visible的值只会在setVisible改变 直接emit
         const setVisible = (bool, info) => {
             state.visible = bool
             emit('update:visible', bool, info)
@@ -49,6 +52,8 @@ export default {
             state.message = info.message
             state.backgroundColor = typeOf(info, 'error') ? '#F7676F' : '#25C550'
             return new Promise(resolve => {
+                // 如果在同一次事件循环中改变visible的值，可能会导致提示框的位置计算错误，从而导致提示框显示在错误的位置。
+                // 通过使用setTimeout，可以将改变visible的操作推迟到下一次事件循环，这样就可以避免这个问题了。
                 setTimeout(() => setVisible(true, info)) // setTimeout 规避提示框错位
                 setTimeout(() => resolve(setVisible(false, info)), props.delay)
             })
@@ -92,7 +97,8 @@ export default {
             if (empty(items)) {
                 return []
             }
-            //  多个子元素 共用一个disabled
+            //  多个子元素的btnDisabled共用一个disabled
+            // 流程:按钮1点击触发按钮的onUpdate:loading 改变当前mytips的disabled => watch disabled 触发my-tips的onUpdate:disabled改变按钮1和按钮2的btndisabled
             //     <my-tips>1</my-tips>
             //     <my-tips>2</my-tips>
             if (items.length > 1) {
@@ -104,15 +110,17 @@ export default {
                 })
                 return <a-space>{children}</a-space>
             }
+
             // 单个元素
             // my-tips
             const _attrs = {
                 popperClass: 'my-tips',
                 popupVisible: visible,
-                updateAtScroll: true,
+                updateAtScroll: true,// 是否在容器滚动时更新弹出框的位置
                 backgroundColor,
                 ...attrs,
             }
+
             const _slots = {
                 // 泡泡弹窗提内容
                 content: () => state.message,
@@ -124,18 +132,21 @@ export default {
                         return items
                     }
                     const props = {
-                        ...btn.props,//注入子组件的props 例如button的type status
+                        //注入子组件的props 例如button的type status
+                        ...btn.props,
                         'onUpdate:loading': syncDisabled,
                         //优先级 mytips的disabled  attrs.btnDisabled自身的disabled  按钮默认的btn.props.disabled
                         // 例子: 元素1 元素2 点击元素1影响不了元素2的state.disabled 但是能影响元素2的btnDisabled 因为他们来源与同一个state
+                        // 为什么是btn.props 不通过setup({props,attrs})是拿不到attrs的 此时arrts和props是合并的
                         disabled: disabled || attrs.btnDisabled || btn.props.disabled,
                         onSuccess,//重写插槽的@success
                         onError,//重写插槽的@error
                     }
-                    // 将 tips 状态变化嵌入子组件 覆盖插槽外部props
+                    // 将 tips 状态变化嵌入子组件 覆盖外部插槽props
                     return Object.assign(btn, { props })
                 },
             }
+
             return <a-tooltip {..._attrs} v-slots={_slots} />
         }
     }

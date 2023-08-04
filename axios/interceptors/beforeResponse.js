@@ -7,7 +7,6 @@ import messageConfig from './messageConfig'
  * @returns {Promise<*>|*}
  */
 export function resolveResponse(response) {
-    console.log('响应成功这里的response是axios.then', response);
     const { data, config } = response
     const { success, message } = data
     if (success) {
@@ -27,7 +26,6 @@ export function resolveResponse(response) {
  * @param error {{ message:string , response: object } }
  */
 export function rejectResponse(error) {
-    console.log('响应失败这里的error是axios.catch', error);
     const { response } = error
     error.message = messageConfig[response?.status || 500]
     return Promise.reject(error)

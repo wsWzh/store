@@ -11,7 +11,7 @@
   "dependencies": {
     "@arco-themes/vue-siku": "0.0.5",
     "pinia": "^2.0.28",
-    "vue": "^3.2.45",
+    "vue": "~3.3.3",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
