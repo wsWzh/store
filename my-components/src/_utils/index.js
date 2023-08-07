@@ -14,8 +14,8 @@ export function stringify(obj) {
     if (!typeOf(obj, 'object')) {
         return ''
     }
-    const items = Object.keys(obj).map(name => {
-        return `${name}=${String(obj[name])}`
+    const items = Object.entries(obj).map(([key,value]) => {
+        return `${key}=${String(value)}`
     })
     return items.join('&')
 }

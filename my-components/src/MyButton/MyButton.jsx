@@ -41,9 +41,9 @@ export default {
             }
         }
 
-        // 按钮文字
-        const buttonText = computed(() => {
-            return loading.value ? props.loadingText : slots.default()[0].children
+        // 按钮插槽
+        const defaultSlots = computed(() => {
+            return loading.value ? () => props.loadingText : slots.default
         })
 
 
@@ -58,9 +58,9 @@ export default {
 
             const _slots = {
                 ...slots,
-                default: () => buttonText.value
+                default: defaultSlots.value
             }
-            return  <AButton {..._attrs} v-slots={_slots} />
+            return <AButton {..._attrs} v-slots={_slots} />
 
         }
     }

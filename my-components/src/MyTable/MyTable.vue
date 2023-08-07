@@ -53,9 +53,10 @@ export default {
             return { ..._, [key]: decodeURIComponent(value) }
         }, {})
 
-        // 查询条件 去掉分页的参数
+        // 查询条件
         const params = reactive({})
-        
+
+        // history时将url的除了分页的参数合并到params
         if (props.history) {
             Object.assign(params, reduceProps(query, ({ name }) => ['pageNo', 'pageSize'].includes(name)))
         }
@@ -63,6 +64,7 @@ export default {
         // 保存查询时使用的参数
         const paramsHistory = ref({})
 
+        // props.history = true 时，通过 url 记录当前参数
         watch(paramsHistory, value => {
             if (!props.history) {
                 return
@@ -70,28 +72,37 @@ export default {
             const query = reduceProps(value, ({ value }) => empty(value))//删减空参数
             if (value?.pageNo === 1) delete query.pageNo // 删减非必要参数
             if (value?.pageSize === 10) delete query.pageSize // 删减非必要参数
+            const { name } = router.currentRoute.value
+            console.log(router.currentRoute);
             let url = location.hash.split('?')[0]
             if (!empty(query)) {
                 url += `?${stringify(query)}`
             }
-            //更新浏览器的历史记录，并修改当前 URL 的路径
-            history.replaceState(history.state, '', url)//这样做可以更新浏览器的地址栏 URL，但不会导致页面的刷新或重新加载。
+            console.log(url, location.hash.split('?')[0]);
+            // history.replaceState(history.state, '', url)
+            router.replace({ name, query })
+
             emit('update:history', query)
         })
 
         // 接口返回数据 包含分页参数
-        const dataInfo = ref()
+        const dataInfo = ref({})
 
         watch(dataInfo, value => emit('change', value, params))
 
         // 列表数据
         const dataList = computed(() => dataInfo.value?.results || [])
 
-        //勾选的数据的rowkey数组
-        const selectedKeys = computed(() => props.selections?.map?.(item => item[props.rowKey]))
+        //勾选的数据的rowkey数组 items=>item.id 入参时转为id数组 出参时根据id返回数据对象的数组
+        const selectedKeys = computed(() => {
+            const { selections, rowKey } = props
+            return selections?.map?.(item=>item[rowKey])
+        }
+        )
 
         // 复选框变更时返回选中的数据对象 concat保证了不会丢失不是当前页的选项
         const doSelectedKeysChange = keyItems => {
+            console.log(keyItems);
             const { selections, rowKey } = props
             const selectedRows = keyItems.map(key => toRaw(selections.concat(dataList.value).find(item => item[rowKey] === key)))
             emit('update:selections', selectedRows)
@@ -123,7 +134,17 @@ export default {
 
 
         // 挂载后执行搜索
-        onMounted(() => props.load && search())
+           // 挂载后执行搜索
+        onMounted(() => {
+            if (!props.load) {
+                return
+            }
+            let pageNo = 1
+            if (props.history) {
+                pageNo = query?.pageNo || 1
+            }
+            search({ pageNo })
+        })
 
 
         return () => {
@@ -144,7 +165,7 @@ export default {
                 ],
                 // 查询条件
                 params: slotParams = () => [],
-                // 分页条
+                // 分页组件
                 pagination: slotPagination = () => {
                     if (empty(dataInfo.value)) {
                         return []
@@ -190,7 +211,7 @@ export default {
 
             const Table = <ATable {...tabelAttrs} v-slots={tableSlots} />
 
-            return slotParams({ params, search }).concat([Table]).concat([slotPagination()])
+            return slotParams({ params, search }).concat([Table]).concat([slotPagination(dataInfo.value)])
         }
     }
 }
