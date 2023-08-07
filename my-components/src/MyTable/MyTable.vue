@@ -45,9 +45,8 @@ export default {
         // location.hash => #/member 获取#之后的值 decodeURIComponent  特殊字符=>原始字符
         const query = /\?(.+)$/.exec(location.hash)?.[1].split('&').reduce((_, str) => {
             const vs = str.split('=')
-            console.log(vs, 123);
             const key = vs[0], value = vs[1]
-            if (vs || value) {
+            if (empty(vs) || empty(value)) {
                 return _
             }
             return { ..._, [key]: decodeURIComponent(value) }
@@ -73,15 +72,7 @@ export default {
             if (value?.pageNo === 1) delete query.pageNo // 删减非必要参数
             if (value?.pageSize === 10) delete query.pageSize // 删减非必要参数
             const { name } = router.currentRoute.value
-            console.log(router.currentRoute);
-            let url = location.hash.split('?')[0]
-            if (!empty(query)) {
-                url += `?${stringify(query)}`
-            }
-            console.log(url, location.hash.split('?')[0]);
-            // history.replaceState(history.state, '', url)
             router.replace({ name, query })
-
             emit('update:history', query)
         })
 
@@ -96,13 +87,12 @@ export default {
         //勾选的数据的rowkey数组 items=>item.id 入参时转为id数组 出参时根据id返回数据对象的数组
         const selectedKeys = computed(() => {
             const { selections, rowKey } = props
-            return selections?.map?.(item=>item[rowKey])
+            return selections?.map?.(item => item[rowKey])
         }
         )
 
         // 复选框变更时返回选中的数据对象 concat保证了不会丢失不是当前页的选项
         const doSelectedKeysChange = keyItems => {
-            console.log(keyItems);
             const { selections, rowKey } = props
             const selectedRows = keyItems.map(key => toRaw(selections.concat(dataList.value).find(item => item[rowKey] === key)))
             emit('update:selections', selectedRows)
@@ -122,7 +112,7 @@ export default {
             }
             //记录参数
             paramsHistory.value = { pageNo, pageSize, ...params, ..._params }
-            dataInfo.value = await props.onRequest(params).finally(useLoading())
+            dataInfo.value = await props.onRequest(paramsHistory.value).finally(useLoading())
         }
 
         // 刷新数据
@@ -132,19 +122,11 @@ export default {
             return search({ pageNo, pageSize })
         }
 
+        //导出方法
+        expose({ search,reload })
 
         // 挂载后执行搜索
-           // 挂载后执行搜索
-        onMounted(() => {
-            if (!props.load) {
-                return
-            }
-            let pageNo = 1
-            if (props.history) {
-                pageNo = query?.pageNo || 1
-            }
-            search({ pageNo })
-        })
+        onMounted(() => props.load && search())
 
 
         return () => {
@@ -170,14 +152,19 @@ export default {
                     if (empty(dataInfo.value)) {
                         return []
                     }
+                    const paginationAttrs = {
+                        disabled: loading.value,
+                        data: dataInfo.value,
+                        onChange: search
+                    }
                     return [
-                        <MyPagination {...{ disabled: loading.value, data: dataInfo.value, onChange: search }} />
+                        <MyPagination {...paginationAttrs} />
                     ]
                 },
             } = slots
 
 
-            const tabelAttrs = {
+            const tableAttrs = {
                 class: 'my-table',
                 scroll: { x: '100%', y: '100%' },
                 pagination: false,
@@ -201,7 +188,7 @@ export default {
                     selectedKeys: selectedKeys.value,
                     'onUpdate:selectedKeys': doSelectedKeysChange
                 }
-                Object.assign(tabelAttrs, selectAttrs)
+                Object.assign(tableAttrs, selectAttrs)
             }
 
             const tableSlots = {
@@ -209,9 +196,13 @@ export default {
                 empty: () => slotEmpty({ loading: loading.value })
             }
 
-            const Table = <ATable {...tabelAttrs} v-slots={tableSlots} />
+            const Table = <ATable {...tableAttrs} v-slots={tableSlots} />
 
-            return slotParams({ params, search }).concat([Table]).concat([slotPagination(dataInfo.value)])
+            return [
+                ...slotParams({ params, search }),
+                Table,
+                slotPagination(dataInfo.value)
+            ]
         }
     }
 }

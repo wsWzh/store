@@ -36,6 +36,9 @@ defineOptions({
 })
 
 const requestApi = async params => {
+  // await new Promise((resolve, reject) => {
+  //   setTimeout(()=> resolve(123),20000000)
+  // })
   const rs = await http.get(GET_PAGE , params)
   console.log(rs)
   return rs

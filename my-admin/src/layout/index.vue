@@ -7,7 +7,7 @@
         <my-crumb>
           <a-button size="mini" type="primary" @click="handleKeepalive">常驻按钮</a-button>
         </my-crumb>
-        <a-layout>
+        <a-layout class="component">
           <router-view #default="{ route, Component }">
             <transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
               <keep-alive :include="keepaliveItems">
@@ -21,17 +21,15 @@
   </a-layout>
 </template>
 
-<script>
-export default {
-  name: "layout",
-}
-</script>
-
 <script setup>
 import MyLayoutHeader from './header.vue'
 import MyLayoutAside from './aside.vue'
 import { keepaliveItems } from '../router/keepalive'
 import { useRouter } from 'vue-router'
+
+defineOptions({
+  name:'layout'
+})
 
 const router = useRouter()
 
@@ -50,16 +48,26 @@ const handleKeepalive = () => {
 
 :deep(.main-wrap>.arco-layout) {
   overflow: auto;
-  padding: 20px;
-  align-items: flex-start;
+  // align-items: flex-start;
 }
-.e-from{
+
+.component>div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+.e-from {
   opacity: 0;
 }
-.e-to{
+
+.e-to {
   opacity: 1;
 
 }
+
 .e-active {
   transition: all 0.5s;
 }

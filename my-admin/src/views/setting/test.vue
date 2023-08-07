@@ -91,6 +91,15 @@
             </div>
           </a-form-item>
         </a-col>
+         <a-col :span="8">
+            <a-form-item label="测试上传组件">
+                  <a-upload action="/" :custom-request="customRequest" :limit="3" @update:fileList="fileListchange" :file-list="fileList" :show-file-list="true" multiple list-type="picture-card">
+                    <template #extra-button>
+                      <my-button>如来</my-button>
+                    </template>
+                  </a-upload>
+            </a-form-item>
+          </a-col>
       </a-row>
     </a-form>
 
@@ -212,6 +221,16 @@ const testErr = () => {
     console.log(err);
   })
   http.get(POST_ERROR)
+}
+
+
+const customRequest=(option)=>{
+  console.log('自定义上传', option);
+}
+
+const fileList=ref([])
+const fileListchange=(fileList)=>{
+  console.log(fileList);
 }
 
 </script>

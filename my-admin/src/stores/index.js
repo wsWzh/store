@@ -21,6 +21,7 @@ function extractStores(mods) {
 
 export const stores = extractStores(mods)
 console.log(stores,'stores');
+
 export function getStore(key){
     return stores[key]()
 }

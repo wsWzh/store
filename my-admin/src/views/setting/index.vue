@@ -91,7 +91,7 @@
               <template #upload-button="{ loading, disabled }">
                 <a-button type="primary" :loading="loading" :disabled="disabled">
                   <template #icon><icon-upload /></template>
-                  {{ loading ? '正在处理' : '点击上传' }}
+                  {{ loading ? '正在上传' : '点击上传' }}
                 </a-button>
               </template>
             </my-upload>

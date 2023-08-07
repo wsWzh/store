@@ -60,6 +60,7 @@ export default {
                 ...slots,
                 default: defaultSlots.value
             }
+            
             return <AButton {..._attrs} v-slots={_slots} />
 
         }
