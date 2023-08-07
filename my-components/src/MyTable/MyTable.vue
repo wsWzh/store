@@ -157,9 +157,8 @@ export default {
                         data: dataInfo.value,
                         onChange: search
                     }
-                    return [
-                        <MyPagination {...paginationAttrs} />
-                    ]
+                    return [<MyPagination {...paginationAttrs} />]
+
                 },
             } = slots
 
@@ -201,7 +200,7 @@ export default {
             return [
                 ...slotParams({ params, search }),
                 Table,
-                slotPagination(dataInfo.value)
+                ...slotPagination(dataInfo.value)
             ]
         }
     }
