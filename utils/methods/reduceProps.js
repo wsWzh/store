@@ -10,8 +10,8 @@ export function reduceProps(obj, fn) {
     if (empty(obj)) {
         return {}
     }
-    return Object.keys(obj).reduce((props, key) => {
-        const value = obj[key]
+    return Object.entries(obj).reduce((props, item) => {
+        const [key, value] = item
         if (empty(value) || empty(fn)) {
             return props
         }
