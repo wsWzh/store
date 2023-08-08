@@ -82,7 +82,7 @@
         <a-col :span="8">
           <a-form-item label="滚动更新位置">
             <div style="width: 400px; height: 100px;overflow-y: auto;background-color: aliceblue;">
-              <a-tooltip  trigger="click" content="滚动更新位置" background-color="#722ED1" :update-at-scroll="true">
+              <a-tooltip trigger="click" content="滚动更新位置" background-color="#722ED1" :update-at-scroll="true">
                 <template #content>
                   我是content插槽
                 </template>
@@ -91,15 +91,55 @@
             </div>
           </a-form-item>
         </a-col>
-         <a-col :span="8">
-            <a-form-item label="测试上传组件">
-                  <a-upload action="/" :custom-request="customRequest" :limit="3" @update:fileList="fileListchange" :file-list="fileList" :show-file-list="true" multiple list-type="picture-card">
-                    <template #extra-button>
-                      <my-button>如来</my-button>
-                    </template>
-                  </a-upload>
-            </a-form-item>
-          </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试上传组件">
+            <a-upload action="/" :custom-request="customRequest" :limit="3" @update:fileList="fileListchange"
+              :file-list="fileList" :show-file-list="true" multiple list-type="picture-card">
+              <template #extra-button>
+                <my-button>如来</my-button>
+              </template>
+            </a-upload>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试菜单">
+            <a-menu :style="{ width: '200px', height: '100%' }" :selected-keys="selectedKeys" :open-keys="openKeys" show-collapse-button @sub-menu-click="subClick" @menu-item-click="menuClick">
+              <a-menu-item key="0_0_0" data-obj="1">Menu 1</a-menu-item>
+              <a-sub-menu key="0">
+                <template #icon><icon-apps></icon-apps></template>
+                <template #title>Navigation 1</template>
+                <a-sub-menu key="0_0">
+                  <template #title>Menu 1</template>
+                  <div>
+                  <a-menu-item key="0_0_0">Menu 11</a-menu-item>
+                    <text>测试能不能赛别的</text>
+                  </div>
+                </a-sub-menu>
+                <a-menu-item key="0_1">Menu 2</a-menu-item>
+                <a-menu-item key="0_2" disabled>Menu 3</a-menu-item>
+              </a-sub-menu>
+              <a-sub-menu key="1">
+                <template #icon><icon-bug></icon-bug></template>
+                <template #title>Navigation 2</template>
+                <a-menu-item key="1_0">Menu 1</a-menu-item>
+                <a-menu-item key="1_1">Menu 2</a-menu-item>
+                <a-menu-item key="1_2">Menu 3</a-menu-item>
+              </a-sub-menu>
+              <a-sub-menu key="2">
+                <template #icon><icon-bulb></icon-bulb></template>
+                <template #title>Navigation 3</template>
+                <a-menu-item-group title="Menu Group 1">
+                  <a-menu-item key="2_0">Menu 1</a-menu-item>
+                  <a-menu-item key="2_1">Menu 2</a-menu-item>
+                </a-menu-item-group>
+                <a-menu-item-group title="Menu Group 2">
+                  <a-menu-item key="2_2">Menu 3</a-menu-item>
+                  <a-menu-item key="2_3">Menu 4</a-menu-item>
+                </a-menu-item-group>
+              </a-sub-menu>
+            </a-menu>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
 
@@ -116,7 +156,7 @@ import { GET_OPTIONS, POST_CHANGE, POST_ERROR, http } from '@/http'
 import Axios from 'axios'
 
 defineOptions({
-  name:'testComponents'
+  name: 'testComponents'
 })
 
 const model = ref({})
@@ -224,13 +264,28 @@ const testErr = () => {
 }
 
 
-const customRequest=(option)=>{
+const customRequest = (option) => {
   console.log('自定义上传', option);
 }
 
-const fileList=ref([])
-const fileListchange=(fileList)=>{
+const fileList = ref([])
+const fileListchange = (fileList) => {
   console.log(fileList);
+}
+
+const selectedKeys = ref([])
+const openKeys=ref([])
+
+const subClick=(key, items)=>{
+  selectedKeys.value.push(key)
+  openKeys.value= items
+console.log(key, items);
+}
+
+const menuClick=(key)=>{
+  selectedKeys.value.push(key)
+
+console.log(selectedKeys.value);
 }
 
 </script>

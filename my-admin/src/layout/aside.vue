@@ -19,19 +19,18 @@ export default {
       const disabled = ref(false)
       const doUpdateDisabled = bool => disabled.value = bool
 
-      // 将路由数组转成键值对
-      const routes = router.getRoutes().reduce((routes, route) => {
+      // 将路由数组转成键值对 name:route
+      const routesMap = router.getRoutes().reduce((routes, route) => {
          const { name } = route
          return empty(name) ? routes : { ...routes, [name]: route }
       }, {})
 
-      // 当前选中的路由数组
+      // 当前选中的路由数组 route.matched匹配当前的路由信息
       const selectedKeys = computed(() => {
-         const items = route.matched.map(({ name }) => name)
+         const items = route.matched.map(({ name, meta }) => meta?.key || name)
          openKeys.value = route.meta?.matched?.(items) || items
          return items
       })
-
 
       // 菜单数据
       const menuItems = computed(() => {
@@ -43,7 +42,7 @@ export default {
          if (disabled.value) {
             return // 提示过程中不做跳转
          }
-         if (empty(routes[name])) {
+         if (empty(routesMap[name])) {
             return Promise.reject(new Error('不存在的路由'))
          }
          router.push({ name })
@@ -56,6 +55,7 @@ export default {
          }
          openKeys.value = items
       }
+
       // 重构子组件的 click 事件，添加异常反馈。配合 my-tips 组件做出提示
       const tempMenuItem = (props, { slots, emit }) => {
          const { onClick } = props
@@ -67,6 +67,7 @@ export default {
       }
 
       return () => {
+
          const _arrts = {
             openKeys: openKeys.value, //展开的菜单
             selectedKeys: selectedKeys.value, //选中的菜单项 key 数组
@@ -74,12 +75,12 @@ export default {
             autoScrollIntoView: true, //自动滚动选中项目到可见区域
             showCollapseButton: true, //内置折叠按钮
             autoOpenSelected: true,//默认展开选中的菜单
-            levelIndent: 30//层级组件缩进
+            levelIndent: 30//层级组件缩进(右边距)
          }
 
          const getMenuItem = (item, lv) => {
             const { name, routeName, children } = item
-            const Icon = routes[routeName]?.meta?.icon || IconApps
+            const Icon = routesMap[routeName]?.meta?.icon || IconApps
             // a-menu-item 最后一级
             if (empty(children)) {
                const itemSlots = { default: () => name }

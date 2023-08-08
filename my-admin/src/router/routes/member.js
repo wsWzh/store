@@ -4,7 +4,7 @@ import { IconArrowDown } from '@arco-design/web-vue/es/icon'
 export default {
     path: '/member',
     name: 'Member',
-    meta: { title: '管理', icon: IconArrowDown },
+    meta: { title: '用户管理', icon: IconArrowDown },
     component: () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue'),
     redirect: { name: 'MemberList' },
     children: [
@@ -17,7 +17,7 @@ export default {
         {
             path: '/detail',
             name: 'MemberDetail',
-            meta: { title: '用户详情' },
+            meta: { title: '用户详情', key:'MemberList' },
             component: () => import(/* webpackChunkName: "member" */ '@/views/member/detail.vue'),
         }
     ]
