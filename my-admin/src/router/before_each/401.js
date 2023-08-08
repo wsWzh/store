@@ -1,4 +1,4 @@
-import { debug,empty } from '@my-wzh/utils'
+import { empty } from '@my-wzh/utils'
 import { getStore } from '@/stores'
 import { GET_MENUS, GET_USER_INFO } from '@/http'
 
@@ -13,7 +13,6 @@ const witelist = [
 ]
 
 export default async function  (to, from) {
-    debug('router.beforeEach.401 >>>', to, from)
     const { name } = to
     const needItems = [GET_MENUS, GET_USER_INFO] //刚需数据
     if (witelist.includes(name)) {
@@ -23,7 +22,13 @@ export default async function  (to, from) {
     for (let i = 0; i < needItems.length; i++) {
         const api = needItems[i]
         const needStore = getStore(api)
-        if (empty(needStore.data)){
+        // if (empty(needStore.data)){
+        //     await new Promise((resolve, reject) => {
+        //         setTimeout(()=>{
+        //             resolve(1)
+        //         },200000)
+        //     })
+
              await needStore.actions()
         }
     }

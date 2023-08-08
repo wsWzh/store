@@ -9,6 +9,8 @@ import { Spin } from '@arco-design/web-vue'
 export function createErrorDoc(error) {
     const Vnode = createVNode(ErrorComponent, error)
     render(Vnode, document.getElementById('app'))
+    closeLoading()
+
 }
 
 /**
@@ -28,6 +30,10 @@ export function createLodingDoc(context) {
         alignItems: 'center',
     }
     const Vnode = h('div', { id: 'page-loading', style }, h(Spin, { size: 30, context }))
+
+    // h 和 createVNode都是创建虚拟节点的 但是createVNode渲染节点的速度更快
+    // h函数更灵活列如: 没有 props 时可以省略不写 children 可以是一个字符串
+    // createVNode貌似只能接收数组类型的子节点 [h(Spin, { size: 30, context }),h(Spin, { size: 30, context })]
     render(createVNode(Vnode), document.body)
 }
 
