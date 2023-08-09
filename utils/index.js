@@ -1,5 +1,4 @@
 export * from './methods/debounce.js'
-export * from './methods/debug.js'
 export * from './methods/empty.js'
 export * from './methods/float.js'
 export * from './methods/formatDate.js'

@@ -11,3 +11,4 @@ export const app = createApp(App)
 app.use(components).use(utils).use(pinia).use(router)
 
 app.mount('#app')
+// app.config.globalProperties.cs='123' //全局属性

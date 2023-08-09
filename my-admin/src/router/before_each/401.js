@@ -22,7 +22,7 @@ export default async function  (to, from) {
     for (let i = 0; i < needItems.length; i++) {
         const api = needItems[i]
         const needStore = getStore(api)
-        // if (empty(needStore.data)){
+        if (empty(needStore.data)){
         //     await new Promise((resolve, reject) => {
         //         setTimeout(()=>{
         //             resolve(1)

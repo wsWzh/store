@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%;">
+  <div style="width: 100%;box-sizing: border-box;">
     <a-form :model="model" auto-label-width>
       <a-row :gutter="20">
         <a-col :span="8">
@@ -103,7 +103,8 @@
         </a-col>
         <a-col :span="8">
           <a-form-item label="测试菜单">
-            <a-menu :style="{ width: '200px', height: '100%' }" :selected-keys="selectedKeys" :open-keys="openKeys" show-collapse-button @sub-menu-click="subClick" @menu-item-click="menuClick">
+            <a-menu :style="{ width: '200px', height: '100%' }" :selected-keys="selectedKeys" :open-keys="openKeys"
+              show-collapse-button @sub-menu-click="subClick" @menu-item-click="menuClick">
               <a-menu-item key="0_0_0" data-obj="1">Menu 1</a-menu-item>
               <a-sub-menu key="0">
                 <template #icon><icon-apps></icon-apps></template>
@@ -111,7 +112,7 @@
                 <a-sub-menu key="0_0">
                   <template #title>Menu 1</template>
                   <div>
-                  <a-menu-item key="0_0_0">Menu 11</a-menu-item>
+                    <a-menu-item key="0_0_0">Menu 11</a-menu-item>
                     <text>测试能不能赛别的</text>
                   </div>
                 </a-sub-menu>
@@ -138,6 +139,11 @@
                 </a-menu-item-group>
               </a-sub-menu>
             </a-menu>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试v-bind">
+            <div v-bind="attrs">v-bind绑定标签的attribute {{ attrs }}</div>
           </a-form-item>
         </a-col>
       </a-row>
@@ -274,19 +280,23 @@ const fileListchange = (fileList) => {
 }
 
 const selectedKeys = ref([])
-const openKeys=ref([])
+const openKeys = ref([])
 
-const subClick=(key, items)=>{
+const subClick = (key, items) => {
   selectedKeys.value.push(key)
-  openKeys.value= items
-console.log(key, items);
+  openKeys.value = items
+  console.log(key, items);
 }
 
-const menuClick=(key)=>{
+const menuClick = (key) => {
   selectedKeys.value.push(key)
 
-console.log(selectedKeys.value);
+  console.log(selectedKeys.value);
 }
+
+const attrs = ref({
+  class: 'class', id: 'id'
+})
 
 </script>
 <style scoped lang='less'>
