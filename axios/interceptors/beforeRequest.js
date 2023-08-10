@@ -6,17 +6,18 @@ import { stringify } from 'qs'
  */
 export function beforeRequest(config) {
     const { type, data } = config
+    // get delete 请求参数为params不是data 直接返回
     if (empty(data)) {
-        // get delete 请求参数不是data 直接返回
         return config
     }
+    // json传参Object 浏览器请求头自动生成Content-Type: "application/json"
     if (type === 'json') {
-        // json传参直接返回
         return config
     }
+    // 上传 浏览器请求头自动生成 Content-Type:multipart/form-data;
     if (typeOf(data, 'formdata')) {
         return config
     }
-    // data为普通对象或其他非标准类型转为字符串
+    // form传参String 浏览器请求头自动生成Content-Type: "application/x-www-form-urlencoded"
     return Object.assign(config, { data: stringify(data) })
 }

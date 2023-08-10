@@ -10,7 +10,7 @@ import { resolveResponse, rejectResponse } from "./interceptors/beforeResponse.j
 export function createAxios(options = {}) {
 
     const axios = Axios.create({
-        type: 'form', // 传参格式，可选值[form|json]
+        type: 'form', // 传参格式，可选值[form|json]=> Content-Type:[application/x-www-form-urlencoded |application/json] 浏览器会根据传参的格式设置请求头
         delay: 0,//限制最低反馈时间(作用于优化页面交互效果)
         intact: false, // 值为真时异步请求结果返回完整结果(默认返回result)
         timeout: 1000 * 7, //超时时间 7s
