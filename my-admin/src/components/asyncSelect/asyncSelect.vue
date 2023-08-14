@@ -36,8 +36,6 @@ export default {
             return pageNo >= totalPage
         })
 
-        // 是否添加数据到数组 标识
-        const flag = ref(true);
 
         // params 请求参数
         const params = reactive({
@@ -56,7 +54,9 @@ export default {
             if (loading.value) {
                return results.concat({ name: '加载中', id: 0, disabled: true })
             }
-
+             if (isNoMore.value) {
+                return results.concat({ name: '没有更多了~', id: -1, disabled: true })
+            }
             return results
         })
 
@@ -79,25 +79,17 @@ export default {
             const { scrollTop, scrollHeight, offsetHeight } = target
             if (scrollTopHistory.value > scrollTop) {
                 scrollTopHistory.value = scrollTop;
-                console.log('向上滚动');
                 return '向上滚动'//向上滚动不触发加载
             }
             scrollTopHistory.value = scrollTop
             const scrollTopMax = scrollHeight - offsetHeight;
             if (scrollTop < scrollTopMax - 20) {
-                console.log('未达到加载高度');
                 return '未达到加载高度'
             }
             if (loading.value) {
-                console.log('加载中');
                 return '加载中'
             }
             if (isNoMore.value) {
-                if(flag.value){
-                   dataInfo.value.results= dataInfo.value.results.concat({ name: '没有更多啦~', id: -1, disabled: true })
-                }
-                flag.value = false;
-                console.log('没有更多啦~');
                 return '没有更多啦~'
             }
             // 列表长度小于数据总长度
