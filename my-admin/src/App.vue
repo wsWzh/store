@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <RouterView />
+      <router-view/>
 </template>
 
 <style lang="less">

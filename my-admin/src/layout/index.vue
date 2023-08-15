@@ -10,7 +10,7 @@
         <a-layout class="component">
           <router-view #default="{ route, Component }">
             <transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
-              <keep-alive :include="keepaliveItems">
+              <keep-alive :include="keepaliveList">
                 <component :is="Component" />
               </keep-alive>
             </transition>
@@ -24,7 +24,7 @@
 <script setup>
 import MyLayoutHeader from './header.vue'
 import MyLayoutAside from './aside.vue'
-import { keepaliveItems } from '../router/keepalive'
+import { keepaliveList } from '../router/keepalive'
 import { useRouter } from 'vue-router'
 
 defineOptions({

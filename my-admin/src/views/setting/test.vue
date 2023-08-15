@@ -30,7 +30,7 @@
         </a-col>
         <a-col :span="8">
           <a-form-item label="组件的方法">
-            <fnComponent @emitChange="emitChange" @change="change" />
+            <fnComponent @emitChange="emitChange" @change="change" @click="fnComponentClick" />
           </a-form-item>
         </a-col>
         <a-col :span="8">
@@ -143,13 +143,20 @@
             <div v-bind="attrs">v-bind绑定标签的attribute {{ attrs }}</div>
           </a-form-item>
         </a-col>
+          <a-col :span="8">
+            <a-form-item label="测试停止监听watch">
+              <a-button @click="watchData++">+</a-button>
+              <div>{{ watchData }}</div>
+              <div>{{ watchText }}</div>
+            </a-form-item>
+          </a-col>
       </a-row>
     </a-form>
 
   </div>
 </template>
 <script setup>
-import { ref, shallowRef, computed } from 'vue'
+import { ref, shallowRef, computed, watch, nextTick } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
@@ -181,10 +188,17 @@ const change = (str) => {
   return '我是父组件的值'
 }
 
+const fnComponentClick=(str)=>{
+  console.log('触发点击事件', str);
+}
+
 const loading = ref(false)
 
-const changeLoading = (value) => {
+const changeLoading =async (value) => {
   console.log(value);
+  setTimeout(()=>{
+    console.log(loading.value);
+  })
 }
 
 const active = ref('fnComponent')
@@ -293,6 +307,17 @@ const menuClick = (key) => {
 
 const attrs = ref({
   class: 'class', id: 'id'
+})
+
+const watchData=ref(0)
+const watchText=ref()
+ const stop= watch(watchData,val=>{
+  console.log(val);
+  watchText.value=`正在监听${val}`
+  if(val>3){
+    watchText.value='监听结束'
+    stop()
+  }
 })
 
 </script>

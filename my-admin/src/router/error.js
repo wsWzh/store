@@ -30,11 +30,13 @@ export function createLodingDoc(context) {
         alignItems: 'center',
     }
     const Vnode = h('div', { id: 'page-loading', style }, h(Spin, { size: 30, context }))
+    
+    render(createVNode(Vnode), document.body)
 
     // h 和 createVNode都是创建虚拟节点的 但是createVNode渲染节点的速度更快
     // h函数更灵活列如: 没有 props 时可以省略不写 children 可以是一个字符串
     // createVNode貌似只能接收数组类型的子节点 [h(Spin, { size: 30, context }),h(Spin, { size: 30, context })]
-    render(createVNode(Vnode), document.body)
+    // render 渲染函数 渲染通过h函数、createVNode函数创建的虚拟节点到指定的位置document.body
 }
 
 /**

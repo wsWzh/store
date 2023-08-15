@@ -7,7 +7,7 @@ export const homeRouter={
 
 export default {
     path: '/',
-    component: () => import(/* webpackChunkName: "layout" */ '@/layout/RouterView.vue'),//首页和404不需要layout
+    component: () => import(/* webpackChunkName: "layout" */ '@/layout/RouterView.vue'),//首页和404的父组件不需要layout
     children:[
         homeRouter,
         {

@@ -7,15 +7,15 @@
 
 <script setup>
 import { ref } from 'vue'
-import { removeKeepalive } from '../../router/keepalive';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const clear=()=>{
-  removeKeepalive('MemberList')
-  setTimeout(()=>{
     router.back()
-  },2000)
 }
+
+defineOptions({
+  name:"memberDetail"
+})
 </script>
 <style scoped lang='scss'>
 </style>
