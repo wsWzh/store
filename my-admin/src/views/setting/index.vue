@@ -53,6 +53,7 @@
           <my-button @click="onJsonPost">json提交</my-button>
             <my-button @click="onFormPost">form提交</my-button>
           <a-button @click="$router.back()">返回</a-button>
+          <a-button @click="onLogin">401</a-button>
           <my-button @click="useResolve">提交按钮</my-button>
           <my-tips success>
             <my-button @click="useResolve">tips提交按钮</my-button>
@@ -105,7 +106,7 @@
 
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , showNotification } from '@/http'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , GET_TOKEN } from '@/http'
 import { http } from '@/http'
 import { reactive, watch, toRaw } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
@@ -186,6 +187,10 @@ const onJsonPost=async ()=>{
 
 const onFormPost = async () => {
   return await http.post(POST_CHANGE, params)
+}
+
+const onLogin=()=>{
+  return  http.post(GET_TOKEN, params)
 }
 
 </script>

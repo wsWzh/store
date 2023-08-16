@@ -1,6 +1,7 @@
 // import { createAxios } from '@my-wzh/axios'
 import { createAxios } from '../../../axios'
-import { Notification } from '@arco-design/web-vue'
+import { Notification, Modal } from '@arco-design/web-vue'
+import router from '../router'
 
 const http = createAxios({ delay: 500, baseURL: '/api' })
 
@@ -10,6 +11,16 @@ const showNotification = (error) => {
 
 // 注意这里拦截是在返回前 返回的延时不在这里生效
 http.interceptors.response.use(res => res, error => {
+
+    const status = error?.response.status
+    if (status === 401) {
+        const onOk = () => {
+            const query = { goto: location.hash.replace('#', '') }
+            router.push({ name: 'home', query })
+        }
+        Modal.info({ content: '登录过期，请重新登录', onOk })
+        return Promise.reject(error)
+    }
     showNotification(error)
     return Promise.reject(error)
 })

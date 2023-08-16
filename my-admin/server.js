@@ -134,9 +134,9 @@ http.createServer(function (request, response) {
                 post = querystring.parse(post)
                 switch (pathname) {
                     case '/get/user/info':
-                        const userInfo={
-                            name:'wzh',
-                            age:18
+                        const userInfo = {
+                            name: 'wzh',
+                            age: 18
                         }
                         return doOutput(success(userInfo))
                     case '/delete': // 删除
@@ -217,6 +217,8 @@ http.createServer(function (request, response) {
                         return doOutput(error('系统出小差'))
                     case '/success': // 成功
                         return doOutput(success())
+                    case '/get/token': response.writeHead(401, { 'Content-Type': 'application/json' })
+                        return doOutput(error('用户未登录'))
                     default:
                         return doOutput(error('接口不存在'))
                 }
