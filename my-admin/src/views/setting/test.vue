@@ -143,20 +143,20 @@
             <div v-bind="attrs">v-bind绑定标签的attribute {{ attrs }}</div>
           </a-form-item>
         </a-col>
-          <a-col :span="8">
-            <a-form-item label="测试停止监听watch">
-              <a-button @click="watchData++">+</a-button>
-              <div>{{ watchData }}</div>
-              <div>{{ watchText }}</div>
-            </a-form-item>
-          </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试停止监听watch">
+            <a-button @click="watchData++">+</a-button>
+            <div>{{ watchData }}</div>
+            <div>{{ watchText }}</div>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
 
   </div>
 </template>
 <script setup>
-import { ref, shallowRef, computed, watch, nextTick } from 'vue'
+import { ref, shallowRef, computed, watch, nextTick, effect, watchEffect } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
@@ -188,15 +188,15 @@ const change = (str) => {
   return '我是父组件的值'
 }
 
-const fnComponentClick=(str)=>{
+const fnComponentClick = (str) => {
   console.log('触发点击事件', str);
 }
 
 const loading = ref(false)
 
-const changeLoading =async (value) => {
+const changeLoading = async (value) => {
   console.log(value);
-  setTimeout(()=>{
+  setTimeout(() => {
     console.log(loading.value);
   })
 }
@@ -309,16 +309,27 @@ const attrs = ref({
   class: 'class', id: 'id'
 })
 
-const watchData=ref(0)
-const watchText=ref()
- const stop= watch(watchData,val=>{
+const watchData = ref(0)
+const watchText = ref()
+
+effect(() => {
+  console.log(123, watchData.value);
+})
+
+const stop = watch(watchData, val => {
   console.log(val);
-  watchText.value=`正在监听${val}`
-  if(val>3){
-    watchText.value='监听结束'
+  watchText.value = `正在监听${val}`
+  if (val > 3) {
+    watchText.value = '监听结束'
     stop()
   }
 })
+
+watchEffect(() => {
+  console.log(456, watchData.value);
+})
+
+
 
 </script>
 <style scoped lang='less'>

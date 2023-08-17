@@ -54,6 +54,7 @@
             <my-button @click="onFormPost">form提交</my-button>
           <a-button @click="$router.back()">返回</a-button>
           <a-button @click="onLogin">401</a-button>
+          <a-button @click="$router.push({name:'nestRoute1',params:{id:123}})">去嵌套路由</a-button>
           <my-button @click="useResolve">提交按钮</my-button>
           <my-tips success>
             <my-button @click="useResolve">tips提交按钮</my-button>

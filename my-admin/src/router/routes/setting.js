@@ -22,5 +22,19 @@ export default {
             meta: { title: '调试组件' },
             component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/test.vue'),
         },
+        {
+            path: 'nest',
+            name: 'nestRoute',
+            meta: { title: '嵌套路由' },
+            component: () => import(/* webpackChunkName: "layout" */ '@/layout/RouterView.vue'),
+            children:[
+                {
+                    path: 'nest1/:id?',
+                    name: 'nestRoute1',
+                    meta: { title: '嵌套路由1' },
+                    component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/nest1.vue'),
+                }
+            ]
+        },
     ]
 }

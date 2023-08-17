@@ -18,6 +18,7 @@
           <a-space align="start">
             <a-button @click="search" type="primary" :loading="loading">查询</a-button>
             <a-button @click="search(null)" :loading="loading" type="outline">重置</a-button>
+            <a-button @click="$router.push({name:'MemberDetail',params:{id:123}})" type="outline">新增</a-button>
           </a-space>
         </a-form>
       </template>

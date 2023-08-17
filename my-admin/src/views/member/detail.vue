@@ -12,7 +12,7 @@ import { removeKeepalive } from '../../router/keepalive';
 import { useRouter, useRoute } from 'vue-router';
 
 defineOptions({
-  name: "memberDetail"
+  name: "MemberDetail"
 })
 
 const router = useRouter()
@@ -22,7 +22,6 @@ const clear = () => {
   removeKeepalive('MemberList')
   router.back()
 }
-
 
 </script>
 <style scoped lang='scss'></style>

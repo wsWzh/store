@@ -28,7 +28,6 @@ export default async function  (to, from) {
         //             resolve(1)
         //         },200000)
         //     })
-
              await needStore.actions()
         }
     }

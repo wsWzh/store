@@ -17,6 +17,14 @@ const createModule = () => {
                 }, {
                     name: '调试组件(用于测试)',
                     routeName: 'testComponents'
+                },
+                {
+                    name: '嵌套路由',
+                    routeName: 'nestRoute',
+                    children:[{
+                        name:'嵌套路由1',
+                        routeName:'nestRoute1'
+                    }]
                 }
             ]
         },
