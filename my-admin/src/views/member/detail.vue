@@ -1,21 +1,28 @@
 <template>
   <div>
     <div>用户详情</div>
+    <div>用户id:{{ route.params?.id }}</div>
     <a-button @click="clear">清除用户列表缓存</a-button>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
-const router = useRouter()
-const clear=()=>{
-    router.back()
-}
+import { removeKeepalive } from '../../router/keepalive';
+import { useRouter, useRoute } from 'vue-router';
 
 defineOptions({
-  name:"memberDetail"
+  name: "memberDetail"
 })
+
+const router = useRouter()
+const route = useRoute()
+
+const clear = () => {
+  removeKeepalive('MemberList')
+  router.back()
+}
+
+
 </script>
-<style scoped lang='scss'>
-</style>
+<style scoped lang='scss'></style>

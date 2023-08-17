@@ -40,6 +40,6 @@ export const columns = [
     width: 100,
     align: 'center',
     slotName: 'actions',
-    render: ({ record }, { reload }) => [<a-button onClick={reload}>刷新</a-button>, <router-link to={{ name:'MemberDetail'}}>编辑</router-link>]
+    render: ({ record }, { reload }) => [<a-button onClick={reload}>刷新</a-button>, <router-link to={`/member/detail/${record.id}`}>编辑</router-link>]
   }
 ]

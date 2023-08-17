@@ -15,7 +15,7 @@ export default {
             component: () => import(/* webpackChunkName: "member" */ '@/views/member/index.vue'),
         },
         {
-            path: 'detail',
+            path: 'detail/:id?',
             name: 'MemberDetail',
             meta: { title: '用户详情', key:'MemberList' },
             component: () => import(/* webpackChunkName: "member" */ '@/views/member/detail.vue'),
