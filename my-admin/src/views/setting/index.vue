@@ -107,9 +107,9 @@
 
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , GET_TOKEN } from '@/http'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , GET_TOKEN , GET_USER_INFO } from '@/http'
 import { http } from '@/http'
-import { reactive, watch, toRaw } from 'vue'
+import { reactive, watch, toRaw, ref } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
 
 defineOptions({
@@ -129,7 +129,6 @@ const params = reactive({
   types: '1,2',
   // types :  [1,3] ,
 })
-
 setTimeout(() => {
   params.image = 'https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg'
 }, 1000)

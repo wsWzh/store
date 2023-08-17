@@ -26,7 +26,7 @@ const createModule = () => {
     return { data, actions, getters }
 }
 
-const userPinia = defineStore(GET_USER_INFO, createModule)
+const userStore = defineStore(GET_USER_INFO, createModule)
 
 
-export default userPinia
+export default userStore

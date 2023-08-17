@@ -74,7 +74,7 @@ const createModule = () => {
 }
 
 
-const menuPinia = defineStore(GET_MENUS, createModule)
+const menuStore = defineStore(GET_MENUS, createModule)
 
-export default menuPinia
+export default menuStore
 

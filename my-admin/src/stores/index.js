@@ -1,4 +1,5 @@
 import { createPinia } from "pinia";
+import { empty } from '../utils'
 
 const mods = import.meta.globEager("./modules/*.js");
 
@@ -19,13 +20,19 @@ function extractStores(mods) {
 
 }
 
-export const stores = extractStores(mods)
-console.log(stores,'stores');
+// id=>pinia实例
+export const storesMap = extractStores(mods)
+console.log(storesMap, 'stores');
 
-export function getStore(key){
-    return stores[key]()
+// 根据id获取stroe
+export function getStore(key) {
+    if (empty(storesMap[key])) {
+        return console.warn(`${key} store empty`,);
+    }
+    return storesMap[key]()
 }
 
 const pinia = createPinia()
 
 export default pinia
+

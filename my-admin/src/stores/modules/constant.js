@@ -11,7 +11,8 @@ const storageTimeOut = 1000 * 60 * 30 //30分钟
 //处理常量接口 一般用于缓存选项类数据
 const urls = Object.values(mods)
 
-function buff(url) {
+function createStore(url) {
+
     return defineStore(url, () => {
 
         const defData = JSON.parse(sessionStorage.getItem(url)) || {}
@@ -41,7 +42,7 @@ function buff(url) {
 }
 
 const constants = urls.reduce((acc, url) => {
-    return { ...acc, [url]: buff(url) }
+    return { ...acc, [url]: createStore(url) }
 }, {})
 
 
