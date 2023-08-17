@@ -23,7 +23,6 @@ function buff(url) {
             if (empty(data.value) || Date.now() > data.datetime) {
                 actions(params)
             }
-            console.log(data.value, 123);
             return data.value || []
         }
 
