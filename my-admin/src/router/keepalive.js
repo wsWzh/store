@@ -23,9 +23,10 @@ export function removeKeepalive(name) {
  *
  * @param {*} to 当前路由
  * @param {*} from 上一个路由
+ * @param {*} failure 错误信息
  * @returns
  */
-export default function (to, from) {
+export default function (to, from, failure) {
     //vue的响应式更新是异步的
     //放入宏任务队列中在下一个事件循环中执行
     // 确保在Vue的响应式更新完成后执行 确保keepaliveList的值是最新的
@@ -47,7 +48,7 @@ export default function (to, from) {
         if (toPageName == null) {
             return true
         }
-        
+
         const items = keepaliveList.value
         // 删除旧记录
         const index = items.findIndex(item => item === toPageName)
