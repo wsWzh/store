@@ -1,6 +1,6 @@
 <script lang="jsx">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import router from '@/router'
 
 
 /**
@@ -14,7 +14,7 @@ export default {
     },
     setup(props, { attrs }) {
 
-        const route = useRoute()
+        const route = router.currentRoute.value
 
         // 面包屑数据
         const matchedItems = computed(() => {

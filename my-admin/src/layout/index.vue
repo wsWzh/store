@@ -27,7 +27,8 @@ export default {
                 <router-view>
                   {
 
-                    ({ Component }) => <Transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
+                    ({ Component }) =>
+                    <Transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
                       <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
                     </Transition>
                   }

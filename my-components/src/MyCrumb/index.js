@@ -1,5 +1,5 @@
 import Crumb from './MyCrumb.vue'
-import { useRoute } from 'vue-router'
+import router from '@/router'
 import { h, reactive } from 'vue'
 
 // 插槽数据
@@ -15,7 +15,7 @@ const MyCrumb = (props, { slots }) => {
 const MyCrumbSlot = {
     name: 'MyCrumbSlot',
     setup: (props, { slots }) => {
-        const { name } = useRoute()
+        const { name } = router.currentRoute.value
         return () => {
             actionSlots[name] = slots.default()
         }
