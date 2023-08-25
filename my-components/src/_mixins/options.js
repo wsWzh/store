@@ -16,7 +16,7 @@ export default {
         modelValue: { type: [String, Number, Array] },
         options: { type: Array, default: () => [] },
         formatter: { type: [String, Function], default: 'value,label' },
-        onChange: Function
+        onChange: { type: Function, default: () => () => { } },
     },
     computed: {
         // 处理返回值 retunr 一个函数接收一个参数 value 。这个 value 表示选择组件的新值。

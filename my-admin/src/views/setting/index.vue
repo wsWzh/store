@@ -118,7 +118,7 @@ defineOptions({
 
 const params = reactive({
   name: 'Master',
-  money: 999.999,
+  money: 999.99,
   number: 999,
   mobile: '18888888888',
   radio: '1',

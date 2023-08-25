@@ -27,7 +27,7 @@ export default {
                 <router-view>
                   {{
                     default: ({ Component }) =>
-                      <Transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
+                      <Transition name="fade">
                         <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
                       </Transition>
                   }}
@@ -61,16 +61,11 @@ export default {
   overflow: auto;
 }
 
-.e-from {
+.fade-enter-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from {
   opacity: 0;
-}
-
-.e-to {
-  opacity: 1;
-
-}
-
-.e-active {
-  transition: all 0.5s;
 }
 </style>

@@ -19,7 +19,8 @@ export default {
         const {
             params: paramsSlot = () => [],
             name1: name1Slot = () => <div>name1预设插槽</div>,
-            name2: name2Slot = () => <div>name2预设插槽</div>
+            name2: name2Slot = () => <div>name2预设插槽</div>,
+            default: defaultSlot = () => <div>默认插槽</div>
         } = slots
 
         // paramsSlot插槽默认返回一个空数组方便用concat
@@ -27,7 +28,8 @@ export default {
             return [
                 ...paramsSlot({ params, open }),
                 name1Slot(),
-                name2Slot()
+                name2Slot(),
+                defaultSlot()
             ]
         }
     }
