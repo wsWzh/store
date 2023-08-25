@@ -25,13 +25,12 @@ export default {
               </my-crumb>
               <a-layout class="component">
                 <router-view>
-                  {
-
-                    ({ Component }) =>
-                    <Transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
-                      <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
-                    </Transition>
-                  }
+                  {{
+                    default: ({ Component }) =>
+                      <Transition enter-from-class="e-from" enter-active-class="e-active" enter-to-class="e-to">
+                        <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
+                      </Transition>
+                  }}
                 </router-view>
               </a-layout>
             </a-layout>

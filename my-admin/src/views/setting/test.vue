@@ -35,7 +35,8 @@
         </a-col>
         <a-col :span="8">
           <a-form-item label="组件的v-model">
-            <testModelValue @update:loading="changeLoading" v-model:loading="loading" v-model="testValue" /> {{ testValue
+            {{ testArr }}
+            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading" v-model="testValue" /> {{ testValue
             }}
           </a-form-item>
         </a-col>
@@ -200,6 +201,8 @@ const changeLoading = async (value) => {
     console.log(loading.value);
   })
 }
+
+const testArr=ref([1,2,3,4,5])
 
 const active = ref('fnComponent')
 

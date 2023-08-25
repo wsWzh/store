@@ -6,7 +6,8 @@ export default {
     name: 'testModelValue',
     emits: ['update:loading','update:modelValue'],
     props: {
-        modelValue: String
+        modelValue: String,
+        arr:Array
     },
     setup(props, { attrs, slots, emit }) {
 
@@ -41,10 +42,16 @@ export default {
                 'onUpdate:modelValue': onUpdate,
                 onChange
             }
-
+            setTimeout(()=>{
+                props.arr[0]=9
+                console.log(props.arr,123);
+            },2000)
             return <a-space>
                 <a-button {..._attrs} onClick={fn}>加载</a-button>
                 <a-input {...inputAttrs}></a-input>
+                <div>
+                    {props.arr}
+                </div>
             </a-space>
 
         }
