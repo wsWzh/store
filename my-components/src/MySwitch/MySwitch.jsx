@@ -26,6 +26,7 @@ export default {
             return () => loading.value = false
         }
 
+        // 通过重写update:modelValue 延迟swicth的值改变
         const onUpdate = async (value) => {
             const { uncheckedValue, checkedValue } = props
             if (![uncheckedValue, checkedValue].includes(value)) {

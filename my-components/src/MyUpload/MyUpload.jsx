@@ -17,7 +17,7 @@ export default {
     emits: ['update:modelValue', 'update:loading', 'success', 'error'],
     props: {
         modelValue: [String, Array],
-        responseUrlKey: { type: String, default: 'filePath' },
+        responseUrlKey: { type: String, default: 'filePath' },//接口字段
         accept: { type: String, default: 'image/jpeg,image/png' },//文件类型
         maxSize: { type: Number, default: 10 }, //大小限制 单位兆
         name: { type: String, default: 'files' }, // 后端接收字段
