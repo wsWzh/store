@@ -1,0 +1,4 @@
+packages:
+  - 'axios'
+  - 'my-admin'
+  - 'my-components'
