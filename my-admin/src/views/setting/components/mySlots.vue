@@ -6,7 +6,7 @@ export default {
     props: {},
     setup(props, { attrs, slots, emit }) {
 
-        const params = {
+        const params ={
             name: 'wzh',
             age: 123
         }
@@ -18,7 +18,7 @@ export default {
         // 添加detault,name1,name2三个预设插槽
         const {
             params: paramsSlot = () => [],
-            name1: name1Slot = () => <div>name1预设插槽</div>,
+            name1: name1Slot = () => <div>name1预设插槽,</div>,
             name2: name2Slot = () => <div>name2预设插槽</div>,
             default: defaultSlot = () => <div>默认插槽</div>
         } = slots
@@ -29,7 +29,7 @@ export default {
                 ...paramsSlot({ params, open }),
                 name1Slot(),
                 name2Slot(),
-                defaultSlot()
+                defaultSlot({params,open})
             ]
         }
     }

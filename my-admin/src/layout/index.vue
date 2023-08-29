@@ -25,12 +25,12 @@ export default {
               </my-crumb>
               <a-layout class="component">
                 <router-view>
-                  {{
-                    default: ({ Component }) =>
+                  {
+                    ({ route, Component }) =>
                       <Transition name="fade">
                         <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
                       </Transition>
-                  }}
+                  }
                 </router-view>
               </a-layout>
             </a-layout>
@@ -62,10 +62,24 @@ export default {
 }
 
 .fade-enter-active {
-  transition: opacity 1s ease;
+  transition: opacity 1.8s ease;
 }
 
 .fade-enter-from {
   opacity: 0;
 }
 </style>
+<!-- jsx插槽 -->
+<!-- 第一种
+  <router-view>
+    {
+      ()=><div>123</div> //default插槽
+    }
+  </router-view> -->
+  <!-- 第二种
+    <router-view>
+    {{
+      default:()=><div>123</div> //default插槽
+      name:()=><div>123</div> //name插槽
+    }}
+  </router-view> -->

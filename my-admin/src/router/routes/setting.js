@@ -23,6 +23,12 @@ export default {
             component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/test.vue'),
         },
         {
+            path: 'jsx',
+            name: 'jsxComponents',
+            meta: { title: 'jsx渲染' },
+            component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/jsx.vue'),
+        },
+        {
             path: 'nest',
             name: 'nestRoute',
             meta: { title: '嵌套路由' },

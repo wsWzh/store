@@ -89,7 +89,7 @@ export default {
                   itemSlots.icon = () => <Icon />
                }
                return [
-                  <my-tips error position="right" onUpdate:visible={doUpdateDisabled}>
+                  <my-tips error position="right" onUpdate: visible={doUpdateDisabled}>
                      <tempMenuItem onClick={() => doMenuItemClick(routeName)}>
                         <a-menu-item key={routeName} v-slots={itemSlots} />
                      </tempMenuItem>
@@ -110,7 +110,9 @@ export default {
          return [
             <a-layout-sider class="my-aside">
                <a-menu {..._arrts}>
-                  {menuItems.value.map(item => getMenuItem(item, 0))}
+                  <a-scrollbar style="height:100%;overflow: auto;">
+                     {menuItems.value.map(item => getMenuItem(item, 0))}
+                  </a-scrollbar>
                </a-menu>
             </a-layout-sider>
          ]
@@ -118,13 +120,25 @@ export default {
    }
 }
 </script>
-<style lang="less">
+<style scoped lang="less">
 .my-aside {
-   width: initial !important;
+   width: unset !important;
+
+   >:deep(.arco-layout-sider-children) {
+      overflow: hidden;
+   }
 
    .arco-menu {
       width: 200px;
       height: 100%;
+
+      :deep(.arco-menu-inner) {
+         padding: unset;
+
+         >.arco-scrollbar {
+            height: 100%;
+         }
+      }
 
       &.arco-menu-collapsed {
          width: 48px;

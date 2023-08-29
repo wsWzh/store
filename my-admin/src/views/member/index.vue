@@ -6,11 +6,11 @@
       <my-button>搜索</my-button>
     </my-crumb-slot>
     <my-table  history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
-      v-model:selections="selections">
+      v-model:selections="selections" >
       <template #params="{ params, search }">
         <a-form :model="params" layout="inline" auto-label-width>
           <a-form-item label="用户名1">
-            <a-input v-model="params.name"></a-input>
+            <a-input  v-model="params.name"></a-input>
           </a-form-item>
           <a-form-item label="用户名2">
             <a-input v-model="params.name2"></a-input>

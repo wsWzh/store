@@ -1,7 +1,7 @@
 <script lang="jsx">
 import MyPagination from './MyPagination'
 import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
-import { ref, watch, reactive, onMounted, computed, toRaw } from 'vue'
+import { ref, watch, reactive, onMounted, computed, toRaw} from 'vue'
 import { reduceProps, empty, typeOf } from '@my-wzh/utils'
 import { stringify } from '../_utils/index'
 import router from '@/router'
@@ -29,6 +29,7 @@ export default {
         history: Boolean, // 值为真时路由会记录
         bordered: { type: [Boolean, Object], default: false },
     },
+    // expose相当于defineExpose
     setup(props, { attrs, slots, emit, expose }) {
 
         const loading = ref(false)//表格loading

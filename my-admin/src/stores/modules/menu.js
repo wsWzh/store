@@ -19,6 +19,10 @@ const createModule = () => {
                     routeName: 'testComponents'
                 },
                 {
+                    name: 'jsx',
+                    routeName: 'jsxComponents'
+                },
+                {
                     name: '嵌套路由',
                     routeName: 'nestRoute',
                     children:[{
