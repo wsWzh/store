@@ -153,7 +153,6 @@
         </a-col>
       </a-row>
     </a-form>
-
   </div>
 </template>
 <script setup>
@@ -165,7 +164,7 @@ import testModelValue from './components/testModelValue.vue';//组件的v-model
 import { getStore } from '@/stores'
 import { GET_OPTIONS, POST_CHANGE, POST_ERROR, http } from '@/http'
 import Axios from 'axios'
-
+import jsxvue from './jsx.vue';
 defineOptions({
   name: 'testComponents'
 })

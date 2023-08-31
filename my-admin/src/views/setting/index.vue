@@ -1,5 +1,4 @@
 <template>
-  <div>
       <my-crumb-slot key="setting">
       <a-button size="mini" type="primary" @click="removeKeepalive('MemberList')">测试删除列表缓存</a-button>
     </my-crumb-slot>
@@ -101,8 +100,6 @@
         </a-space>
       </a-row>
     </a-layout>
-  </div>
-
 </template>
 
 <script setup>

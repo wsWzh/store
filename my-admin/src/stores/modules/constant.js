@@ -16,8 +16,10 @@ function createStore(url) {
     return defineStore(url, () => {
 
         const defData = JSON.parse(sessionStorage.getItem(url)) || {}
+        console.log(defData);
 
         const data = reactive(defData)
+        console.log(data);
 
         const getters = (params) => {
             //数据空时或超过缓存时间调用actions重新拿值
@@ -30,8 +32,9 @@ function createStore(url) {
         const actions = async (params) => {
             const options = { url, params, delay: 0 }
             return http(options).then(res => {
-                data.value = res
-                sessionStorage.setItem(url, JSON.stringify({ datetime: Date.now() + storageTimeOut, value: data.value }))
+                const obj = { datetime :Date.now() + storageTimeOut,value:res }
+                Object.assign(data,obj)
+                sessionStorage.setItem(url, JSON.stringify(obj))
             }).catch(error => {
                 data.value = []
             })

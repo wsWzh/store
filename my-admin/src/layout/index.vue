@@ -23,16 +23,16 @@ export default {
               <my-crumb>
                 <a-button size="mini" type="primary" onClick={handleKeepalive}>常驻按钮</a-button>
               </my-crumb>
-              <a-layout class="component">
-                <router-view>
-                  {
-                    ({ route, Component }) =>
-                      <Transition name="fade">
+              <router-view>
+                {
+                  ({ route, Component }) =>
+                    <Transition name="fade">
+                      <a-layout key={route.fullPath}>
                         <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
-                      </Transition>
-                  }
-                </router-view>
-              </a-layout>
+                      </a-layout>
+                    </Transition>
+                }
+              </router-view>
             </a-layout>
           </a-layout>
         </a-layout>
@@ -49,16 +49,17 @@ export default {
 }
 
 :deep(.main-wrap>.arco-layout) {
+  padding: 20px;
   overflow: auto;
-  // align-items: flex-start;
+
 }
 
-.component>div {
-  display: flex;
-  flex-direction: column;
+.component {
   flex: 1;
   padding: 20px;
   overflow: auto;
+  height: 100%;
+  overflow: hidden;
 }
 
 .fade-enter-active {

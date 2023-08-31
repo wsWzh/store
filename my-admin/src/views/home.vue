@@ -1,6 +1,6 @@
 <template>
   <a-row justify="center" align="center">
-    <a-image @click=onNav src="logo.png" width="100" :preview="false" />
+    <a-image @click=onNav src="logo.png" width="100" :preview="false" />✨🍍
   </a-row>
 </template>
 

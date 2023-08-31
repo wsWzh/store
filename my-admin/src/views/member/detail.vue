@@ -1,9 +1,10 @@
 <template>
-  <div>
-    <div>用户详情</div>
-    <div>用户id:{{ route.params?.id }}</div>
-    <a-button @click="clear">清除用户列表缓存</a-button>
-  </div>
+    <a-space>
+      <div>用户详情</div>
+      <div>用户id:{{ route.params?.id }}</div>
+      <a-input v-model="inputData"></a-input>
+      <a-button @click="clear">清除用户列表缓存</a-button>
+    </a-space>
 </template>
 
 <script setup>
@@ -17,6 +18,8 @@ defineOptions({
 
 const router = useRouter()
 const route = useRoute()
+
+const inputData = ref('')
 
 const clear = () => {
   removeKeepalive('MemberList')
