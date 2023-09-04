@@ -104,7 +104,7 @@ export default {
             }
             if (!empty(params.name)) {
                 dataInfo.value={}
-                params.name = '';
+                params.name=''
                 await getDataInfo(params);
             }
         }

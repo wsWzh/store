@@ -171,7 +171,7 @@ const handleDownload = () => {
 }
 
 const handleExport = params => {
-  return http({ url: GET_DOWNLOAD, responseType: 'blob', params })
+  return http({ url: GET_DOWNLOAD, responseType: 'blob', params, intact: true })
 }
 
 const handleUpload = (formData, config) => {

@@ -18,3 +18,14 @@ export function empty(...args) {
         }
     }
 }
+
+ /**
+  * 判断参数是否不为空,多参数时判断所有参数是否不为空
+  */
+export function notEmpty(...args){
+    if(args.length > 1){
+        return args.every(v => notEmpty(v))
+    }else{
+        return !empty(args[0])
+    }
+}
