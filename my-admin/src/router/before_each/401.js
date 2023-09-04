@@ -12,28 +12,19 @@ const witelist = [
     '500'
 ]
 
-export default async function  (to, from) {
+const needItems = [GET_MENUS, GET_USER_INFO] //刚需数据
+
+
+export default async function (to, from) {
     const { name } = to
-    const needItems = [GET_MENUS, GET_USER_INFO] //刚需数据
     if (witelist.includes(name)) {
-        return true //白名单放行
+        return  //白名单放行
     }
     //请求刚需数据
-    for (let i = 0; i < needItems.length; i++) {
-        const api = needItems[i]
+    for (let api of needItems) {
         const needStore = getStore(api)
-        if (empty(needStore.data)){
-        //     await new Promise((resolve, reject) => {
-        //         setTimeout(()=>{
-        //             resolve(1)
-        //         },200000)
-        //     })
-             await needStore.actions()
+        if (empty(needStore.data)) {
+            await needStore.actions()
         }
     }
-}
-
-//401触发跳转登录
-const handleError = (error, { href }) => {
-
 }
