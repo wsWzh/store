@@ -5,7 +5,6 @@
     align-items: center;
     flex-direction: column;
     color: #444
-
 }
 
 .error p {
@@ -17,5 +16,8 @@
 @keyframes fadeIn {
     from {
         opacity: 0
+    }
+    to{
+        opacity: 1;
     }
 }
