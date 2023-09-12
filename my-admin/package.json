@@ -15,10 +15,10 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.45.1",
-    "@wzh-/axios": "^1.0.0",
-    "@wzh-/components":"^1.0.0",
-    "@wzh-/utils": "^1.0.0",
+    "@arco-design/web-vue": "~2.46.0",
+    "@wzh-/axios": "~1.0.2",
+    "@wzh-/components": "~1.0.3",
+    "@wzh-/utils": "~1.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "less": "^4.1.3",

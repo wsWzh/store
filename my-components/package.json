@@ -1,6 +1,6 @@
 {
   "name": "@wzh-/components",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "基于Arco-Design-Vue,二次封装的组件",
   "main": "index.js",
   "scripts": {
@@ -8,9 +8,13 @@
   },
   "author": "wangzh123",
   "license": "ISC",
-  "keywords": [ "arco","vue","components"],
+  "keywords": [
+    "arco",
+    "vue",
+    "components"
+  ],
   "dependencies": {
-    "vue": "^3.2.45",
+    "vue": "~3.3.3",
     "@arco-design/web-vue": "~2.46.0",
     "@wzh-/utils": "^1.0.0"
   }
