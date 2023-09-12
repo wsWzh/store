@@ -1,1 +1,1 @@
-export {default as MySwitch} from './MySwitch'
+export {default as MySwitch} from './MySwitch.jsx'

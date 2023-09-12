@@ -1,1 +1,1 @@
-export { default as MyDownload } from './MyDownload'
+export { default as MyDownload } from './MyDownload.jsx'

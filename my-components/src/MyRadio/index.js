@@ -1,1 +1,1 @@
-export { default as MyRadio } from './MyRadio'
+export { default as MyRadio } from './MyRadio.jsx'

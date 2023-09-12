@@ -1,1 +1,1 @@
-export { default as MyUpload } from './MyUpload'
+export { default as MyUpload } from './MyUpload.jsx'
