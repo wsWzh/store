@@ -2,7 +2,7 @@
 import MyPagination from './MyPagination'
 import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
 import { ref, watch, reactive, onMounted, computed, toRaw} from 'vue'
-import { reduceProps, empty, typeOf } from '@my-wzh/utils'
+import { reduceProps, empty, typeOf } from '@wzh-/utils'
 import { stringify } from '../_utils/index'
 import router from '@/router'
 

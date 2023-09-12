@@ -6,7 +6,7 @@ import { GET_MENUS } from "@/http"
 import { IconApps } from '@arco-design/web-vue/es/icon'
 import { getStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
-import { empty } from '@my-wzh/utils'
+import { empty } from '@wzh-/utils'
 
 export default {
    name: "LayoutAside",

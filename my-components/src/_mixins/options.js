@@ -1,4 +1,4 @@
-import { typeOf } from '@my-wzh/utils'
+import { typeOf } from '@wzh-/utils'
 import { formatValue } from '../_utils'
 /**
  * 选择组件复用模块

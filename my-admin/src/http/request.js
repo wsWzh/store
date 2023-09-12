@@ -1,5 +1,5 @@
-// import { createAxios } from '@my-wzh/axios'
-import { createAxios } from '../../../axios'
+import { createAxios } from '@wzh-/axios'
+// import { createAxios } from '../../../axios'
 import { Notification, Modal } from '@arco-design/web-vue'
 import router from '../router'
 

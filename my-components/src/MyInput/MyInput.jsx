@@ -1,5 +1,5 @@
 import { Input as AInput } from '@arco-design/web-vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 /**
  * input 添加 pattern 属性
  * 在配置 pattern 正则表达式之后不满足条件的值将返回旧值

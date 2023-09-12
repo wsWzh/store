@@ -1,5 +1,5 @@
 import { MyButton } from "../MyButton"
-import { empty, typeOf } from "@my-wzh/utils"
+import { empty, typeOf } from "@wzh-/utils"
 /**
  * 下载按钮
  * props.api 后端服务地址

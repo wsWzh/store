@@ -1,6 +1,6 @@
 <script lang="jsx">
 import {  reactive, watch } from 'vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 
 /**
  * 通用操作提示

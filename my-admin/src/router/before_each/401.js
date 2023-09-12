@@ -1,4 +1,4 @@
-import { empty } from '@my-wzh/utils'
+import { empty } from '@wzh-/utils'
 import { getStore } from '@/stores'
 import { GET_MENUS, GET_USER_INFO } from '@/http'
 

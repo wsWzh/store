@@ -1,4 +1,4 @@
-import { typeOf } from '@my-wzh/utils'
+import { typeOf } from '@wzh-/utils'
 import messageConfig from './messageConfig'
 
 /**

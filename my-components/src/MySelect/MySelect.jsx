@@ -1,7 +1,7 @@
 import { Select as ASelect, Option as AOption } from "@arco-design/web-vue"
 import mixin from '../_mixins/options'
 import { computed } from 'vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 import { formatValue } from '../_utils'
 
 

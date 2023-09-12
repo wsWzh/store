@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue'
-import { typeOf } from '@my-wzh/utils'
+import { typeOf } from '@wzh-/utils'
 import { Button as AButton } from '@arco-design/web-vue'
 /**
  * my-button 添加了 loading
@@ -60,7 +60,7 @@ export default {
                 ...slots,
                 default: defaultSlots.value
             }
-            
+
             return <AButton {..._attrs} v-slots={_slots} />
 
         }

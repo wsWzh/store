@@ -1,5 +1,5 @@
 import { ref, reactive, watch } from 'vue'
-import { empty } from '@my-wzh/utils'
+import { empty } from '@wzh-/utils'
 import { MyButton } from '../MyButton'
 import { MyTips } from '../MyTips'
 import { Popover as APopover, Space as ASpace, Row as ARow, Button as AButton } from '@arco-design/web-vue'

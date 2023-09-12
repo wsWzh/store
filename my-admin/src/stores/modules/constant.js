@@ -1,6 +1,6 @@
 import * as mods from '@/http/apis/constant'
 import { defineStore } from 'pinia';
-import { empty } from '@my-wzh/utils'
+import { empty } from '@wzh-/utils'
 import { http } from '@/http'
 import { reactive } from 'vue'
 

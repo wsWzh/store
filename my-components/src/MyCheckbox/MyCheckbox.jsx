@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 import mixin from '../_mixins/options'
 import { formatValue } from '../_utils'
 import { CheckboxGroup as ACheckboxGroup, Checkbox as ACheckbox } from '@arco-design/web-vue'

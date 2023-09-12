@@ -1,4 +1,4 @@
-import { empty, typeOf } from '@my-wzh/utils/index'
+import { empty, typeOf } from '@wzh-/utils'
 import { stringify } from 'qs'
 
 /**

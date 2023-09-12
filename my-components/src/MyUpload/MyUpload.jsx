@@ -1,6 +1,6 @@
 import { Upload as AUpload } from "@arco-design/web-vue"
 import { ref } from 'vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 
 // 提示语用后缀
 const accepts = {

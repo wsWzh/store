@@ -1,6 +1,6 @@
 import { Switch as ASwitch } from "@arco-design/web-vue"
 import { ref, watch } from 'vue'
-import { empty, typeOf } from '@my-wzh/utils'
+import { empty, typeOf } from '@wzh-/utils'
 /**
  * 开关组件
  * props.checkedValue 添加默认值 1

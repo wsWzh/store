@@ -16,8 +16,9 @@
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.45.1",
-    "@my-wzh/axios": "^1.0.2",
-    "@my-wzh/utils": "^1.0.0",
+    "@wzh-/axios": "^1.0.0",
+    "@wzh-/components":"^1.0.0",
+    "@wzh-/utils": "^1.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "less": "^4.1.3",
