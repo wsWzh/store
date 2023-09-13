@@ -5,7 +5,7 @@
     <my-button>搜索</my-button>
   </my-crumb-slot>
   <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
-    v-model:selections="selections">
+    v-model:selections="selections" :row-selection="{type:'radio'}">
     <template #params="{ params, search }">
       <a-form :model="params" layout="inline" auto-label-width>
         <a-form-item label="用户名1">

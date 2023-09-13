@@ -1,7 +1,7 @@
 <script lang="jsx">
 import MyPagination from './MyPagination'
 import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
-import { ref, watch, reactive, onMounted, computed, toRaw} from 'vue'
+import { ref, watch, reactive, onMounted, computed, toRaw } from 'vue'
 import { reduceProps, empty, typeOf } from '@wzh-/utils'
 import { stringify } from '../_utils/index'
 import router from '@/router'
@@ -14,6 +14,7 @@ import router from '@/router'
  * props.history? 值为真时，利用 url 记录当前查询的条件和分页（暂时只支持哈希路由）
  * props.load? 值为真时组件载入后发送请求
  * props.bordered? 是否显示边框（默认否）
+ * props.rowSelection? 表格的行选择器配置
  * slots.params? 参数插槽，提供参数：{ params , search }
  * slots.pagination? 自定义分页区插槽，提供参数：{ dataInfo , search }
  */
@@ -28,6 +29,7 @@ export default {
         rowKey: { default: 'id' }, // 预设 key = id
         history: Boolean, // 值为真时路由会记录
         bordered: { type: [Boolean, Object], default: false },
+        rowSelection:{type:Object,default:()=>({})},
     },
     // expose相当于defineExpose
     setup(props, { attrs, slots, emit, expose }) {
@@ -124,7 +126,7 @@ export default {
         }
 
         //导出方法
-        expose({ search,reload })
+        expose({ search, reload })
 
         // 挂载后执行搜索
         onMounted(() => props.load && search())
@@ -167,29 +169,30 @@ export default {
             const tableAttrs = {
                 class: 'my-table',
                 scroll: { x: '100%', y: '100%' },
-                pagination: true,
+                pagination: false,
                 data: dataList.value,
                 rowKey,
                 loading: loading.value,
                 columns,
                 bordered,
+                ...attrs,
             }
 
             // 当配置了 selections 时，添加复选框关联配置
             if (typeOf(selections, 'array')) {
+                const {rowSelection} = props
                 const selectAttrs = {
                     rowSelection: {
                         width: 60,
                         type: 'checkbox',
                         showCheckedAll: true,
+                        ...rowSelection
                     },
                     selectedKeys: selectedKeys.value,
                     'onUpdate:selectedKeys': doSelectedKeysChange
                 }
                 Object.assign(tableAttrs, selectAttrs)
             }
-
-            Object.assign(tableAttrs, attrs)
 
             const tableSlots = {
                 ...slots,

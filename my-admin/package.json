@@ -17,7 +17,7 @@
     "@arco-themes/vue-siku": "0.0.5",
     "@arco-design/web-vue": "^2.50.2",
     "@wzh-/axios": "~1.0.2",
-    "@wzh-/components": "~1.0.14",
+    "@wzh-/components": "~1.0.15",
     "@wzh-/utils": "~1.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
