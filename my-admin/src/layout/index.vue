@@ -27,7 +27,7 @@ export default {
                 {
                   ({ route, Component }) =>
                     <Transition name="fade">
-                      <a-layout key={route.fullPath}>
+                      <a-layout key={route.name}>
                         <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
                       </a-layout>
                     </Transition>
