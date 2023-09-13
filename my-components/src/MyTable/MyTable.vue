@@ -167,13 +167,12 @@ export default {
             const tableAttrs = {
                 class: 'my-table',
                 scroll: { x: '100%', y: '100%' },
-                pagination: false,
+                pagination: true,
                 data: dataList.value,
                 rowKey,
                 loading: loading.value,
                 columns,
                 bordered,
-                ...attrs,
             }
 
             // 当配置了 selections 时，添加复选框关联配置
@@ -183,13 +182,14 @@ export default {
                         width: 60,
                         type: 'checkbox',
                         showCheckedAll: true,
-                        ...attrs.rowSelection
                     },
                     selectedKeys: selectedKeys.value,
                     'onUpdate:selectedKeys': doSelectedKeysChange
                 }
                 Object.assign(tableAttrs, selectAttrs)
             }
+
+            Object.assign(tableAttrs, attrs)
 
             const tableSlots = {
                 ...slots,

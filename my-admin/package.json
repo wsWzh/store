@@ -9,15 +9,15 @@
     "preview": "vite preview --port 3000"
   },
   "dependencies": {
-    "@arco-themes/vue-siku": "0.0.5",
     "pinia": "^2.0.28",
     "vue": "~3.3.3",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "~2.48.0",
+    "@arco-themes/vue-siku": "0.0.5",
+    "@arco-design/web-vue": "^2.50.2",
     "@wzh-/axios": "~1.0.2",
-    "@wzh-/components": "~1.0.13",
+    "@wzh-/components": "~1.0.14",
     "@wzh-/utils": "~1.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
