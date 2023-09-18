@@ -13,7 +13,6 @@ const route = useRoute()
 
 const onNav = () => {
   const { goto = '/member/list' } = route.query
-  console.log(goto, route.fullPath);
   router.replace(goto)
 }
 </script>

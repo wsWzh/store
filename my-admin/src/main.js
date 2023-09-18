@@ -16,7 +16,7 @@ const cs = app.mount('#app')
 // app.config.globalProperties.cs='123' //全局属性
 
 // App根组件 app应用实例 cs根组件实例
-console.log(App, app, cs);
+// console.log(App, app, cs);
 
 // 避免局部错误导致 app 挂掉
 app.config.errorHandler = (error, vm, info) => {

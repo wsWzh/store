@@ -5,7 +5,7 @@
     <a-layout class="list-wrap">
       <a-form :model="params">
         <a-form-item label="限制输入字母">
-          <my-input v-model="params.name" :pattern="/^[a-zA-Z]{0,20}$/" />
+          <my-input v-model="params.name" :pattern="/^[a-zA-Z]{0,20}$/"/>
         </a-form-item>
         <a-form-item label="限制输入金额">
           <my-input v-model="params.money" :pattern="/^(\d{1,10})?(\.([0-9]{0,2}))?$/" />
@@ -17,7 +17,7 @@
           <my-input v-model="params.mobile" :pattern="/^1([3-9](\d{0,9})?)?$/" />
         </a-form-item>
         <a-form-item label="下拉框单选">
-          <my-select v-model="params.type" :options="options" :formatter="({ id, name }) => [+id, name]" />
+          <my-select v-model="params.type" :options="options" :formatter="({ id, name }) => [id, name]" />
         </a-form-item>
         <a-form-item label="下拉框多选">
           <my-select v-model="params.types" :options="options" formatter="id,name" multiple @change="handleChange" />

@@ -24,7 +24,7 @@ const randomId = len => {
 }
 
 // 测试数据
-const items = Array(20).fill('').map((_, index) => {
+const items = Array(30).fill('').map((_, index) => {
     const id = randomId(16)
     const year = 2000 + Math.ceil(Math.random() * 22)
     const month = Math.ceil(Math.random() * 12)

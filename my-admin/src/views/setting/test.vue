@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 100%;box-sizing: border-box;">
-    <a-form :model="model" auto-label-width>
-      <a-row :gutter="20">
+  <div style="width: 100%;box-sizing: border-box;height: 100%;overflow-y: auto;">
+    <a-form :model="model" auto-label-width style="width: 100%;box-sizing: border-box;">
+      <a-row :gutter="20" style="width: 100%;box-sizing: border-box;">
         <a-col :span="8">
           <a-form-item label="状态同步的按钮">
             <asyncStatus>
@@ -36,8 +36,9 @@
         <a-col :span="8">
           <a-form-item label="组件的v-model">
             {{ testArr }}
-            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading" v-model="testValue" /> {{ testValue
-            }}
+            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading"
+              v-model="testValue" /> {{ testValue
+              }}
           </a-form-item>
         </a-col>
         <a-col :span="8">
@@ -151,12 +152,25 @@
             <div>{{ watchText }}</div>
           </a-form-item>
         </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试reactive、ref响应式">
+            <a-space direction="vertical">
+              <a-button @click="state.count++">reactive++</a-button>
+              <a-button @click="state1.count1++">ref++</a-button>
+              <a-button @click="(state = { count: 1 })">reactive重新赋值(会丢失响应)</a-button>
+                <a-button @click="(state1 = { count1: 1 })">ref重新赋值(不会会丢失响应)</a-button>
+              <div>reactive:{{ state }}</div>
+              <div>ref:{{ state1 }}{{ gl }}</div>
+            </a-space>
+
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
   </div>
 </template>
 <script setup>
-import { ref, shallowRef, computed, watch, nextTick, effect, watchEffect } from 'vue'
+import { ref,  reactive, computed, watch, effect, watchEffect } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
@@ -165,6 +179,7 @@ import { getStore } from '@/stores'
 import { GET_OPTIONS, POST_CHANGE, POST_ERROR, http } from '@/http'
 import Axios from 'axios'
 import jsxvue from './jsx.vue';
+
 defineOptions({
   name: 'testComponents'
 })
@@ -201,7 +216,7 @@ const changeLoading = async (value) => {
   })
 }
 
-const testArr=ref([1,2,3,4,5])
+const testArr = ref([1, 2, 3, 4, 5])
 
 const active = ref('fnComponent')
 
@@ -331,7 +346,8 @@ watchEffect(() => {
   console.log(456, watchData.value);
 })
 
-
+const state = reactive({ count: 0 })
+const state1 = ref({ count1: 0 })
 
 </script>
 <style scoped lang='less'>

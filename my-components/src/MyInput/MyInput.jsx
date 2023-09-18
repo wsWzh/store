@@ -12,7 +12,6 @@ export default {
         pattern: RegExp
     },
     setup(props, { attrs, slots, emit }) {
-
         const doUpdate = value => {
             emit('update:modelValue', value)
         }
@@ -28,7 +27,6 @@ export default {
             }
             doUpdate(value)
         }
-
 
 
         return () => {

@@ -8,7 +8,7 @@ export default {
     name: 'MyPagination',
     emits: ['change'],
     props: {
-        data: { type: Object, default: () => ({}), required: true }
+        data: { type: Object, required: true }// 数据源
     },
     setup(props, { attrs, slots, emit }) {
 

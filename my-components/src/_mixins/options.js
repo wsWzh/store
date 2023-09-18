@@ -25,7 +25,6 @@ export default {
                 this.$emit('update:modelValue', v)
             }
             return value => {
-                console.log(value);
                 //传入值和返回值类型保持一致
                 //value来源于arco的组件 不可改 modelValue二次封装传入的值
                 if (typeOf(value, 'array')) {

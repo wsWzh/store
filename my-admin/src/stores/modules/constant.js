@@ -16,10 +16,8 @@ function createStore(url) {
     return defineStore(url, () => {
 
         const defData = JSON.parse(sessionStorage.getItem(url)) || {}
-        console.log(defData);
 
         const data = reactive(defData)
-        console.log(data);
 
         const getters = (params) => {
             //数据空时或超过缓存时间调用actions重新拿值

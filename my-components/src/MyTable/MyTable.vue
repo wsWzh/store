@@ -3,7 +3,6 @@ import MyPagination from './MyPagination'
 import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
 import { ref, watch, reactive, onMounted, computed, toRaw } from 'vue'
 import { reduceProps, empty, typeOf } from '@wzh-/utils'
-import { stringify } from '../_utils/index'
 import router from '@/router'
 
 /**
@@ -29,11 +28,10 @@ export default {
         rowKey: { default: 'id' }, // 预设 key = id
         history: Boolean, // 值为真时路由会记录
         bordered: { type: [Boolean, Object], default: false },
-        rowSelection:{type:Object,default:()=>({})},
+        rowSelection: { type: Object, default: () => ({}) },
     },
     // expose相当于defineExpose
     setup(props, { attrs, slots, emit, expose }) {
-
         const loading = ref(false)//表格loading
 
         const useLoading = () => {
@@ -44,7 +42,7 @@ export default {
         // 将 loading 同步到父组件
         watch(loading, bool => emit('update:loading', bool))
 
-        // 首次进入页面,获取url中的参数
+        // 进入页面,获取url中的参数
         // location.hash => #/member 获取#之后的值 decodeURIComponent  特殊字符=>原始字符
         const query = /\?(.+)$/.exec(location.hash)?.[1].split('&').reduce((_, str) => {
             const vs = str.split('=')
@@ -57,7 +55,6 @@ export default {
 
         // 查询条件
         const params = reactive({})
-
         // history时将url的除了分页的参数合并到params
         if (props.history) {
             Object.assign(params, reduceProps(query, ({ name }) => ['pageNo', 'pageSize'].includes(name)))
@@ -87,7 +84,7 @@ export default {
         // 列表数据
         const dataList = computed(() => dataInfo.value?.results || [])
 
-        //勾选的数据的rowkey数组 items=>item.id 入参时转为id数组 出参时根据id返回数据对象的数组
+        //勾选的数据的rowkey数组 items=>item[rowKey] 用于回显表格的勾选
         const selectedKeys = computed(() => {
             const { selections, rowKey } = props
             return selections?.map?.(item => item[rowKey])
@@ -103,18 +100,20 @@ export default {
 
         //查询
         const search = async _params => {
-            let pageNo = empty(dataInfo.value) ? query?.pageNo || 1 : 1
-            let pageSize = empty(dataInfo.value) ? query?.pageSize || 10 : dataInfo.value.pageSize
+            let { pageSize } = dataInfo.value
+            let pageNo = query?.pageNo || 1
             //重置时清空查询条件
             if (_params === null) {
+                // 不能直接赋值 reactive会丢失响应性
                 reduceProps(params, ({ key }) => delete params[key])
+                pageNo=1
             }
             // 非正常参数
             if (!typeOf(_params, 'object')) {
                 _params = {}
             }
             //记录参数
-            paramsHistory.value = { pageNo, pageSize, ...params, ..._params }
+            paramsHistory.value = {pageSize, pageNo, ...params, ..._params }
             dataInfo.value = await props.onRequest(paramsHistory.value).finally(useLoading())
         }
 
@@ -180,7 +179,7 @@ export default {
 
             // 当配置了 selections 时，添加复选框关联配置
             if (typeOf(selections, 'array')) {
-                const {rowSelection} = props
+                const { rowSelection } = props
                 const selectAttrs = {
                     rowSelection: {
                         width: 60,

@@ -1,8 +1,8 @@
 import { empty } from './empty.js'
 
 /**
- *
- * @param {str}
+ *复制文本
+ * @param {string} str
  * @returns {Promise}
  */
 export function copyText(str) {

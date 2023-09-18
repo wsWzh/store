@@ -59,12 +59,12 @@ export default {
                 onChange: value => {
                     if (typeOf(value, 'array')) {
                         //多选 返回数组
-                        value = formatOptions.filter(item => value.includes(item.value))
+                        selectValue = formatOptions.filter(item => value.includes(item.value))
                     } else {
                         //单选
-                        value = formatOptions.find(item => value === item.value)
+                        selectValue = formatOptions.find(item => value === item.value)
                     }
-                    onChange(value)
+                    onChange(selectValue)
                 },
                 ...attrs,
             }

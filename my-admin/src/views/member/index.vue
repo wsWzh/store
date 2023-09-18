@@ -5,7 +5,7 @@
     <my-button>搜索</my-button>
   </my-crumb-slot>
   <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
-    v-model:selections="selections" :row-selection="{type:'radio'}">
+    v-model:selections="selections">
     <template #params="{ params, search }">
       <a-form :model="params" layout="inline" auto-label-width>
         <a-form-item label="用户名1">
@@ -37,7 +37,6 @@ const requestApi = async params => {
   //   setTimeout(()=> resolve(123),20000000)
   // })
   const rs = await http.get(GET_PAGE, params)
-  console.log(rs)
   return rs
 }
 
@@ -47,13 +46,15 @@ const change = (value, params) => {
   console.log(value, params);
 }
 
-const selections = ref([{
-  "id": "aji7ss357jg62b81",
-  "name": "测试aji7ss357jg62b81",
-  "createTime": "2018-4-01 39:31:03",
-  "status": 1,
-  "picture": "https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg"
-}])
+const selections = ref([
+  {
+    id: '61017nkp10qonjlvvl',
+    name: '测试aji7ss357jg62b81',
+    createTime: '2018-4-01 39:31:03',
+    status: 1,
+    picture: 'https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg'
+  }
+])
 
 
 
