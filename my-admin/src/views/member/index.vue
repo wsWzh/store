@@ -4,7 +4,6 @@
     <a-button>更新</a-button>
     <my-button>搜索</my-button>
   </my-crumb-slot>
-  <input type="text" value="123">
   <my-table  @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
     v-model:selections="selections">
     <template #params="{ params, search }">

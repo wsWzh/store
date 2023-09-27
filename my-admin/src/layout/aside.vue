@@ -146,7 +146,6 @@ export default {
    .arco-menu {
       width: 200px;
       height: 100%;
-      padding: 0 4px;
 
       :deep(.arco-menu-inner) {
          padding: 0;

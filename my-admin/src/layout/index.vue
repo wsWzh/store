@@ -70,17 +70,3 @@ export default {
   opacity: 0;
 }
 </style>
-<!-- jsx插槽 -->
-<!-- 第一种
-  <router-view>
-    {
-      ()=><div>123</div> //default插槽
-    }
-  </router-view> -->
-  <!-- 第二种
-    <router-view>
-    {{
-      default:()=><div>123</div> //default插槽
-      name:()=><div>123</div> //name插槽
-    }}
-  </router-view> -->
