@@ -29,8 +29,9 @@ export function createAxios(options = {}) {
      * @returns {Promise<*>}
      */
     function proxyAxios(proxyHttpOptions) {
-        const { delay, intact } = Object.assign({}, options, proxyHttpOptions) //优先级proxyHttpOptions>options
+        const { delay, intact } = Object.assign(options, proxyHttpOptions)
         const datetime = Date.now() + delay
+        //datetime的Date.now()是发起请求时的时间戳,awaitNext的Date.now()是在请求响应后执行awaitNext时当前时间戳
         const awaitNext = fn => setTimeout(fn, datetime - Date.now())
         return new Promise((resolve, reject) => {
             axios(proxyHttpOptions).then(res => {

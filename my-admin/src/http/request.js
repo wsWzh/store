@@ -1,5 +1,5 @@
-import { createAxios } from '@wzh-/axios'
-// import { createAxios } from '../../../axios'
+// import { createAxios } from '@wzh-/axios'
+import { createAxios } from '../../../axios'
 import { Notification, Modal } from '@arco-design/web-vue'
 import router from '../router'
 
@@ -9,9 +9,7 @@ const showNotification = (error) => {
     Notification.error(error.message || '操作失败')
 }
 
-// 注意这里拦截是在返回前 返回的延时不在这里生效
 http.interceptors.response.use(res => res, error => {
-
     const status = error?.response.status
     if (status === 401) {
         const onOk = () => {

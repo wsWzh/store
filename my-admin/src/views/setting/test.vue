@@ -160,7 +160,7 @@
               <a-button @click="(state = { count: 1 })">reactive重新赋值(会丢失响应)</a-button>
                 <a-button @click="(state1 = { count1: 1 })">ref重新赋值(不会会丢失响应)</a-button>
               <div>reactive:{{ state }}</div>
-              <div>ref:{{ state1 }}{{ gl }}</div>
+              <div>ref:{{ state1 }}</div>
             </a-space>
 
           </a-form-item>

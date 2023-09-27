@@ -31,7 +31,6 @@ export default {
          openKeys.value = route.meta?.matched?.(items) || items
          return items
       })
-
       // 菜单数据
       const menuItems = computed(() => {
          return getStore(GET_MENUS).data
@@ -67,15 +66,16 @@ export default {
       }
 
       return () => {
-
          const _arrts = {
+            // accordion:true,//手风琴效果
             openKeys: openKeys.value, //展开的菜单
             selectedKeys: selectedKeys.value, //选中的菜单项 key 数组
             onSubMenuClick,//点击子菜单时触发
             autoScrollIntoView: true, //自动滚动选中项目到可见区域
             showCollapseButton: true, //内置折叠按钮
             autoOpenSelected: true,//默认展开选中的菜单
-            levelIndent: 30//层级组件缩进(右边距)
+            levelIndent: 30,//层级组件缩进(右边距)
+            collapsedWidth: 48,//折叠菜单宽度
          }
 
          const getMenuItem = (item, lv) => {
@@ -89,7 +89,7 @@ export default {
                   itemSlots.icon = () => <Icon />
                }
                return [
-                  <my-tips error position="right" onUpdate: visible={doUpdateDisabled}>
+                  <my-tips error position="right" onUpdate:visible={doUpdateDisabled}>
                      <tempMenuItem onClick={() => doMenuItemClick(routeName)}>
                         <a-menu-item key={routeName} v-slots={itemSlots} />
                      </tempMenuItem>
@@ -110,7 +110,7 @@ export default {
          return [
             <a-layout-sider class="my-aside">
                <a-menu {..._arrts}>
-                  <a-scrollbar style="height:100%;overflow: auto;">
+                  <a-scrollbar>
                      {menuItems.value.map(item => getMenuItem(item, 0))}
                   </a-scrollbar>
                </a-menu>
@@ -126,22 +126,30 @@ export default {
 
    >:deep(.arco-layout-sider-children) {
       overflow: hidden;
+
+   }
+
+   .arco-scrollbar {
+      height: 100%;
+
+      :deep(.arco-scrollbar-container) {
+         height: 100%;
+         overflow: auto;
+
+         .arco-menu-has-icon {
+            padding: 0;
+            padding-left: 16px;
+         }
+      }
    }
 
    .arco-menu {
       width: 200px;
       height: 100%;
+      padding: 0 4px;
 
       :deep(.arco-menu-inner) {
-         padding: unset;
-
-         >.arco-scrollbar {
-            height: 100%;
-         }
-      }
-
-      &.arco-menu-collapsed {
-         width: 48px;
+         padding: 0;
       }
    }
 }

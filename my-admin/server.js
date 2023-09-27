@@ -18,13 +18,13 @@ const state = {}
 
 // 生成随机 id
 const randomId = len => {
-    return Array(len).fill('').map(() => {
+    return Array.from({ length: len }, () => {
         return Math.ceil(Math.random() * 32).toString(32)
     }).join('')
 }
 
 // 测试数据
-const items = Array(30).fill('').map((_, index) => {
+const items = Array.from({ length: 30 }, (_, index) => {
     const id = randomId(16)
     const year = 2000 + Math.ceil(Math.random() * 22)
     const month = Math.ceil(Math.random() * 12)

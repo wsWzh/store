@@ -106,7 +106,7 @@
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
 import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , GET_TOKEN , GET_USER_INFO } from '@/http'
 import { http } from '@/http'
-import { reactive, watch, toRaw, ref } from 'vue'
+import { reactive, watch, toRaw, ref ,getCurrentInstance} from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
 
 defineOptions({
@@ -152,7 +152,6 @@ const useResolve = () => {
 
 const useReject = async () => {
   const res = await http({ url: POST_ERROR, params: { id: '999' } })
-  console.log('useReject', res)
   return res
 }
 

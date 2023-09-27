@@ -14,20 +14,21 @@ export default {
     },
     setup(props, { attrs }) {
 
-        const route = router.currentRoute.value
+        const route = router.currentRoute
 
         // 面包屑数据
         const matchedItems = computed(() => {
-            const { meta, params, matched } = route
+            const { meta, params, matched } = route.value
             const routes = matched.filter(({ meta }) => meta?.title)
             // params.matched 和 meta.matched 可对面包屑的数据进行二次改造
+            console.log(params, meta, 'route', route.value, routes);
             return params.matched?.(routes) || meta.matched?.(routes) || routes
         })
 
         // 右侧插槽
         const actions = computed(() => {
             const { slots, actionSlots } = props
-            const items = actionSlots[route.name] || []
+            const items = actionSlots[route.value.name] || []
             return items.concat(slots.default?.())
         })
 
@@ -40,14 +41,14 @@ export default {
             const breadcrumbItems = items.map((route, index) => {
                 const { title } = route.meta
 
-                if (len > index + 1) {
-                    return [
-                        <a-breadcrumb-item key={index}>
-                            <router-link class="menu-link" to={route}>{title}</router-link>
-                        </a-breadcrumb-item>
-                    ]
+                if (index === len - 1) {
+                    return <a-breadcrumb-item>{title}</a-breadcrumb-item>
                 }
-                return <a-breadcrumb-item>{title}</a-breadcrumb-item>
+                return [
+                    <a-breadcrumb-item key={index}>
+                        <router-link class="menu-link" to={route}>{title}</router-link>
+                    </a-breadcrumb-item>
+                ]
             })
 
             return [

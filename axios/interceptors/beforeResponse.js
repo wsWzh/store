@@ -8,7 +8,7 @@ import messageConfig from './messageConfig'
  */
 export function resolveResponse(response) {
     const { data, config } = response
-    const { success, message } = data
+    const { success, message } = data //可能是blob对象没有success, message这两个属性
     if (success) {
         return data
     }

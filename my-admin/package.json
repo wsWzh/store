@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@arco-themes/vue-siku": "0.0.5",
-    "@arco-design/web-vue": "^2.50.2",
     "@wzh-/axios": "~1.0.2",
     "@wzh-/components": "~1.0.15",
     "@wzh-/utils": "~1.0.0",

@@ -4,7 +4,8 @@
     <a-button>更新</a-button>
     <my-button>搜索</my-button>
   </my-crumb-slot>
-  <my-table history @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
+  <input type="text" value="123">
+  <my-table  @request="requestApi" :columns="columns" v-model:loading="loading" @change="change"
     v-model:selections="selections">
     <template #params="{ params, search }">
       <a-form :model="params" layout="inline" auto-label-width>
@@ -36,7 +37,7 @@ const requestApi = async params => {
   // await new Promise((resolve, reject) => {
   //   setTimeout(()=> resolve(123),20000000)
   // })
-  const rs = await http.get(GET_PAGE, params)
+  const rs = await http.get(GET_PAGE, { pageSize: 20,...params})
   return rs
 }
 

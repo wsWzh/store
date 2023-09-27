@@ -2,8 +2,8 @@
 import MyLayoutHeader from './header.vue'
 import MyLayoutAside from './aside.vue'
 import { keepaliveList } from '../router/keepalive'
-import { useRouter } from 'vue-router'
-import { KeepAlive, Transition } from 'vue'
+import { useRouter ,RouterView} from 'vue-router'
+import { KeepAlive, Transition, } from 'vue'
 export default {
   name: 'Layout',
   setup() {
@@ -23,7 +23,7 @@ export default {
               <my-crumb>
                 <a-button size="mini" type="primary" onClick={handleKeepalive}>常驻按钮</a-button>
               </my-crumb>
-              <router-view>
+              <RouterView>
                 {
                   ({ route, Component }) =>
                     <Transition name="fade">
@@ -32,7 +32,7 @@ export default {
                       </a-layout>
                     </Transition>
                 }
-              </router-view>
+              </RouterView>
             </a-layout>
           </a-layout>
         </a-layout>

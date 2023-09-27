@@ -77,12 +77,12 @@ export default {
         })
 
         // 接口返回数据 包含分页参数
-        const dataInfo = ref({})
+        const dataInfo = reactive({})
 
         watch(dataInfo, value => emit('change', value, params))
 
         // 列表数据
-        const dataList = computed(() => dataInfo.value?.results || [])
+        const dataList = computed(() => dataInfo.results || [])
 
         //勾选的数据的rowkey数组 items=>item[rowKey] 用于回显表格的勾选
         const selectedKeys = computed(() => {
@@ -100,27 +100,25 @@ export default {
 
         //查询
         const search = async _params => {
-            let { pageSize } = dataInfo.value
-            let pageNo = query?.pageNo || 1
             //重置时清空查询条件
             if (_params === null) {
                 // 不能直接赋值 reactive会丢失响应性
                 reduceProps(params, ({ key }) => delete params[key])
-                pageNo=1
             }
             // 非正常参数
             if (!typeOf(_params, 'object')) {
                 _params = {}
             }
             //记录参数
-            paramsHistory.value = {pageSize, pageNo, ...params, ..._params }
-            dataInfo.value = await props.onRequest(paramsHistory.value).finally(useLoading())
+            paramsHistory.value = {...params, ..._params }
+            const res = await props.onRequest(paramsHistory.value).finally(useLoading())
+            Object.assign(dataInfo, res)
         }
 
         // 刷新数据
         const reload = () => {
-            const pageNo = dataInfo.value?.pageNo //当前页码
-            const pageSize = dataInfo.value?.pageSize //当前每页展示的数据条数
+            const pageNo = dataInfo.pageNo //当前页码
+            const pageSize = dataInfo.pageSize //当前每页展示的数据条数
             return search({ pageNo, pageSize })
         }
 
@@ -151,14 +149,10 @@ export default {
                 params: slotParams = () => [],
                 // 分页组件
                 pagination: slotPagination = () => {
-                    if (empty(dataInfo.value)) {
+                    if (empty(dataInfo)) {
                         return []
                     }
-                    const paginationAttrs = {
-                        disabled: loading.value,
-                        data: dataInfo.value,
-                        onChange: search
-                    }
+                    const paginationAttrs = { disabled: loading.value, data: dataInfo, onChange: search }
                     return [<MyPagination {...paginationAttrs} />]
 
                 },
@@ -203,7 +197,7 @@ export default {
             return [
                 ...slotParams({ params, search }),
                 Table,
-                ...slotPagination(dataInfo.value)
+                ...slotPagination(dataInfo)
             ]
         }
     }

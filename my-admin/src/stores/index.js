@@ -22,17 +22,16 @@ function extractStores(mods) {
 
 // id=>pinia实例
 export const storesMap = extractStores(mods)
-console.log(storesMap, 'stores');
+// console.log(storesMap, 'stores');
 
 // 根据id获取stroe
-export function getStore(key) {
-    if (empty(storesMap[key])) {
-        return console.warn(`${key} store empty`,);
+export function getStore(id) {
+    if (empty(storesMap[id])) {
+        return console.warn(`${id} store empty`,);
     }
-    return storesMap[key]()
+    return storesMap[id]()
 }
 
 const pinia = createPinia()
 
 export default pinia
-

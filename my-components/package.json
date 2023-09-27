@@ -17,7 +17,7 @@
     "vue": "~3.3.3"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.50.2",
+    "@arco-design/web-vue": "^2.51.1",
     "@wzh-/utils": "^1.0.0"
   }
 }
