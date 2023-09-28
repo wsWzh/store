@@ -30,5 +30,4 @@ router.afterEach(closeLoading)
 //错误处理
 router.onError(onError)
 
-
 // 执行顺序:beforeEach => afterEach => onError 中间的beforeEach和afterEach其中一个报错跳过其余的路由拦截直接执行onError

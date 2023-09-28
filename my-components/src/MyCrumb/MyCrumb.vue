@@ -21,7 +21,6 @@ export default {
             const { meta, params, matched } = route.value
             const routes = matched.filter(({ meta }) => meta?.title)
             // params.matched 和 meta.matched 可对面包屑的数据进行二次改造
-            console.log(params, meta, 'route', route.value, routes);
             return params.matched?.(routes) || meta.matched?.(routes) || routes
         })
 

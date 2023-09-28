@@ -1,5 +1,5 @@
 <template>
-  <div>嵌套路由页面{{ $route.params?.id }}</div>
+  <a-layout>嵌套路由页面{{ $route.params?.id }}</a-layout>
 </template>
 
 <script setup>

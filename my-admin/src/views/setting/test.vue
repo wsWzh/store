@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%;box-sizing: border-box;height: 100%;overflow-y: auto;">
+  <a-layout>
     <a-form :model="model" auto-label-width style="width: 100%;box-sizing: border-box;">
       <a-row :gutter="20" style="width: 100%;box-sizing: border-box;">
         <a-col :span="8">
@@ -36,9 +36,9 @@
         <a-col :span="8">
           <a-form-item label="组件的v-model">
             {{ testArr }}
-            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading"
-              v-model="testValue" /> {{ testValue
-              }}
+            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading" v-model="testValue" />
+            {{ testValue
+            }}
           </a-form-item>
         </a-col>
         <a-col :span="8">
@@ -158,19 +158,18 @@
               <a-button @click="state.count++">reactive++</a-button>
               <a-button @click="state1.count1++">ref++</a-button>
               <a-button @click="(state = { count: 1 })">reactive重新赋值(会丢失响应)</a-button>
-                <a-button @click="(state1 = { count1: 1 })">ref重新赋值(不会会丢失响应)</a-button>
+              <a-button @click="(state1 = { count1: 1 })">ref重新赋值(不会会丢失响应)</a-button>
               <div>reactive:{{ state }}</div>
               <div>ref:{{ state1 }}</div>
             </a-space>
-
           </a-form-item>
         </a-col>
       </a-row>
     </a-form>
-  </div>
+  </a-layout>
 </template>
 <script setup>
-import { ref,  reactive, computed, watch, effect, watchEffect } from 'vue'
+import { ref, reactive, computed, watch, effect, watchEffect } from 'vue'
 import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法

@@ -22,7 +22,7 @@ const route = useRoute()
 const inputData = ref('')
 
 const clear = () => {
-  removeKeepalive('MemberList')
+  // removeKeepalive('MemberList')
   router.back()
 }
 

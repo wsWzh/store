@@ -2,17 +2,12 @@
 import MyLayoutHeader from './header.vue'
 import MyLayoutAside from './aside.vue'
 import { keepaliveList } from '../router/keepalive'
-import { useRouter ,RouterView} from 'vue-router'
-import { KeepAlive, Transition, } from 'vue'
+import { RouterView } from 'vue-router'
+import { KeepAlive, Transition } from 'vue'
 export default {
   name: 'Layout',
   setup() {
-    const router = useRouter()
 
-    // 测试更新页面缓存
-    const handleKeepalive = () => {
-      router.push({ name: 'MemberList' })
-    }
     return () => {
       return [
         <a-layout class="my-layout">
@@ -21,16 +16,17 @@ export default {
             <MyLayoutAside />
             <a-layout class="main-wrap">
               <my-crumb>
-                <a-button size="mini" type="primary" onClick={handleKeepalive}>常驻按钮</a-button>
+                <a-button type="primary">常驻按钮</a-button>
               </my-crumb>
               <RouterView>
                 {
                   ({ route, Component }) =>
                     <Transition name="fade">
-                      <a-layout key={route.name}>
-                        <KeepAlive include={keepaliveList.value}>{Component}</KeepAlive>
-                      </a-layout>
+                      <KeepAlive include={keepaliveList.value}>
+                        {Component}
+                      </KeepAlive>
                     </Transition>
+
                 }
               </RouterView>
             </a-layout>

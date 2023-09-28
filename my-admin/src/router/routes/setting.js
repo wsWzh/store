@@ -32,7 +32,7 @@ export default {
             path: 'nest',
             name: 'nestRoute',
             meta: { title: '嵌套路由' },
-            component: () => import(/* webpackChunkName: "layout" */ '@/layout/RouterView.vue'),
+            redirect: { name: 'nestRoute1' },
             children:[
                 {
                     path: 'nest1/:id?',

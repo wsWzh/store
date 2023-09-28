@@ -1,7 +1,6 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { Message } from '@arco-design/web-vue' //引入acro-design组件库 获得代码提示
 </script>
 
 <template>

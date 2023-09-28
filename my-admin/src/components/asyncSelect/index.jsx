@@ -1,10 +1,9 @@
 
-<script  lang="jsx">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed,defineComponent } from 'vue'
 import { empty } from '@/utils'
 import { http, GET_PAGE } from '@/http'
 import { Select as ASelect } from '@arco-design/web-vue'
-export default {
+export default defineComponent ({
     name: 'asyncSelect',
     emits: [],
     props: {
@@ -133,5 +132,4 @@ export default {
             return <ASelect {..._attrs} v-slots={slots} />
         }
     }
-}
-</script>
+})

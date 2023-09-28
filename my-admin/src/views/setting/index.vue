@@ -1,11 +1,12 @@
 <template>
-      <my-crumb-slot key="setting">
-      <a-button size="mini" type="primary" @click="removeKeepalive('MemberList')">测试删除列表缓存</a-button>
+  <a-layout>
+    <my-crumb-slot key="setting">
+      <a-button type="primary" @click="removeKeepalive('MemberList')">测试删除列表缓存</a-button>
     </my-crumb-slot>
     <a-layout class="list-wrap">
       <a-form :model="params">
         <a-form-item label="限制输入字母">
-          <my-input v-model="params.name" :pattern="/^[a-zA-Z]{0,20}$/"/>
+          <my-input v-model="params.name" :pattern="/^[a-zA-Z]{0,20}$/" />
         </a-form-item>
         <a-form-item label="限制输入金额">
           <my-input v-model="params.money" :pattern="/^(\d{1,10})?(\.([0-9]{0,2}))?$/" />
@@ -41,8 +42,8 @@
         </a-form-item>
         <a-form-item label="图片上传">
           <my-tips error position="right">
-            <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload" origin="https://static-nk.liux.co"
-              style="width: unset" />
+            <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload"
+              origin="https://static-nk.liux.co" style="width: unset" />
           </my-tips>
         </a-form-item>
 
@@ -50,10 +51,10 @@
       <a-row style="padding-left: 50px;">
         <a-space wrap style="width: 600px;">
           <my-button @click="onJsonPost">json提交</my-button>
-            <my-button @click="onFormPost">form提交</my-button>
+          <my-button @click="onFormPost">form提交</my-button>
           <a-button @click="$router.back()">返回</a-button>
           <a-button @click="onLogin">401</a-button>
-          <a-button @click="$router.push({name:'nestRoute1',params:{id:123}})">去嵌套路由</a-button>
+          <a-button @click="$router.push({ name: 'nestRoute1', params: { id: 123 } })">去嵌套路由</a-button>
           <my-button @click="useResolve">提交按钮</my-button>
           <my-tips success>
             <my-button @click="useResolve">tips提交按钮</my-button>
@@ -100,17 +101,18 @@
         </a-space>
       </a-row>
     </a-layout>
+  </a-layout>
 </template>
 
 <script setup>
 import { IconDownload, IconExport, IconUpload } from '@arco-design/web-vue/es/icon'
-import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD , POST_CHANGE , GET_TOKEN , GET_USER_INFO } from '@/http'
+import { POST_SUCCESS, POST_ERROR, GET_DOWNLOAD, POST_UPLOAD, POST_CHANGE, GET_TOKEN, GET_USER_INFO } from '@/http'
 import { http } from '@/http'
-import { reactive, watch, toRaw, ref ,getCurrentInstance} from 'vue'
+import { reactive, watch, toRaw, ref, getCurrentInstance } from 'vue'
 import { removeKeepalive } from '../../router/keepalive'
 
 defineOptions({
-  name:'BasicsComponents'
+  name: 'BasicsComponents'
 })
 
 const params = reactive({
@@ -177,16 +179,16 @@ const handleUpload = (formData, config) => {
   return http.post(POST_UPLOAD, formData, config)
 }
 
-const onJsonPost=async ()=>{
-  return await http.post(POST_CHANGE, params,{type:'json'})
+const onJsonPost = async () => {
+  return await http.post(POST_CHANGE, params, { type: 'json' })
 }
 
 const onFormPost = async () => {
   return await http.post(POST_CHANGE, params)
 }
 
-const onLogin=()=>{
-  return  http.post(GET_TOKEN, params)
+const onLogin = () => {
+  return http.post(GET_TOKEN, params)
 }
 
 </script>

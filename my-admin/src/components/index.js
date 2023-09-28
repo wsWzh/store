@@ -4,7 +4,7 @@ import '@arco-themes/vue-siku/index.less'//自定义样式
 // import './theme.css'//自定义主题色
 import * as components from '../../../my-components'
 // import * as components from '@wzh-/components'
-import { asyncSelect } from './asyncSelect'
+import asyncSelect from './asyncSelect/index.jsx'
 
 export default {
     install(app) {

@@ -5,8 +5,8 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     props: { data: String },
     setup(props) {
-        return () => {
-            return [
+        return () =>
+            <a-layout>
                 <mySlots>
                     {{
                         default:
@@ -20,8 +20,7 @@ export default defineComponent({
                 <div>
                     {props.data}
                 </div>
-            ]
-        }
+            </a-layout>
     }
 })
 </script>

@@ -27,16 +27,20 @@ export function removeKeepalive(name) {
  * @returns
  */
 export default function (to, from, failure) {
+    // redirect时
+    if (to.name === from.name) {
+        return true
+    }
     //vue的响应式更新是异步的
     //放入宏任务队列中在下一个事件循环中执行
-    //确保在Vue的响应式更新完成后执行 确保keepaliveList的值是最新的
+    //Vue的响应式更新完成后执行 确保keepaliveList的值是最新的
     setTimeout(() => {
-
         // 上一个页面name
         const fromPageName = from.matched.at(-1)?.components?.default?.name
 
-        // 返回时自动删除上一个缓存
+        // 返回时自动删除上一个页面缓存
         if (usePopstate && fromPageName && keepaliveList.value?.at(-1) === fromPageName) {
+            console.log(123);
             keepaliveList.value.pop()
             usePopstate = false
         }
@@ -70,5 +74,6 @@ let usePopstate = false
 // history.back()、history.forward()、history.go()
 // router.back()、router.go()
 window.addEventListener('popstate', () => {
+    console.log('popstate');
     usePopstate = true
 })
