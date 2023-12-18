@@ -140,6 +140,9 @@ export default {
             }
             return value.split(',').map(fileInit)
         }
+        const cs = (fileItem)=>{
+            console.log(fileItem,123);
+        }
         return () => {
 
             const { modelValue, action, name, accept, responseUrlKey } = props
@@ -157,6 +160,11 @@ export default {
                 accept,
                 name,
                 responseUrlKey,
+                onSuccess:cs
+            }
+
+            if (typeOf(action, 'string')) {
+                Object.assign(_attrs, { action })
             }
 
             // 重构插槽参数（优化按钮交互状态）

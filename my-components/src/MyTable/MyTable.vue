@@ -1,6 +1,6 @@
 <script lang="jsx">
 import MyPagination from './MyPagination'
-import { Row as ARow, Table as ATable } from '@arco-design/web-vue'
+import { Row as ARow, Table as ATable, Button as Abutton, Space as Aspace } from '@arco-design/web-vue'
 import { ref, watch, reactive, onMounted, computed, toRaw } from 'vue'
 import { reduceProps, empty, typeOf } from '@wzh-/utils'
 import router from '@/router'
@@ -98,8 +98,11 @@ export default {
             emit('update:selections', selectedRows)
         }
 
+        const searchErr = ref(false)
+
         //查询
         const search = async _params => {
+            searchErr.value = false
             //重置时清空查询条件
             if (_params === null) {
                 // 不能直接赋值 reactive会丢失响应性
@@ -110,8 +113,8 @@ export default {
                 _params = {}
             }
             //记录参数
-            paramsHistory.value = {...params, ..._params }
-            const res = await props.onRequest(paramsHistory.value).finally(useLoading())
+            paramsHistory.value = { ...params, ..._params }
+            const res = await props.onRequest(paramsHistory.value).catch(err => searchErr.value = true).finally(useLoading())
             Object.assign(dataInfo, res)
         }
 
@@ -140,6 +143,15 @@ export default {
                 }
             })
 
+            const slotErr = () => [
+                <ARow class="empty-wrap" justify="center" align="center">
+                    <Aspace>
+                         <div>请求错误</div>
+                        <Abutton type='text' onClick={search}>重试</Abutton>
+                    </Aspace>
+                </ARow>
+            ]
+
             //预设插槽
             const {
                 empty: slotEmpty = () => [
@@ -157,7 +169,6 @@ export default {
 
                 },
             } = slots
-
 
             const tableAttrs = {
                 class: 'my-table',
@@ -189,9 +200,8 @@ export default {
 
             const tableSlots = {
                 ...slots,
-                empty: () => slotEmpty({ loading: loading.value })
+                empty: searchErr.value ? slotErr() : slotEmpty({ loading: loading.value })
             }
-
             const Table = <ATable {...tableAttrs} v-slots={tableSlots} />
 
             return [
