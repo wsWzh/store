@@ -239,15 +239,16 @@ const axios = Axios.create({
   timeout: 70000,
 })
 axios.interceptors.response.use(res => {
-  console.log(res, '我是拦截器');
+  console.log(res, '我是第一次成功拦截器');
   const suce = res.data.success
   if (suce) {
     return res
   }
-  return Promise.reject({ message: '虽然你成功了,但是我要让你走catch' })
+  // return Promise.resolve({ message: '走第二次拦截器的成功' })
+  return Promise.reject({ message: '虽然你成功了,但是我要让你走第二次catch' })
 
 }, err => {
-  console.log(err, '我是拦截器');
+  console.log(err, '我是第一次失败拦截器');
   return Promise.reject(err)
 })
 
@@ -293,7 +294,6 @@ const testErr = () => {
   axios({ url: POST_ERROR }).catch(err => {
     console.log(err);
   })
-  http.get(POST_ERROR)
 }
 
 
@@ -329,11 +329,11 @@ const watchData = ref(0)
 const watchText = ref()
 
 effect(() => {
-  console.log(123, watchData.value);
+  console.log('effect', watchData.value);
 })
 
 const stop = watch(watchData, val => {
-  console.log(val);
+  console.log(`正在监听${val}`);
   watchText.value = `正在监听${val}`
   if (val > 3) {
     watchText.value = '监听结束'
@@ -342,7 +342,7 @@ const stop = watch(watchData, val => {
 })
 
 watchEffect(() => {
-  console.log(456, watchData.value);
+  console.log('watchEffect', watchData.value);
 })
 
 const state = reactive({ count: 0 })

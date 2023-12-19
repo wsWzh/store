@@ -26,7 +26,6 @@ export default {
                         {Component}
                       </KeepAlive>
                     </Transition>
-
                 }
               </RouterView>
             </a-layout>

@@ -41,10 +41,7 @@ export default {
             }
         }
 
-        // 按钮插槽
-        const defaultSlots = computed(() => {
-            return loading.value ? () => props.loadingText : slots.default
-        })
+
 
 
         return () => {
@@ -56,12 +53,8 @@ export default {
                 onClick
             }
 
-            const _slots = {
-                ...slots,
-                default: defaultSlots.value
-            }
 
-            return <AButton {..._attrs} v-slots={_slots} />
+            return <AButton {..._attrs} v-slots={slots} />
 
         }
     }
