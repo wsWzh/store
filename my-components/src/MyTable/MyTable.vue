@@ -205,7 +205,7 @@ export default {
             const Table = <ATable {...tableAttrs} v-slots={tableSlots} />
 
             return [
-                ...slotParams({ params, search }),
+                ...slotParams({ params, search,loading:loading.value }),
                 Table,
                 ...slotPagination(dataInfo)
             ]
