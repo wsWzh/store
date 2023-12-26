@@ -97,6 +97,8 @@
                 </a-button>
               </template>
             </my-upload>
+            <input type="file" @change="onUpload">
+            进度:{{ percent }}%
           </my-tips>
         </a-space>
       </a-row>
@@ -171,6 +173,7 @@ const handleDownload = () => {
   return http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
 }
 
+// responseType: 'blob' 将响应解析为 Blob 对象 方便处理二进制数据。
 const handleExport = params => {
   return http({ url: GET_DOWNLOAD, responseType: 'blob', params, intact: true })
 }
@@ -189,6 +192,20 @@ const onFormPost = async () => {
 
 const onLogin = () => {
   return http.post(GET_TOKEN, params)
+}
+
+
+const percent = ref(0)
+
+const onUpload = (e) => {
+  const file = e.target.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+  http.post(POST_UPLOAD, formData, {
+    onUploadProgress: (progressEvent) => {
+      percent.value = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+    }
+  })
 }
 
 </script>

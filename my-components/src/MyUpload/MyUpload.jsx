@@ -102,7 +102,7 @@ export default {
             const formData = new FormData()
             formData.append(props.name, fileItem.file)
 
-            // 上传进度条 axios处理进度条的函数名称
+            //持续监听 上传进度条  axios处理进度条的函数名称
             const onUploadProgress = (event) => {
                 const percent = event.total > 0 ? (event.loaded / event.total) : undefined
                 onProgress(parseInt(percent), event)
