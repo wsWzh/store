@@ -10,7 +10,7 @@ export function beforeRequest(config) {
     if (empty(data)) {
         return config
     }
-    // json传参Object 浏览器请求头自动生成Content-Type: "application/json"
+    //不处理传参 json传参Object 浏览器请求头自动生成Content-Type: "application/json"
     if (type === 'json') {
         return config
     }
@@ -18,6 +18,7 @@ export function beforeRequest(config) {
     if (typeOf(data, 'formdata')) {
         return config
     }
+    //处理传参为name = 张三 & age=30
     // form传参String 浏览器请求头自动生成Content-Type: "application/x-www-form-urlencoded"
     return Object.assign(config, { data: stringify(data) })
 }

@@ -6,7 +6,8 @@
     "server": "node server",
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview --port 3000"
+    "preview": "vite preview --port 3000",
+    "pub": "npm publish"
   },
   "dependencies": {
     "pinia": "^2.0.28",

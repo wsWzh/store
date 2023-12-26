@@ -200,7 +200,7 @@ export default {
 
             const tableSlots = {
                 ...slots,
-                empty: searchErr.value ? slotErr() : slotEmpty({ loading: loading.value })
+                empty:()=> searchErr.value ? slotErr() : slotEmpty({ loading: loading.value })
             }
             const Table = <ATable {...tableAttrs} v-slots={tableSlots} />
 

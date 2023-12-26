@@ -37,10 +37,8 @@ export default function (to, from, failure) {
     setTimeout(() => {
         // 上一个页面name
         const fromPageName = from.matched.at(-1)?.components?.default?.name
-
         // 返回时自动删除上一个页面缓存
         if (usePopstate && fromPageName && keepaliveList.value?.at(-1) === fromPageName) {
-            console.log(123);
             keepaliveList.value.pop()
             usePopstate = false
         }
@@ -74,6 +72,5 @@ let usePopstate = false
 // history.back()、history.forward()、history.go()
 // router.back()、router.go()
 window.addEventListener('popstate', () => {
-    console.log('popstate');
     usePopstate = true
 })
