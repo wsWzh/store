@@ -17,12 +17,13 @@ export function resolveResponse(response) {
         return response
     }
     const error = Object.assign(new Error(), { message, config, response })
-    // 错误处理 return Promise.reject(error) 会走catch
+    // 错误处理 return Promise.reject(error) 会走catch 也会走创建实例的响应拦截器的第二个函数
     return Promise.reject(error)
 }
 
 /**
  * 处理请求失败
+ * 状态码超出 2xx 范围的状态码都会触发该函数。
  * @param error {{ message:string , response: object } }
  */
 export function rejectResponse(error) {

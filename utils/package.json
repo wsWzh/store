@@ -1,11 +1,12 @@
 {
   "name": "@wzh-/utils",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "js常用函数",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pub": "npm publish",
+    "del": "npm unpublish @wzh-/utils --force"
   },
   "keywords": [
     "utils"

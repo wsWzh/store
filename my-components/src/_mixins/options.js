@@ -7,8 +7,6 @@ import { formatValue } from '../_utils'
  * 栗子：formatter = ({id,name}) => [id,name]
  * 栗子：formatter = 'id,name'
  */
-
-
 export default {
     inheritAttrs: true,
     emits: ['update:modelValue', 'change'], //事件名称不包括逗号。事件名称不包括模板中

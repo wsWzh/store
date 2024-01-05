@@ -16,7 +16,7 @@ export default defineComponent({
                         params: ({ open, params }) => <div onClick={open}>{params.name},123</div>
                     }
                     }
-                </mySlots>,
+                </mySlots>
                 <div>
                     {props.data}
                 </div>

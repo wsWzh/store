@@ -1,11 +1,11 @@
 {
   "name": "@wzh-/components",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "基于Arco-Design-Vue,二次封装的组件",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pub":"npm publish"
+    "pub":"npm publish",
+    "del":"npm unpublish @wzh-/components --force"
   },
   "author": "wangzh123",
   "license": "ISC",

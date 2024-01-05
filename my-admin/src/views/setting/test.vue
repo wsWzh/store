@@ -248,7 +248,7 @@ axios.interceptors.response.use(res => {
   return Promise.reject({ message: '虽然你成功了,但是我要让你走第二次catch' })
 
 }, err => {
-  console.log(err, '我是第一次失败拦截器');
+  console.log(err, '我是axios第一次失败拦截器');
   return Promise.reject(err)
 })
 
@@ -269,7 +269,7 @@ const ProxyAxios = () => {
 ProxyAxios.interceptors = axios.interceptors
 //这里的拦截器是被axios拦截器影响后的  请求成功也不一定是res
 ProxyAxios.interceptors.response.use(res => res, err => {
-  return Promise.reject({ err, message: '不好意思我又封装了一层' })
+  return Promise.reject({ err, message: '创建实例的拦截器,第二次' })
 })
 
 

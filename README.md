@@ -12,6 +12,7 @@
 
 #### 安装教程
 
-1.  npm install //安装依赖
-2.  npm run serve //启动node服务 模拟接口
-3.  npm run dev //运行项目
+1.  cd my-admin
+2.  npm install //安装依赖
+3.  npm run serve //启动node服务 模拟接口
+4.  npm run dev //运行项目
