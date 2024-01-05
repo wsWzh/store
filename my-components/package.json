@@ -1,6 +1,6 @@
 {
   "name": "@wzh-/components",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "基于Arco-Design-Vue,二次封装的组件",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.51.1",
-    "@wzh-/utils": "^1.0.0"
+    "@wzh-/utils": "^1.0.4"
   }
 }

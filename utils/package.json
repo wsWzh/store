@@ -1,6 +1,6 @@
 {
   "name": "@wzh-/utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "js常用函数",
   "main": "index.js",
   "type": "module",

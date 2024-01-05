@@ -1,6 +1,6 @@
 {
   "name": "@wzh-/axios",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "二次封装的异步请求",
   "main": "index.js",
   "type": "module",
@@ -18,6 +18,6 @@
     "del": "npm unpublish @wzh-/axios --force"
   },
   "devDependencies": {
-    "@wzh-/utils": "1.0.1"
+    "@wzh-/utils": "1.0.4"
   }
 }
