@@ -58,7 +58,7 @@ const Setting = () => {
                     </MyTips>
                     <MyTips success error>
                         <div>
-                            123
+                            多个按钮同步状态：
                         </div>
                         <MyButton type="primary" onClick={useResolve}>成功提示</MyButton>
                         <MyButton danger type="primary" onClick={useReject}>错误提示</MyButton>
@@ -66,7 +66,7 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="开关">
-                <MySwitch />
+                <MySwitch onChange={useResolve}/>
             </Descriptions.Item>
         </Descriptions>
     )
