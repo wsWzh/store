@@ -1,0 +1,1 @@
+export { typeOf } from '../../../utils';

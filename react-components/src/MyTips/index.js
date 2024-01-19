@@ -1,0 +1,1 @@
+export { default as MyTips } from './MyTips.jsx'

@@ -1,7 +1,7 @@
 {
-  "name": "store",
+  "name": "react-components",
   "version": "1.0.0",
-  "description": "个人使用",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,5 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "react": "^18.2.0"
+  },
+  "devDependencies":{
+    "@wzh-/utils": "^1.0.4",
+    "antd": "^5.13.1"
   }
 }

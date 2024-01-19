@@ -133,6 +133,7 @@ export default {
 
 
         return () => {
+            console.log('更新咯');
             const { rowKey, selections, columns, bordered } = props
 
             // 重写render 将reload(刷新数据)注入render
@@ -146,7 +147,7 @@ export default {
             const slotErr = () => [
                 <ARow class="empty-wrap" justify="center" align="center">
                     <Aspace>
-                         <div>请求错误</div>
+                        <div>请求错误</div>
                         <Abutton type='text' onClick={search}>重试</Abutton>
                     </Aspace>
                 </ARow>
@@ -200,12 +201,12 @@ export default {
 
             const tableSlots = {
                 ...slots,
-                empty:()=> searchErr.value ? slotErr() : slotEmpty({ loading: loading.value })
+                empty: () => searchErr.value ? slotErr() : slotEmpty({ loading: loading.value })
             }
             const Table = <ATable {...tableAttrs} v-slots={tableSlots} />
 
             return [
-                ...slotParams({ params, search,loading:loading.value }),
+                ...slotParams({ params, search, loading: loading.value }),
                 Table,
                 ...slotPagination(dataInfo)
             ]

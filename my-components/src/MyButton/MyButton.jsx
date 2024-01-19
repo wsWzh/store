@@ -45,7 +45,6 @@ export default {
 
 
         return () => {
-
             const _attrs = {
                 class: 'my-button',
                 loading: loading.value,

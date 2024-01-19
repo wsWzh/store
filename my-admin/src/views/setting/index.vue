@@ -128,6 +128,7 @@ const params = reactive({
   switch: '',
   image: '',
   types: '1,2',
+  arr:[1,2]
   // types :  [1,3] ,
 })
 setTimeout(() => {
@@ -207,6 +208,7 @@ const onUpload = (e) => {
     }
   })
 }
+
 
 </script>
 

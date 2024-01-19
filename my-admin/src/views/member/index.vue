@@ -5,6 +5,8 @@
       <a-button>更新</a-button>
       <my-button>搜索</my-button>
     </my-crumb-slot>
+    <button @click="cs=!cs">测试一下父组件会不会影响组件更新</button>
+    <div>{{cs}}</div>
     <my-table history @request="requestApi" :columns="columns"  @change="change"
       v-model:selections="selections">
       <template #params="{ params, search,loading }">
@@ -33,6 +35,7 @@ import { columns } from './columns'
 defineOptions({
   name: 'MemberList'
 })
+const cs = ref(false)
 
 const requestApi = async params => {
   // await new Promise((resolve, reject) => {
