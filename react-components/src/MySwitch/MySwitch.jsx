@@ -3,9 +3,9 @@ import { Switch } from 'antd';
 import { useState } from 'react'
 
 /**
- * 
- * @param {*} props 
- * @returns 
+ *
+ * @param {*} props
+ * @returns
  */
 const MySwitch = (props) => {
 
@@ -35,6 +35,7 @@ const MySwitch = (props) => {
 
     const _props = {
         ...props,
+        className: 'my-switch',
         loading,
         onClick,
         value

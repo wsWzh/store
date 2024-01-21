@@ -1,34 +1,11 @@
 import { Descriptions } from 'antd'
 import React, { useState } from 'react'
-import { MyButton, MyTips, MySwitch } from '../../components'
-import { Button, Space, Tooltip } from 'antd'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange } from '../../components'
+import { Button, Space, Tooltip, Input, DatePicker } from 'antd'
 
-const Cs = (props) => {
-    const Children = props.children
-
-    const success = () => {
-        console.log('接收到子组件成功信息');
-    }
-
-    const error = () => {
-        console.log('接收到子组件失败信息');
-    }
-
-
-    return <div >
-        {React.cloneElement(props.children, { success, error })}
-    </div>
-}
-
-const Cs1 = (props) => {
-    console.log(123);
-
-    return <div {...props}>
-        112
-    </div>
-}
-
+const { RangePicker } = DatePicker
 const Setting = () => {
+
     const useResolve = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -45,8 +22,17 @@ const Setting = () => {
         })
     }
 
+    const [params, setParams] = useState({
+        input: '123',
+        start: '2024-01-01',
+        end: '2024-01-02'
+    })
+
     return (
         <Descriptions title="测试封装的组件" column={1}>
+            <div>
+                {JSON.stringify(params)}
+            </div>
             <Descriptions.Item label="按钮">
                 <Space>
                     <MyButton type="primary" onClick={useResolve}>成功按钮</MyButton>
@@ -66,7 +52,18 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="开关">
-                <MySwitch onChange={useResolve}/>
+                <MySwitch onChange={useResolve} />
+            </Descriptions.Item>
+            <Descriptions.Item label="输入框">
+                <Space>
+                    数字输入框: <MyInput value={params.input} pattern={/^\d+$/} update={v=>setParams({...params,input:v})}/>
+                    字母输入框: <MyInput value={params.input} pattern={/^[a-zA-Z]+$/} />
+                    金额输入框: <MyInput value={params.input} pattern={/^(\d{1,10})?(\.([0-9]{0,2}))?$/} />
+                    手机号码输入框: <MyInput value={params.input} pattern={/^1?([3-9](\d{0,9})?)?$/} />
+                </Space>
+            </Descriptions.Item>
+            <Descriptions.Item label="日期范围">
+                <MyDateRange showTime end={params.end} start={params.start} updateDate={(start, end) => setParams({ ...params, start, end })} />
             </Descriptions.Item>
         </Descriptions>
     )
