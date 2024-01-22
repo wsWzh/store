@@ -35,6 +35,8 @@ const MySwitch = (props) => {
     }
 
     const _props = {
+        ...props,
+        className: 'my-switch',
         loading,
         onChange,
         value
