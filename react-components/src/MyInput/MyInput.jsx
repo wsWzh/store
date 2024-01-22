@@ -1,6 +1,6 @@
 import { typeOf } from '@wzh-/utils'
 import { Input } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * input 添加 pattern 属性
@@ -10,32 +10,53 @@ import { useState } from 'react'
  */
 const MyInput = (props) => {
 
-    const { pattern ,update} = props
+    const { pattern, update, value, onChange } = props
 
-    let value
+    const triggerChange = (value) => {
+        onChange?.(value);
+        setValue(value)
 
-    if (typeOf(pattern, 'regexp') && pattern.test(props.value)) {
-        value = props.value
-    }
+    };
 
+    const [_value, setValue] = useState()
 
-    const onChange = (e) => {
-
-        const { value: v } = e.target
-
-        if (typeOf(pattern, 'regexp') && pattern.test(v)) {
-            update(v)
+    // 模拟挂载后生命周期
+    useEffect(() => {
+        if (!typeOf(pattern, 'regexp')) {
+            return
         }
+        if (!pattern.test(value)) {
+            //不符合正则 清空
+            triggerChange('')
+        }else{
+            triggerChange(value)
+        }
+
+    }, [value])
+
+
+
+    const _onChange = (e) => {
+        const v = e.target.value
+
+        if (typeOf(pattern, 'regexp')) {
+            if (!pattern.test(v)) {
+                return //不更新值
+            }
+        }
+        triggerChange(v)
+        update(v)
     }
 
     const _props = {
         ...props,
         className: 'my-input',
-        value,
-        onChange,
+        value: _value,
+        onChange: _onChange,
     }
 
     delete _props.update
+    delete _props.pattern
 
     MyInput.TextArea = Input.TextArea;
 
@@ -44,7 +65,7 @@ const MyInput = (props) => {
 
 MyInput.defaultProps = {
     pattern: '',
-    update:()=>{}
+    update: () => { }
 }
 
 export default MyInput;

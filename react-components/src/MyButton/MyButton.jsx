@@ -9,7 +9,6 @@ import { typeOf } from '@wzh-/utils';
  * @returns
  */
 const MyButton = (props) => {
-    console.log(props);
 
     const { onSuccess, onError, updateDisabled } = props
 
@@ -29,6 +28,7 @@ const MyButton = (props) => {
 
     const onClick = (...args) => {
         const click = props.onClick
+        if (!click) return
         const promise = (click[0] || click)(...args)
         if (typeOf(promise, 'promise')) {
             promise

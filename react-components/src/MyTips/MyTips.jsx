@@ -11,7 +11,6 @@ import React, { useState, useEffect } from 'react';
  * @returns
  */
 const MyTips = (props) => {
-    console.log(props,'props');
     const { children, delay, success, error, updateDisabled, btnDisabled } = props
 
     // 提示窗口的背景色

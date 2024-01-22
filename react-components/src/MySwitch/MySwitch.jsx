@@ -1,6 +1,6 @@
 import { typeOf } from '@wzh-/utils';
 import { Switch } from 'antd';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  *
@@ -8,8 +8,7 @@ import { useState } from 'react'
  * @returns
  */
 const MySwitch = (props) => {
-
-    const { children, checkedValue, uncheckedValue, onChange: fn,value:v } = props
+    const { checkedValue, uncheckedValue, onChange: fn, value: v } = props
 
     const [loading, setLoading] = useState(false);
 
@@ -17,9 +16,14 @@ const MySwitch = (props) => {
         setLoading(true);
         return () => setLoading(false)
     }
-    const bool = (v === checkedValue)
-    console.log(bool, '123', v);
-    const [value, setValue] = useState(bool)
+
+
+    const [value, setValue] = useState()
+
+    useEffect(() => {
+        const bool = (v === checkedValue)
+        setValue(bool)
+    }, [v])
 
     const onChange = (bool) => {
         const value = bool ? checkedValue : uncheckedValue
@@ -31,6 +35,8 @@ const MySwitch = (props) => {
             ).catch(err => {
             }
             ).finally(useLoading())
+        } else {
+            setValue(bool)
         }
     }
 
@@ -42,7 +48,8 @@ const MySwitch = (props) => {
         value
     }
 
-
+    delete _props.checkedValue
+    delete _props.uncheckedValue
 
     return <Switch {..._props} />
 }
