@@ -3,13 +3,13 @@ import { Switch } from 'antd';
 import { useState } from 'react'
 
 /**
- * 
- * @param {*} props 
- * @returns 
+ *
+ * @param {*} props
+ * @returns
  */
 const MySwitch = (props) => {
 
-    const { children, onChange } = props
+    const { children, checkedValue, uncheckedValue, onChange: fn,value:v } = props
 
     const [loading, setLoading] = useState(false);
 
@@ -17,30 +17,37 @@ const MySwitch = (props) => {
         setLoading(true);
         return () => setLoading(false)
     }
+    const bool = (v === checkedValue)
+    console.log(bool, '123', v);
+    const [value, setValue] = useState(bool)
 
-    const [value,setValue]=useState(false)
-
-    const onClick = () => {
-        const promise = onChange(value);
-        if (typeOf(promise,'promise')){
-            promise.then(res=>{
-                setValue(true)
+    const onChange = (bool) => {
+        const value = bool ? checkedValue : uncheckedValue
+        const promise = fn(value);
+        if (typeOf(promise, 'promise')) {
+            promise.then(res => {
+                setValue(bool)
             }
-            ).catch(err=>{
-                setValue(false)
+            ).catch(err => {
             }
             ).finally(useLoading())
         }
     }
 
     const _props = {
-        ...props,
         loading,
-        onClick,
+        onChange,
         value
     }
 
-    return <Switch {..._props}/>
+
+
+    return <Switch {..._props} />
+}
+
+MySwitch.defaultProps = {
+    checkedValue: 1,
+    uncheckedValue: 0
 }
 
 export default MySwitch;

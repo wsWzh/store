@@ -1,7 +1,7 @@
 import { Descriptions } from 'antd'
 import React, { useState } from 'react'
 import { MyButton, MyTips, MySwitch } from '../../components'
-import { Button, Space, Tooltip } from 'antd'
+import { Button, Space, Tooltip, Form, Input } from 'antd'
 
 const Cs = (props) => {
     const Children = props.children
@@ -45,11 +45,25 @@ const Setting = () => {
         })
     }
 
+    const useSwitch = val => {
+        console.log(val);
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('操作成功')
+            }, 1500)
+        })
+    }
+
+    const [params, setParams] = useState({
+        input: 123,
+        switch: 1
+    })
+
     return (
         <Descriptions title="测试封装的组件" column={1}>
             <Descriptions.Item label="按钮">
                 <Space>
-                    <MyButton type="primary" onClick={useResolve}>成功按钮</MyButton>
+                    <MyButton type="primary" onClick={useResolve}>加载按钮 </MyButton>
                     <MyTips success >
                         <MyButton type="primary" onClick={useResolve}>成功提示</MyButton>
                     </MyTips>
@@ -66,7 +80,17 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="开关">
-                <MySwitch onChange={useResolve}/>
+                <MySwitch onChange={useSwitch} />
+            </Descriptions.Item>
+            <Descriptions.Item label="表单">
+                <Form>
+                    <Form.Item label="输入框">
+                        <Input value={params.input} />
+                    </Form.Item>
+                    <Form.Item label="状态">
+                        <MySwitch onChange={useSwitch} value={params.switch}/>
+                    </Form.Item>
+                </Form>
             </Descriptions.Item>
         </Descriptions>
     )
