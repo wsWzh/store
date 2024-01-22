@@ -13,7 +13,6 @@ import { useMemo } from "react";
  * mode=multiple时将多选值改造成 v,v,v... 的格式
  */
 const MySelect = withExtraProps(props => {
-    console.log(props, 'select');
 
     const { value: v, update, options, children, onChange, mode } = props
 

@@ -1,6 +1,6 @@
 import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox ,MySelect} from '../../components'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect } from '../../components'
 import { Button, Space, Tooltip, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
 
 const { RangePicker } = DatePicker
@@ -27,8 +27,8 @@ const Setting = () => {
             setTimeout(() => {
                 resolve('操作成功')
             }, 1500)
-        }).then(res=>{
-            setParams({...params,a:{switch:val}})
+        }).then(res => {
+            setParams({ ...params, a: { switch: val } })
         })
     }
 
@@ -39,7 +39,7 @@ const Setting = () => {
     ]
 
     const getDetail = () => {
-       return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({
                     input: '123',
@@ -48,8 +48,8 @@ const Setting = () => {
                     a: {
                         switch: 1
                     },
-                    radio:1,
-                    checkbox:['1',2],
+                    radio: 1,
+                    checkbox: ['1', 2],
                     select: ['1', 2]
                 })
             })
@@ -107,10 +107,10 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="日期范围">
-                <MyDateRange showTime end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} />
+                {/* <MyDateRange showTime end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} /> */}
             </Descriptions.Item>
             <Descriptions.Item label="单选">
-                <MyRadio options={options} formatter="id,name" value={params.radio} update={radio =>setParams({...params,radio})}>
+                <MyRadio options={options} formatter="id,name" value={params.radio} update={radio => setParams({ ...params, radio })}>
                     <Radio value={4}>选项4</Radio>
                     <Radio value={5}>选项5</Radio>
                 </MyRadio>
@@ -121,7 +121,7 @@ const Setting = () => {
                 </MyCheckbox>
             </Descriptions.Item>
             <Descriptions.Item label="下拉">
-                <MySelect options={options} formatter="id,name" value={params.select} update={select=>setParams({...params,select})}>
+                <MySelect options={options} formatter="id,name" value={params.select} update={select => setParams({ ...params, select })}>
                     <Select.Option value="123" key="123">123</Select.Option>
                 </MySelect>
             </Descriptions.Item>
@@ -133,8 +133,8 @@ const Setting = () => {
                     <Form.Item label="开关" name={['a', 'switch']} rules={[{ required: true }]}>
                         <MySwitch></MySwitch>
                     </Form.Item>
-                    <Form.Item label="日期" name="start" rules={[{ required: true }] }>
-                        <MyDateRange end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} />
+                    <Form.Item label="日期" name="start,end" rules={[{ required: true }]}>
+                        <MyDateRange  />
                     </Form.Item>
                     <Form.Item label="单选" name="radio" rules={[{ required: true }]}>
                         <MyRadio options={options} formatter={({ id, name }) => [id, name]} value={1} >
