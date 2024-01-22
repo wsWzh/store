@@ -1,7 +1,7 @@
 import { withExtraProps } from "../_Hoc";
 import { Checkbox } from "antd";
 import { formatValue, typeOf } from "../_utils";
-import { empty } from '@wzh-/utils'
+import { empty,reduceProps } from '@wzh-/utils'
 import { useMemo } from "react";
 
 /**
@@ -13,7 +13,7 @@ import { useMemo } from "react";
  * 将多选值改造成 v,v,v... 的格式
  */
 const MyCheckbox = withExtraProps(props => {
-    
+
     const { value: v, update, options, children, onChange } = props
 
     const value = useMemo(() => {
@@ -34,14 +34,15 @@ const MyCheckbox = withExtraProps(props => {
         onChange(checkedValues.join(','))
     }
 
-    const _props = {
+    let _props = {
         ...props,
         value,
         onChange: _onChange,
         options: []//配置项优先级大于插槽
     }
 
-    delete _props.update
+    const keysToRemove = ['update']
+    _props = reduceProps(_props, ({ key }) => keysToRemove.includes(key))
 
     return <Checkbox.Group  {..._props} >
         {

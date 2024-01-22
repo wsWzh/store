@@ -23,11 +23,12 @@ const Setting = () => {
     }
 
     const useSwitch = val => {
-        console.log(val);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve('操作成功')
             }, 1500)
+        }).then(res=>{
+            setParams({...params,a:{switch:val}})
         })
     }
 
@@ -65,7 +66,7 @@ const Setting = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        console.log(values, params);
+        console.log(values);
     }
 
     return (
@@ -92,7 +93,9 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="开关">
-                <MySwitch onChange={useSwitch} value={params.a?.switch} />
+                <MyTips success>
+                    <MySwitch onChange={useSwitch} value={params.a?.switch} />
+                </MyTips>
             </Descriptions.Item>
             <Descriptions.Item label="输入框">
                 <Space>

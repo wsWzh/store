@@ -1,7 +1,7 @@
 import { withExtraProps } from "../_Hoc";
 import { Select } from "antd";
 import { formatValue, typeOf } from "../_utils";
-import { empty } from '@wzh-/utils'
+import { empty, reduceProps } from '@wzh-/utils'
 import { useMemo } from "react";
 
 /**
@@ -37,7 +37,7 @@ const MySelect = withExtraProps(props => {
         onChange(checkedValues.join(','))
     }
 
-    const _props = {
+    let _props = {
         ...props,
         className: 'my-select',
         value,
@@ -45,7 +45,9 @@ const MySelect = withExtraProps(props => {
         // options: []//配置项优先级大于插槽
     }
 
-    delete _props.update
+    const keysToRemove = ['update']
+
+    _props=reduceProps(_props, ({key})=>keysToRemove.includes(key))
 
     return <Select  {..._props} >
 

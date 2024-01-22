@@ -1,4 +1,4 @@
-import { typeOf } from '@wzh-/utils'
+import { typeOf, reduceProps } from '@wzh-/utils'
 import { Input } from 'antd'
 import { useMemo } from 'react'
 
@@ -11,7 +11,6 @@ import { useMemo } from 'react'
 const MyInput = (props) => {
 
     const { pattern, update, value: v, onChange } = props
-
 
     const value = useMemo(() => {
         if (typeOf(pattern, 'regexp') && pattern.test(v)) {
@@ -31,15 +30,14 @@ const MyInput = (props) => {
 
     }
 
-    const _props = {
+    let _props = {
         ...props,
         className: 'my-input',
         value,
         onChange: _onChange,
     }
-
-    delete _props.update
-    delete _props.pattern
+    const keysToRemove = ['update', 'pattern']
+    _props = reduceProps(_props, ({ key, value }) => keysToRemove.includes(key))
 
     MyInput.TextArea = Input.TextArea;
 

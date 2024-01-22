@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { typeOf } from '@wzh-/utils';
+import { typeOf, reduceProps } from '@wzh-/utils';
+
 /**
  * my-button 添加了 loading
  * loading : onClick 事件返回的是一个 promise 时自动触发 loading 效果
@@ -12,10 +13,9 @@ const MyButton = (props) => {
 
     const { onSuccess, onError, updateDisabled } = props
 
-    const basicProps = JSON.parse(JSON.stringify(props))//这里拷贝不了方法
+    const basicProps = JSON.parse(JSON.stringify(props))
 
     const [loading, setLoading] = useState(false)
-
 
     const useLoading = () => {
         setLoading(true)
@@ -39,15 +39,15 @@ const MyButton = (props) => {
     }
 
     // ...props 会导致组件频繁更新
-    const _props = {
+    let _props = {
         ...basicProps,
         className: 'my-button',
         loading,
         disabled: props.disabled || loading,
     }
 
-    delete _props.onSuccess //注入原生button自定义的参数会报错
-    delete _props.onError
+    const keysToRemove = [ 'onSuccess', 'onError']
+    _props = reduceProps(_props, ({ key, value }) => keysToRemove.includes(key))
 
     return <Button {..._props} onClick={onClick} />
 }
