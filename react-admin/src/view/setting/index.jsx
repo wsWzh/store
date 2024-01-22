@@ -49,7 +49,8 @@ const Setting = () => {
                         switch: 1
                     },
                     radio:1,
-                    checkbox:'1,2'
+                    checkbox:['1',2],
+                    select: ['1', 2]
                 })
             })
         })
@@ -120,9 +121,9 @@ const Setting = () => {
                 </MyCheckbox>
             </Descriptions.Item>
             <Descriptions.Item label="下拉">
-                <MySelect options={options}>
+                <MySelect options={options} formatter="id,name" value={params.select} update={select=>setParams({...params,select})}>
+                    <Select.Option value="123" key="123">123</Select.Option>
                 </MySelect>
-                <Select options={options}></Select>
             </Descriptions.Item>
             <Descriptions.Item label="表单">
                 <Form form={form} onFinish={onFinish}>
@@ -145,6 +146,11 @@ const Setting = () => {
                         <MyCheckbox options={options} formatter="id,name" value={params.checkbox} update={checkbox => setParams({ ...params, checkbox })}>
                             <Checkbox value={4}>选项4</Checkbox>
                         </MyCheckbox>
+                    </Form.Item>
+                    <Form.Item label="下拉" name="select">
+                        <MySelect options={options} formatter="id,name" mode="multiple">
+                            <Select.Option value="123" key="123">123</Select.Option>
+                        </MySelect>
                     </Form.Item>
                     <MyButton type="primary" htmlType="submit">提交</MyButton>
                 </Form>

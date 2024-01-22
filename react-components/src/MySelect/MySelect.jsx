@@ -10,54 +10,65 @@ import { useMemo } from "react";
  * 通过设置 props.formatter 指定真实值和显示值
  * 栗子：formatter = ({id,name}) => [id,name]
  * 栗子：formatter = 'id,name'
- * 将多选值改造成 v,v,v... 的格式
+ * mode=multiple时将多选值改造成 v,v,v... 的格式
  */
 const MySelect = withExtraProps(props => {
     console.log(props, 'select');
-    const Option = Select.Option;
 
-    const { value: v, update, options, children, onChange } = props
+    const { value: v, update, options, children, onChange, mode } = props
 
+    const updateValue = v => {
+        update(v)
+        onChange(v)
+    }
 
     const value = useMemo(() => {
-        let checkedValues
-        if (empty(v)) {
-            return []
+        let selectValue = v
+        if (mode === 'multiple') {
+            if (empty(v)) {
+                return []
+            }
+            if (typeOf(v, 'array')) {
+                selectValue = v.map(formatValue)
+            }
+            selectValue=v.toString().split(',').map(formatValue)
+            return selectValue
+        } else {
+            return formatValue(selectValue)
         }
-        if (typeOf(v, 'array')) {
-            checkedValues = v
-        }
-        checkedValues = v.toString().split(',')
-
-        return checkedValues.map(formatValue)
     }, [v])
 
-    const _onChange = (checkedValues) => {
-        update(checkedValues.join(','))
-        onChange(checkedValues.join(','))
+    const _onChange = (value) => {
+        let v = value
+        if (mode === 'multiple') {
+            v = v.join(',')
+        }
+        updateValue(v)
     }
 
     let _props = {
         ...props,
         className: 'my-select',
+        style: { width: '100%' },
         value,
         onChange: _onChange,
-        // options: []//配置项优先级大于插槽
+        options: []//配置项优先级大于插槽
     }
 
     const keysToRemove = ['update']
 
-    _props=reduceProps(_props, ({key})=>keysToRemove.includes(key))
+    _props = reduceProps(_props, ({ key }) => keysToRemove.includes(key))
+
+    const items = options.map(({ label, value, disabled }) => {
+        return <Select.Option disabled={disabled} key={value} value={value}>{label}</Select.Option>
+    })
 
     return <Select  {..._props} >
-
+        {
+            children ? items.concat(children) : items
+        }
     </Select>
 })
-
-MySelect.defaultProps = {
-    ...MySelect.defaultProps,
-    update: () => { }
-}
 
 
 export default MySelect;

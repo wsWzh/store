@@ -13,6 +13,7 @@ export const withExtraProps = UserCom => {
     const _Component = (props) => {
 
         const { formatter, options } = props
+        
         const formatOptions = useMemo(() => {
             return options.map(option => {
                 if (typeOf(formatter, 'string')) {
@@ -33,7 +34,6 @@ export const withExtraProps = UserCom => {
                 }
             })
         }, [options])
-        console.log(formatOptions, 'options');
 
         const _props = {
             ...props,
