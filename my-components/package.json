@@ -1,6 +1,6 @@
 {
   "name": "@wzh-/components",
-  "version": "1.0.17",
+  "version": "1.0.19",
   "description": "基于Arco-Design-Vue,二次封装的组件",
   "main": "index.js",
   "scripts": {

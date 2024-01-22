@@ -1,5 +1,6 @@
 import { Radio as ARadio } from "@arco-design/web-vue"
 import mixin from '../_mixins/options'
+import { formatValue } from "../_utils"
 /**
  * 单选框
  * 添加 props.options 作为选项数据
@@ -15,7 +16,7 @@ export default {
 
             const _attrs = {
                 class: 'my-radio',
-                modelValue: (modelValue),
+                modelValue: formatValue(modelValue),
                 'onUpdate:modelValue': onUpdate,
                 onChange,
                 ...attrs

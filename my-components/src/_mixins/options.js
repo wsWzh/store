@@ -43,7 +43,8 @@ export default {
                     if (typeOf(_props, 'array')) {
                         const value = formatValue(_props[0])
                         const label = _props[_props.length - 1]
-                        return { value, label }
+                        const disabled = option.disabled
+                        return { disabled, value, label }
                     }
                     return {}
                 }
