@@ -23,3 +23,11 @@
 h3,h5{
     margin: 0;
 }
+.ant-layout-sider-children{
+    display: flex;
+    flex-direction: column;
+}
+.ant-menu-root{
+    flex: 1;
+    overflow: auto;
+}

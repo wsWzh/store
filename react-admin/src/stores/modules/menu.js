@@ -1,50 +1,50 @@
 const defItems = [
     {
         name: '组件',
-        routeName: 'Components',
+        routePath: '/components',
         children: [
             {
                 name: '基础组件',
-                routeName: 'BasicsComponents'
+                routePath: '/components/basics'
             }, {
                 name: '调试组件(用于测试)',
-                routeName: 'testComponents'
+                routePath: 'testComponents'
             },
             {
                 name: 'jsx',
-                routeName: 'jsxComponents'
+                routePath: '/components/jsxComponents'
             },
             {
                 name: '嵌套路由',
-                routeName: 'nestRoute',
+                routePath: '/components/nestRoute',
                 children: [{
                     name: '嵌套路由1',
-                    routeName: 'nestRoute1'
+                    routePath: '/components/nestRoute/nestRoute1'
                 }]
             }
         ]
     },
     {
         name: '用户管理',
-        routeName: 'Member',
+        routePath: '/member',
         children: [
             {
                 name: '用户列表',
-                routeName: 'MemberList'
+                routePath: '/member/list'
             }
         ]
     },
     {
         name: '一级菜单',
-        routeName: 'testSub1',
+        routePath: '/testSub1',
         children: [
             {
                 name: '二级菜单',
-                routeName: 'testSub2',
+                routePath: '/testSub1/testSub2',
                 children: [
                     {
                         name: '假路由',
-                        routeName: 'testItem'
+                        routePath: '/testSub1/testItem'
                     }
                 ]
             }

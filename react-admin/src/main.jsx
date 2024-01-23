@@ -10,8 +10,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <ConfigProvider locale={zhCN} theme={{ components: { Layout: { bodyBg: "#fff", siderBg: "#fff" } } }}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </ConfigProvider>
 )

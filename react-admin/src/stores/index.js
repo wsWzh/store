@@ -1,1 +1,1 @@
-export { default as menuList } from './modules/menu'
+export { default as menuItems } from './modules/menu'
