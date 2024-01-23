@@ -20,7 +20,7 @@ export default {
       return [
         <a-row class="header" justify="space-between" align="center">
           <router-link to={{ name: 'home' }}>
-            <a-row className="logo" align="center">
+            <a-row class="logo" align="center">
               <a-image src="/favicon.ico" />
               <h3>后台模版</h3>
             </a-row>
@@ -64,7 +64,7 @@ export default {
     display: flex;
 
     .arco-image {
-      height: 26px;
+      height: 30px;
       margin-right: 20px;
     }
 
