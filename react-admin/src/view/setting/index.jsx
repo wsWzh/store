@@ -107,7 +107,7 @@ const Setting = () => {
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="日期范围">
-                {/* <MyDateRange showTime end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} /> */}
+                <MyDateRange showTime end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} />
             </Descriptions.Item>
             <Descriptions.Item label="单选">
                 <MyRadio options={options} formatter="id,name" value={params.radio} update={radio => setParams({ ...params, radio })}>
@@ -133,8 +133,8 @@ const Setting = () => {
                     <Form.Item label="开关" name={['a', 'switch']} rules={[{ required: true }]}>
                         <MySwitch></MySwitch>
                     </Form.Item>
-                    <Form.Item label="日期" name="start,end" rules={[{ required: true }]}>
-                        <MyDateRange  />
+                    <Form.Item label="日期" name="start" rules={[{ required: true }]}>
+                        <MyDateRange form={form} endName="end" isForm />
                     </Form.Item>
                     <Form.Item label="单选" name="radio" rules={[{ required: true }]}>
                         <MyRadio options={options} formatter={({ id, name }) => [id, name]} value={1} >

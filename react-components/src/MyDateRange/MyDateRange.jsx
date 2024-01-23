@@ -1,87 +1,112 @@
-import { DatePicker, Form, Input } from 'antd';
+import { DatePicker, Form } from 'antd';
 import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import localeData from 'dayjs/plugin/localeData';
-import { empty, notEmpty } from '@wzh-/utils';
-import { useMemo, useState, useRef } from 'react'
-import EventBus from '../eventBus';
+import { notEmpty } from '@wzh-/utils';
+import { useMemo } from 'react'
 dayjs.extend(weekday); dayjs.extend(localeData);
-const bus = new EventBus()
 
 /**
  * 日期范围 将数组[startTime,endTime]拆分startTime,endTime
- * showTime 是否显示时间选项
+ * showTime 是否显示时间选项 返回值 showTime ?' YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD'
+ * 在表单中使用需要 设置 form,isForm和endName(结束时间字段)
  * @param {*} props
  * @returns
  */
+
 const MyDateRange = (props) => {
+    const { start, end, showTime, update, form, id: startName, value: v, endName, isForm } = props;
 
-    const { RangePicker } = DatePicker;
+    const fmt = showTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD';
 
-    let {
-        start,
-        end,
-        showTime,
-        update,
-        id,
-        onChange,
-        value: v,
-        totalChange,
-        isStart,
-        isEnd
-    } = props;
+    let handleValue, handelChange
+    let handleFormValue, handelFormChange
 
-    const fmt = showTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss';
+    // 只处理在form表单的第一个日期框的回显和更新
+    const isStart = (!isForm && endName)
+    if (isStart) {
+        handleFormValue = () => {
+            let dateRange = []
+            const rangeObj = form.getFieldsValue([endName, startName])
+            const startValue = rangeObj[startName]
+            const endValue = rangeObj[endName]
+            if (startValue) {
+                dateRange[0] = dayjs(startValue, fmt)
+            }
+            if (endValue) {
+                dateRange[1] = dayjs(endValue, fmt)
+            }
 
-    if (isEnd && !bus.events['endChage']?.length) {
-        bus.on('endChage', onChange)
+            return dateRange
+        }
+        handelFormChange = (start, end) => {
+            form.setFieldValue(startName, start)
+            form.setFieldValue(endName, end)
+        }
+    }
+
+    // 处理不在表单中的日期框回显和更新
+    if (!props.id) {
+        handleValue = () => {
+            let dateRange = []
+
+            if (start) {
+                dateRange[0] = dayjs(start, fmt)
+            }
+            if (end) {
+                dateRange[1] = dayjs(end, fmt)
+            }
+            return dateRange
+        }
+
+        handelChange = (start, end) => {
+            update(start, end)
+        }
     }
 
     const value = useMemo(() => {
-        const dateRange = []
-        dateRange[0] = dayjs(v, fmt)
-        dateRange[1] = dayjs(v, fmt)
-        return dateRange
-    }, [v])
-
+        if (handleFormValue) {
+            return handleFormValue()
+        }
+        if (handleValue) {
+            return handleValue()
+        }
+    }, [v, start, end])
 
     const _onChange = (dates, dateStrings) => {
         const [start, end] = dateStrings
-        totalChange(dateStrings)
-        isStart && onChange(start)
-        bus.emit('endChage', end)
+        if (handelFormChange){
+            handelFormChange(start, end)
+        }
+        if(handelChange){
+            handelChange(start, end)
+        }
     }
 
     const _props = {
         ...props,
         className: 'my-date-range',
         onChange: _onChange,
-        value,
+        value
     }
 
+    // 说明是表单
+    if (isForm) {
+        return < >
+            <Form.Item name={startName} style={{ marginBottom: "unset" }}>
+                <MyDateRange endName={endName} form={form} />
+            </Form.Item>
+            <Form.Item name={endName} style={{ position: 'absolute', zIndex: -1, opacity: 0 }}>
+                <MyDateRange />
+            </Form.Item>
+        </>
 
-    if (empty(id) || !id.includes(',')) {
-
-        return <RangePicker {..._props} />
-
-    } else {
-        const [startKey, endKey] = id.split(',');
-
-        return <div>
-            <Form.Item name={startKey} >
-                <MyDateRange totalChange={onChange} isStart />
-            </Form.Item >
-            <Form.Item name={endKey} >
-                <MyDateRange isEnd />
-            </Form.Item >
-        </div>
     }
-
+    return <DatePicker.RangePicker {..._props} />
 }
 
 MyDateRange.defaultProps = {
     showTime: false,
-    update: () => { },
-    onChange: () => { }
+    update: () => { }
 }
 export default MyDateRange;
