@@ -4,20 +4,16 @@ import MyLayoutAside from './aside';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom'
 
-const { Header, Footer, Sider, Content } = Layout;
-
 const Index = () => {
-    return <>
-        <Layout className='my-layout'>
+    return <Layout className='my-layout'>
             <MyLayoutHeader/>
             <Layout>
-                <MyLayoutAside></MyLayoutAside>
+                <MyLayoutAside accordion />
                 <Layout>
                     <Outlet />
                 </Layout>
             </Layout>
         </Layout>
-    </>
 }
 
 export default Index;

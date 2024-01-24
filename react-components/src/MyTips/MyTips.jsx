@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
  */
 const MyTips = (props) => {
     const { children, delay, success, error, updateDisabled, btnDisabled } = props
-
+    console.log(props);
     // 提示窗口的背景色
     const [color, setColor] = useState('')
 
@@ -29,7 +29,7 @@ const MyTips = (props) => {
     const [open, setOpen] = useState(false)
 
     useEffect(()=>{
-        updateDisabled(open)
+      updateDisabled&&  updateDisabled(open)
     },[open])
 
     const showTips = info => {
@@ -98,7 +98,7 @@ const MyTips = (props) => {
     let _children = children//普通标签
 
     // 自定义组件
-    if (typeOf(children.type,'function')) {
+    if (typeOf(children.type, 'function') || children.type.render) {
         //给子组件注入额外的props 为什么updateDisabled不能是syncDisabled syncDisabled是每个子节点自身的处理disabled的函数
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
         _children = React.cloneElement(children, { onSuccess, onError, disabled: btnDisabled, updateDisabled })

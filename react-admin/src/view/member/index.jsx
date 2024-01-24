@@ -1,5 +1,5 @@
-const Member=()=>{
-    return <div>用户列表</div>
+const Member = () => {
+    return <div onClick={() => message.info('用户列表')}>用户列表</div>
 }
 
 export default Member;

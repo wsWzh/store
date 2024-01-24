@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router-dom'
+import { App } from 'antd'
 
-export function nav(){
-     const navigate = useNavigate();
-    return navigate
+export const useMessage = () => {
+    const { message } = App.useApp()
+    return message
 }
+

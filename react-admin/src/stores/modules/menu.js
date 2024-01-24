@@ -8,7 +8,7 @@ const defItems = [
                 routePath: '/components/basics'
             }, {
                 name: '调试组件(用于测试)',
-                routePath: 'testComponents'
+                routePath: '/components/test'
             },
             {
                 name: 'jsx',

@@ -55,7 +55,6 @@ const Setting = () => {
             })
         })
     }
-
     useEffect(() => {
         getDetail().then(res => {
             form.setFieldsValue(res);
