@@ -8,11 +8,15 @@
 </template>
 
 <style lang="less">
+html,
+body {
+  height: 100%;
+}
+
 #app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  min-width: 960px;
+  height: 100%;
   overflow: auto;
 
   .slide-view {

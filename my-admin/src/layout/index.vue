@@ -40,7 +40,11 @@ export default {
 .my-layout,
 .my-layout>.arco-layout,
 :deep(.arco-table-element) {
-  overflow: hidden;
+  overflow: auto;
+}
+
+.my-layout{
+  min-width: 1200px;
 }
 
 :deep(.main-wrap>.arco-layout) {
