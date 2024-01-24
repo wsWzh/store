@@ -1,5 +1,7 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Spin, Row } from 'antd';
+import { useUserStore } from '../../stores';
+import { empty } from '@wzh-/utils'
 
 
 const Loading = () => {
@@ -8,11 +10,33 @@ const Loading = () => {
     </Row>
 }
 
+// 路由守卫
+const RouteGuard = ({ route, children }) => {
+
+    const { userInfo, getUserInfo } = useUserStore()
+
+    useEffect(() => {
+        const cs = async () => {
+            if (empty(userInfo)) {
+                await getUserInfo()
+                console.log(123);
+            }
+        }
+        cs()
+    }, [])
+
+    return children
+}
+
 const handelRoute = (route) => {
     return <Suspense fallback={Loading()}>
-        <route.component />
+        <RouteGuard route={route}>
+            <route.component />
+        </RouteGuard>
     </Suspense>
 }
+
+
 
 export const generateRouter = (routes) => {
     return routes.map(route => {

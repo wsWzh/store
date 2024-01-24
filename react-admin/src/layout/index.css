@@ -1,34 +1,47 @@
-.layout{
+.layout {
     background: #fff;
 }
-.my-layout{
+
+.my-layout {
     overflow: hidden;
     flex: 1;
     min-width: 1200px;
 }
-.header{
+
+.header {
     height: 60px;
     flex-shrink: 0;
     padding: 0 20px;
     border-bottom: 1px solid #eee;
 }
-.logo{
+
+.logo {
     align-items: center;
-    .ant-image{
+
+    .ant-image {
         margin-right: 20px;
     }
-    .ant-image-img{
+
+    .ant-image-img {
         height: 30px;
     }
 }
-h3,h5{
+
+h3,
+h5 {
     margin: 0;
 }
-.ant-layout-sider-children{
+
+.ant-layout-sider-children {
     display: flex;
     flex-direction: column;
 }
-.ant-menu-root{
+
+.ant-menu-root {
     flex: 1;
     overflow: auto;
+}
+
+.ant-layout-has-sider>.ant-layout {
+    overflow-x: hidden;
 }

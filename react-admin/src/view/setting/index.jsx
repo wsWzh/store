@@ -2,10 +2,8 @@ import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect } from '../../components'
 import { Button, Space, Tooltip, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
-
 const { RangePicker } = DatePicker
 const Setting = () => {
-
     const useResolve = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -70,7 +68,7 @@ const Setting = () => {
     }
 
     return (
-        <Descriptions title="测试封装的组件" column={1}>
+        <Descriptions title="测试封装的组件" column={1} className='outlet-main'>
             <div>
                 {JSON.stringify(params)}
             </div>

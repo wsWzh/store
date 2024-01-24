@@ -31,9 +31,9 @@ const routesMap = getRoutesMap(routes)
  */
 const MyLayoutAside = (props) => {
 
-    const message=useMessage()
+    const message = useMessage()
 
-    const {  accordion } = props
+    const { accordion } = props
 
     const { pathname } = useLocation()
     const nav = useNavigate()
@@ -42,7 +42,7 @@ const MyLayoutAside = (props) => {
         let matchs = []
 
         const getMatchs = (str) => {
-            const newStr = str.replace(/\/[^\/]+$/, '')
+            const newStr = str.replace(/\/[^\/]*$/, '')
             if (newStr) {
                 matchs.push(newStr)
                 getMatchs(newStr)
@@ -90,14 +90,14 @@ const MyLayoutAside = (props) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
 
         // 手风琴效果
-        if (accordion){
+        if (accordion) {
             if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
                 setOpenKeys(keys)
-            }else{
+            } else {
                 setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
             }
 
-        }else{
+        } else {
             setOpenKeys(keys)
         }
     }
