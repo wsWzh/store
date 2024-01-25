@@ -11,7 +11,7 @@ import { typeOf, reduceProps } from '@wzh-/utils';
  */
 const MyButton = (props) => {
 
-    const { onSuccess, onError, updateDisabled } = props
+    const { onSuccess, onError, updateLoading} = props
 
     const basicProps = JSON.parse(JSON.stringify(props))
 
@@ -19,12 +19,12 @@ const MyButton = (props) => {
 
     const useLoading = () => {
         setLoading(true)
-        return () => setLoading(false)
+        updateLoading(true)
+        return () => {
+            setLoading(false)
+            updateLoading(false)
+        }
     }
-
-    useEffect(() => {
-        updateDisabled && updateDisabled(loading)
-    }, [loading])
 
     const onClick = (...args) => {
         const click = props.onClick
@@ -55,6 +55,7 @@ const MyButton = (props) => {
 MyButton.defaultProps = {
     onError: () => { },
     onSuccess: () => { },
+    updateLoading:()=>{}
 }
 
 export default MyButton

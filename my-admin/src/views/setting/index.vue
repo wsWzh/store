@@ -63,7 +63,10 @@
             <my-button :disabled="true" type="primary" @click="useResolve">操作成功</my-button>
             <my-button type="primary" status="warning" @click="useReject">操作失败</my-button>
           </my-tips>
-          <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">删除</my-confirm>
+          <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">
+            <a-button>删除</a-button>
+            <a-button>登录</a-button>
+          </my-confirm>
           <my-confirm type="primary" title="请选择审核状态">
             <template #default>
               <a-button type="primary">审核</a-button>

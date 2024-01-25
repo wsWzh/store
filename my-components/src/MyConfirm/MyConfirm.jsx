@@ -46,7 +46,7 @@ export default {
         }
 
         // 同步tips visible状态 tips关闭时关闭气泡卡片
-        const onUpdateVisible = bool =>  state.visible = bool
+        const onUpdateVisible = bool => state.visible = bool
 
 
         return () => {
@@ -72,7 +72,7 @@ export default {
                 //预设content插槽
                 content = () => {
                     {
-                         // 同步按钮禁用状态
+                        // 同步按钮禁用状态
                         const btnAttrs = {
                             disabled,
                             'onUpdate:loading': onDisabled,
@@ -135,10 +135,10 @@ export default {
                     if (empty(slotsDefault)) {
                         return
                     }
-                    // 如果插入的是button 同步disabled
+                    // 如果插入的是button 同步disabled 只处理第一个button
                     if (slotsDefault.find(item => {
                         if (['Button', 'MyButton'].includes(item?.type?.name)) {
-                            Object.assign(item.props, { disabled }, attrs)
+                            item.props = { ...item.props, disabled, ...attrs };
                             return true
                         }
                     })) {
