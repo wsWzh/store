@@ -1,7 +1,7 @@
 import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect } from '../../components'
-import { Button, Space, Tooltip, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm } from '../../components'
+import { Button, Space, Tooltip, Menu,Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
 const { RangePicker } = DatePicker
 const Setting = () => {
     const useResolve = () => {
@@ -69,6 +69,7 @@ const Setting = () => {
 
     return (
         <Descriptions title="测试封装的组件" column={1} className='outlet-main'>
+
             <div>
                 {JSON.stringify(params)}
             </div>
@@ -122,6 +123,11 @@ const Setting = () => {
                 <MySelect options={options} formatter="id,name" value={params.select} update={select => setParams({ ...params, select })}>
                     <Select.Option value="123" key="123">123</Select.Option>
                 </MySelect>
+            </Descriptions.Item>
+            <Descriptions.Item label="确认操作">
+                <MyConfirm onConfirm={useResolve}>
+                    <Button>你好</Button>
+                </MyConfirm>
             </Descriptions.Item>
             <Descriptions.Item label="表单">
                 <Form form={form} onFinish={onFinish}>

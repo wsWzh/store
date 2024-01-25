@@ -97,11 +97,13 @@ const MyTips = (props) => {
     // 单个插槽
     let _children = children//普通标签
 
-    // 自定义组件
-    if (typeOf(children.type, 'function') || children.type.render) {
+    // 组件
+    if (typeOf(children.type, 'function') ||children.type.render) {
         //给子组件注入额外的props 为什么updateDisabled不能是syncDisabled syncDisabled是每个子节点自身的处理disabled的函数
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
-        _children = React.cloneElement(children, { onSuccess, onError, disabled: btnDisabled, updateDisabled })
+        // _children = React.cloneElement(children,)
+        const _childrenProps = { ...children.props, onSuccess, onError, disabled: btnDisabled, updateDisabled }
+        _children = <children.type {..._childrenProps}/>
     }
 
 

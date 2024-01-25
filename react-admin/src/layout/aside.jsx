@@ -30,7 +30,6 @@ const routesMap = getRoutesMap(routes)
  * @returns
  */
 const MyLayoutAside = (props) => {
-
     const { accordion } = props
     const message = useMessage()
     const { pathname } = useLocation()
@@ -115,7 +114,6 @@ const MyLayoutAside = (props) => {
                 selectedKeys={selectedKeys}
                 onOpenChange={onOpenChange}
                 openKeys={openKeys}
-                inlineCollapsed
                 items={items}
             />
             <div onClick={() => setCollapsed(!collapsed)} className={`collapsed-btn ${collapsed ? 'collapsed' : ''}`}>

@@ -6,3 +6,4 @@ export { MyDateRange } from './src/MyDateRange';
 export { MyRadio } from './src/MyRadio';
 export { MyCheckbox } from './src/MyCheckbox';
 export { MySelect } from './src/MySelect';
+export { MyConfirm } from './src/MyConfirm';

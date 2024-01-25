@@ -32,7 +32,6 @@ const MyCheckbox = (props) => {
     }, [v])
 
     const _onChange = (checkedValues) => {
-        console.log(checkedValues);
         update(checkedValues.join(','))
         onChange && onChange(checkedValues.join(','))
     }
