@@ -1,12 +1,11 @@
-import { Layout, Menu } from 'antd';
-import { useMemo } from 'react';
-import { SettingOutlined } from '@ant-design/icons';
+import { Layout, Menu, Button } from 'antd';
+import { useMemo, useState } from 'react';
+import { SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { empty } from '@wzh-/utils';
-import { useNavigate, useNavigation, useLocation, useMatch, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import routes from '../router'
 import { useMessage } from '../utils';
-import { getStore} from '../stores'
+import { getStore } from '../stores'
 import { GET_MENUS } from '../http';
 
 const { Sider } = Layout;
@@ -36,7 +35,7 @@ const MyLayoutAside = (props) => {
     const message = useMessage()
     const { pathname } = useLocation()
     const nav = useNavigate()
-    
+
     const menuItems = getStore(GET_MENUS, state => state.data)
 
     const matchs = useMemo(() => {
@@ -104,16 +103,24 @@ const MyLayoutAside = (props) => {
         }
     }
 
+    // 导航栏伸缩
+    const [collapsed, setCollapsed] = useState(false);
+
     return <>
-        <Sider className='my-aside'>
+
+        <Sider className='my-aside' collapsed={collapsed} collapsedWidth={60}>
             <Menu
                 mode="inline"
                 onSelect={onSelect}
                 selectedKeys={selectedKeys}
                 onOpenChange={onOpenChange}
                 openKeys={openKeys}
+                inlineCollapsed
                 items={items}
             />
+            <div onClick={() => setCollapsed(!collapsed)} className={`collapsed-btn ${collapsed ? 'collapsed' : ''}`}>
+                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </div>
         </Sider>
     </>
 
