@@ -1,6 +1,6 @@
-import { typeOf, reduceProps } from '@wzh-/utils'
+import { typeOf } from '@wzh-/utils'
 import { Input } from 'antd'
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * input 添加 pattern 属性
@@ -10,34 +10,52 @@ import { useMemo } from 'react'
  */
 const MyInput = (props) => {
 
-    const { pattern, update, value: v, onChange } = props
+    const { pattern, update, value, onChange } = props
 
-    const value = useMemo(() => {
-        if (typeOf(pattern, 'regexp') && pattern.test(v)) {
-            return v
+    const triggerChange = (value) => {
+        onChange && onChange(value);
+        setValue(value)
+    };
+
+    const [_value, setValue] = useState()
+
+    // 模拟挂载后生命周期
+    useEffect(() => {
+        if (!typeOf(pattern, 'regexp')) {
+            return setValue(value)
         }
-    }, [v])
+        if (!pattern.test(value)) {
+            //不符合正则 清空
+            triggerChange('')
+        } else {
+            triggerChange(value)
+        }
+
+    }, [value])
+
 
 
     const _onChange = (e) => {
+        const newValue = e.target.value
 
-        const v = e.target.value
-
-        if (typeOf(pattern, 'regexp') && pattern.test(v)) {
-            onChange(v)
-            update(v)
+        if (typeOf(pattern, 'regexp') && !pattern.test(newValue)) {
+            return //不更新值
         }
-
+        triggerChange(newValue)
+        update(newValue)
     }
 
-    let _props = {
+    const _props = {
         ...props,
         className: 'my-input',
-        value,
+        value: _value,
         onChange: _onChange,
     }
-    const keysToRemove = ['update', 'pattern']
-    _props = reduceProps(_props, ({ key, value }) => keysToRemove.includes(key))
+
+    //不能用reduceProps处理不然输入框为空时校验不生效
+    delete _props.update
+    delete _props.pattern
+
 
     MyInput.TextArea = Input.TextArea;
 
@@ -45,9 +63,8 @@ const MyInput = (props) => {
 }
 
 MyInput.defaultProps = {
-    pattern: new RegExp,
-    update: () => { },
-    onChange: () => { }
+    pattern: '',
+    update: () => { }
 }
 
 export default MyInput;

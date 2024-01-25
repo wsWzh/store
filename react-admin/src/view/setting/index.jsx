@@ -98,9 +98,10 @@ const Setting = () => {
             <Descriptions.Item label="输入框">
                 <Space>
                     数字输入框: <MyInput value={params.input} pattern={/^\d*$/} update={v => setParams({ ...params, input: v })} />
-                    字母输入框: <MyInput value={params.input} pattern={/^[a-zA-Z]+$/} />
+                    字母输入框: <MyInput value={params.input} pattern={/^[a-zA-Z]*$/} />
                     金额输入框: <MyInput value={params.input} pattern={/^(\d{1,10})?(\.([0-9]{0,2}))?$/} />
                     手机号码输入框: <MyInput value={params.input} pattern={/^1?([3-9](\d{0,9})?)?$/} />
+                    普通输入框: <MyInput value={params.input} />
                 </Space>
             </Descriptions.Item>
             <Descriptions.Item label="日期范围">
