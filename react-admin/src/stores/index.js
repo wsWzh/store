@@ -1,2 +1,12 @@
-export { default as menuItems } from './modules/menu'
-export { default as useUserStore } from './modules/user'
+import useMenuStore from "./modules/menu"
+import useUserStore from "./modules/user"
+
+const storesMap = [useMenuStore, useUserStore].reduce((map, item) => {
+    const { Storekey } = item
+    return {...map,...{[Storekey]:item}}
+}, {})
+
+export const getStore = (key,fn) => {
+    return storesMap[key](fn)
+}
+

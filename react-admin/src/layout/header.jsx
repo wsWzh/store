@@ -1,9 +1,10 @@
 import { Row, Image, Avatar, Divider } from 'antd'
-import { useUserStore } from '../stores'
+import { getStore } from '../stores'
+import { GET_USER_INFO } from '../http'
 
 const MyLayoutHeader = (props) => {
 
-    const userInfo = useUserStore(state => state.userInfo)
+    const userInfo = getStore(GET_USER_INFO, state => state.data)
 
     const circleUrl = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 

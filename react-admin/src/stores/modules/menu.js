@@ -1,3 +1,7 @@
+import { create } from "zustand"
+import { empty } from '@wzh-/utils'
+import { GET_MENUS, http } from '../../http'
+
 const defItems = [
     {
         name: '组件',
@@ -52,4 +56,24 @@ const defItems = [
     }
 ]
 
-export default defItems
+const fmt = (set, get) => {
+    return {
+        data: [],
+        action: async () => {
+            await http.get(GET_MENUS)
+            set(state=>({data: defItems}))
+        },
+        getter: () => {
+            const { data, action } = get()
+            if (empty(data)) {
+                action()
+            }
+            return data
+        }
+    }
+}
+
+const useMenuStore = create(fmt)
+ useMenuStore.Storekey = GET_MENUS
+
+export default useMenuStore

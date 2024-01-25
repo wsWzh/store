@@ -1,0 +1,23 @@
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+}
+
+.error>p {
+    color: #888;
+    animation: fadeIn infinite alternate 1s;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+            opacity: 0;
+        }
+    to {
+        opacity: 1;
+    }
+
+}

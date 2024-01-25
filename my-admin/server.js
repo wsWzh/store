@@ -12,7 +12,7 @@ const path = require('path')
 const apiPort = 4001
 
 // 等待输出时间（s）
-const tickTime = 5
+const tickTime = 0
 
 const state = {}
 
@@ -139,6 +139,8 @@ http.createServer(function (request, response) {
                             age: 18
                         }
                         return doOutput(success(userInfo))
+                    case '/get/menus':
+                        return doOutput(success(123))
                     case '/delete': // 删除
                         const deleteState = items.some(({ id }, index) => {
                             if (id === params.id) {

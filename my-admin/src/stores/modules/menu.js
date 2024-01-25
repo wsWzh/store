@@ -61,10 +61,10 @@ const createModule = () => {
     ]
     const data = ref([])
 
-    const actions = () => {
+    const actions = async() => {
         console.log('触发401', '401');
+        data.value = await http.get(GET_MENUS)
         data.value = defItems
-        // data.value = await http.get(GET_MENUS)
     }
 
     const getters = () => {
@@ -81,4 +81,6 @@ const createModule = () => {
 const menuStore = defineStore(GET_MENUS, createModule)
 
 export default menuStore
+
+
 

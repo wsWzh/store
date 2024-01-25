@@ -1,5 +1,4 @@
 import { Layout, Menu } from 'antd';
-import { menuItems } from '../stores'
 import { useMemo } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import { empty } from '@wzh-/utils';
@@ -7,6 +6,8 @@ import { useNavigate, useNavigation, useLocation, useMatch, Link } from 'react-r
 import { useState } from 'react';
 import routes from '../router'
 import { useMessage } from '../utils';
+import { getStore} from '../stores'
+import { GET_MENUS } from '../http';
 
 const { Sider } = Layout;
 
@@ -31,12 +32,12 @@ const routesMap = getRoutesMap(routes)
  */
 const MyLayoutAside = (props) => {
 
-    const message = useMessage()
-
     const { accordion } = props
-
+    const message = useMessage()
     const { pathname } = useLocation()
     const nav = useNavigate()
+    
+    const menuItems = getStore(GET_MENUS, state => state.data)
 
     const matchs = useMemo(() => {
         let matchs = []
@@ -68,6 +69,7 @@ const MyLayoutAside = (props) => {
         }
         return { key, label }
     }
+
 
     const items = useMemo(() => {
         return menuItems.map(i => getMenuItem(i, 0))
