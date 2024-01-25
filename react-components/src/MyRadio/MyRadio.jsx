@@ -1,4 +1,4 @@
-import { withExtraProps } from "../_Hoc";
+import { useOptions } from "../_hook";
 import { Radio } from "antd";
 import { formatValue } from "../_utils";
 import { useEffect, useMemo, useState } from "react";
@@ -10,9 +10,11 @@ import { useEffect, useMemo, useState } from "react";
  * 栗子：formatter = ({id,name}) => [id,name]
  * 栗子：formatter = 'id,name'
  */
-const MyRadio = withExtraProps(props => {
+const MyRadio = (props) => {
 
-    const { value: v, update, options, children } = props
+    const { value: v, update, options, children, formatter, onChange } = props
+
+    const _options = useOptions(options, formatter)
 
     const value = useMemo(() => {
         return v
@@ -21,7 +23,7 @@ const MyRadio = withExtraProps(props => {
     const _onChange = (e) => {
         const value = e.target.value
         update(value)
-        props?.onChange(value)
+        onChange && onChange(value)
     }
 
     const _props = {
@@ -32,14 +34,16 @@ const MyRadio = withExtraProps(props => {
         options: null//配置项优先级大于插槽
     }
 
-    return <Radio.Group {..._props} >
-        {
-            options.map(({ label, value, disabled }) => {
-                return <Radio value={value} key={value} disabled={disabled}>{label}</Radio>
-            }).concat(children)
-        }
-    </Radio.Group>
-})
+    const items = _options.map(({ label, value, disabled }) => {
+        return <Radio value={value} key={value} disabled={disabled}>{label}</Radio>
+    })
 
+    return <Radio.Group {..._props} > {children ? items.concat(children) : items}</Radio.Group>
+}
+
+MyRadio.defaultProps = {
+    update: () => { },
+    formatter: 'label,value'
+}
 
 export default MyRadio;

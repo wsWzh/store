@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
  */
 const MyTips = (props) => {
     const { children, delay, success, error, updateDisabled, btnDisabled } = props
-    console.log(props);
+
     // 提示窗口的背景色
     const [color, setColor] = useState('')
 
@@ -29,7 +29,7 @@ const MyTips = (props) => {
     const [open, setOpen] = useState(false)
 
     useEffect(()=>{
-      updateDisabled&&  updateDisabled(open)
+      updateDisabled &&  updateDisabled(open)
     },[open])
 
     const showTips = info => {

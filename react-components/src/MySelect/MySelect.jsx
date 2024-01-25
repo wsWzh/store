@@ -1,4 +1,4 @@
-import { withExtraProps } from "../_Hoc";
+import { useOptions } from "../_hook";
 import { Select } from "antd";
 import { formatValue, typeOf } from "../_utils";
 import { empty, reduceProps } from '@wzh-/utils'
@@ -12,13 +12,15 @@ import { useMemo } from "react";
  * 栗子：formatter = 'id,name'
  * mode=multiple时将多选值改造成 v,v,v... 的格式
  */
-const MySelect = withExtraProps(props => {
+const MySelect = (props) => {
 
-    const { value: v, update, options, children, onChange, mode } = props
+    const { value: v, update, options, children, onChange, mode, formatter } = props
+
+    const _options = useOptions(options, formatter)
 
     const updateValue = v => {
         update(v)
-        onChange(v)
+        onChange && onChange(v)
     }
 
     const value = useMemo(() => {
@@ -30,7 +32,7 @@ const MySelect = withExtraProps(props => {
             if (typeOf(v, 'array')) {
                 selectValue = v.map(formatValue)
             }
-            selectValue=v.toString().split(',').map(formatValue)
+            selectValue = v.toString().split(',').map(formatValue)
             return selectValue
         } else {
             return formatValue(selectValue)
@@ -58,16 +60,16 @@ const MySelect = withExtraProps(props => {
 
     _props = reduceProps(_props, ({ key }) => keysToRemove.includes(key))
 
-    const items = options.map(({ label, value, disabled }) => {
+    const items = _options.map(({ label, value, disabled }) => {
         return <Select.Option disabled={disabled} key={value} value={value}>{label}</Select.Option>
     })
 
-    return <Select  {..._props} >
-        {
-            children ? items.concat(children) : items
-        }
-    </Select>
-})
+    return <Select  {..._props} > {children ? items.concat(children) : items}</Select>
+}
 
+MySelect.defaultProps = {
+    update: () => { },
+    formatter: 'label,value'
+}
 
 export default MySelect;
