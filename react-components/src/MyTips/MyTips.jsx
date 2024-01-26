@@ -7,11 +7,12 @@ import React, { useState, useEffect } from 'react';
  * delay弹窗延时 success,error是否显示弹窗 传入string时为弹窗的提示内容
  * btnDisabled 多个按钮共同的disabled
  * updateVisible 通知父组件MyTips的弹窗状态
+ * updateDisabled 通知父组件Mytips按钮的禁用状态
  * @param { delay, success, error} props
  * @returns
  */
 const MyTips = (props) => {
-    const { children, delay, success, error, updateVisible, btnDisabled } = props
+    const { children, delay, success, error, updateVisible, updateDisabled,btnDisabled } = props
 
     // 提示窗口的背景色
     const [color, setColor] = useState('')
@@ -23,6 +24,7 @@ const MyTips = (props) => {
 
     const syncDisabled=bool=>{
         setDisabled(bool)
+        updateDisabled(bool)
     }
 
     // 是否显示气泡
@@ -30,13 +32,10 @@ const MyTips = (props) => {
 
     const changeOpen = bool => {
         setOpen(bool)
-        setDisabled(bool)//设置子组件按钮
+        syncDisabled(bool)//设置子组件按钮
         updateVisible(bool)//通知父组件
     }
 
-    useEffect(()=>{
-    //   updateDisabled &&  updateDisabled(open)
-    },[open])
 
     const showTips = info => {
         const { message } = info
@@ -84,7 +83,7 @@ const MyTips = (props) => {
         const tipsProps = {
             ...props,
             btnDisabled: disabled,
-            updateVisible: syncDisabled
+            updateDisabled: syncDisabled
         }
 
         const Items = children.map((item, key) => {
@@ -108,8 +107,8 @@ const MyTips = (props) => {
         //给子组件注入额外的props 为什么updateDisabled不能是syncDisabled syncDisabled是每个子节点自身的处理disabled的函数
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
         // _children = React.cloneElement(children,) updateLoading: updateVisible
-      
-        const _childrenProps = { ...children.props, onSuccess, onError, disabled: disabled||btnDisabled}
+
+        const _childrenProps = { ...children.props, onSuccess, onError, disabled: disabled || btnDisabled, updateLoading: updateDisabled }
         _children = <children.type {..._childrenProps}/>
     }
 
@@ -120,11 +119,11 @@ const MyTips = (props) => {
         open,
         color,
         title,
+        children: _children
     }
 
-    return <Tooltip {..._props} >
-        {_children}
-    </Tooltip>
+    return <Tooltip {..._props} />
+
 
 }
 
@@ -132,7 +131,8 @@ MyTips.defaultProps = {
     delay: 1500, // 信息窗停留时间
     success: false, // 开/关 成功提示 (字符串时替换提示信息)
     error: false,//开/关 错误提示 (字符串时替换提示信息)
-    updateVisible:()=>{}
+    updateVisible:()=>{},
+    updateDisabled:()=>{}
 }
 
 export default MyTips;

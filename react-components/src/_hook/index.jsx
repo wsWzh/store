@@ -1,4 +1,4 @@
-import { typeOf } from "@wzh-/utils"
+import { reduceProps, typeOf } from "@wzh-/utils"
 import { useMemo } from "react"
 import { formatValue } from "../_utils"
 
@@ -29,4 +29,15 @@ export const useOptions = (options, formatter = "label,value") => {
         }
     })
     return formatOptions
+}
+
+
+/**
+ *
+ * @param {object} props 要处理的props
+ * @param {array} keys 要删除的指定key数组
+ * @returns {object} newProps
+ */
+export const useDeleteProps=(props,keys=[])=>{
+    return reduceProps(props,({key})=>keys.includes(key))
 }

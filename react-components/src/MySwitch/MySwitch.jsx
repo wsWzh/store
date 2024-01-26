@@ -1,6 +1,7 @@
-import { typeOf,reduceProps } from '@wzh-/utils';
+import { typeOf } from '@wzh-/utils';
 import { Switch } from 'antd';
 import { useMemo, useState } from 'react'
+import { useDeleteProps } from '../_hook';
 
 /**
  * 开关添加loading
@@ -55,7 +56,7 @@ const MySwitch = (props) => {
     }
 
     const keysToRemove = ['checkedValue', 'uncheckedValue', 'onSuccess', 'onError','updateDisabled']
-    _props = reduceProps(_props, ({ key, value }) => keysToRemove.includes(key))
+    _props = useDeleteProps(_props, keysToRemove)
 
     return <Switch {..._props} />
 }

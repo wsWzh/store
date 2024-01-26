@@ -135,7 +135,7 @@ export default {
                     if (empty(slotsDefault)) {
                         return
                     }
-                    // 如果插入的是button 同步disabled 只处理第一个button
+                    // 如果插入的是button 同步disabled
                     if (slotsDefault.find(item => {
                         if (['Button', 'MyButton'].includes(item?.type?.name)) {
                             item.props = { ...item.props, disabled, ...attrs };

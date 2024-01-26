@@ -124,11 +124,7 @@ const Setting = () => {
                     <Select.Option value="123" key="123">123</Select.Option>
                 </MySelect>
             </Descriptions.Item>
-            <Descriptions.Item label="确认操作">
-                <MyConfirm onConfirm={useResolve}>
-                    <Button>你好</Button>
-                </MyConfirm>
-            </Descriptions.Item>
+            
             <Descriptions.Item label="表单">
                 <Form form={form} onFinish={onFinish}>
                     <Form.Item label="姓名" name="input" rules={[{ required: true }]}>

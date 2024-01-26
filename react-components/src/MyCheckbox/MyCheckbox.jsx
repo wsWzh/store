@@ -1,7 +1,7 @@
-import { useOptions } from "../_hook";
+import { useDeleteProps, useOptions } from "../_hook";
 import { Checkbox } from "antd";
 import { formatValue, typeOf } from "../_utils";
-import { empty, reduceProps } from '@wzh-/utils'
+import { empty } from '@wzh-/utils'
 import { useMemo } from "react";
 
 /**
@@ -44,7 +44,7 @@ const MyCheckbox = (props) => {
     }
 
     const keysToRemove = ['update']
-    _props = reduceProps(_props, ({ key }) => keysToRemove.includes(key))
+    _props = useDeleteProps(_props, keysToRemove )
 
     const items = _options.map(({ label, value, disabled }) => {
         return <Checkbox value={value} key={value} disabled={disabled}>{label}</Checkbox >

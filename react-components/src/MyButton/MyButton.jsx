@@ -1,6 +1,7 @@
 import { Button } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { typeOf, reduceProps } from '@wzh-/utils';
+import React, {  useState } from 'react';
+import { typeOf } from '@wzh-/utils';
+import { useDeleteProps } from '../_hook';
 
 /**
  * my-button 添加了 loading
@@ -48,7 +49,7 @@ const MyButton = (props) => {
     }
 
     const keysToRemove = [ 'onSuccess', 'onError']
-    _props = reduceProps(_props, ({ key, value }) => keysToRemove.includes(key))
+    _props = useDeleteProps(_props, keysToRemove)
 
     return <Button {..._props} onClick={onClick} />
 }
