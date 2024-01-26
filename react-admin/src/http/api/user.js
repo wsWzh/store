@@ -6,3 +6,6 @@ export const GET_MENUS = '/get/menus'
 
 // 401
 export const GET_TOKEN = '/get/token'
+
+//上传
+export const POST_UPLOAD = '/post/upload'

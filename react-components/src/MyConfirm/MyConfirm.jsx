@@ -2,9 +2,12 @@ import { Popover, Space, Row, Button } from 'antd'
 import React, { useCallback, useState } from 'react'
 import { MyTips, MyButton } from '../../index'
 import { typeOf, empty } from '@wzh-/utils'
+import { isButton } from '../_utils'
 
-
-
+/**
+ * 确认操作气泡卡片
+ * 一般用于删除等操作
+ */
 const MyConfirm = (props) => {
 
     const onHide = () => setOpen(false)
@@ -50,14 +53,6 @@ const MyConfirm = (props) => {
         setOpen(bool)
     })
 
-    const isButton = useCallback((vnode) => {
-        return vnode?.type
-            && (
-                vnode.type.__ANT_BUTTON
-                || vnode.type === 'button'
-                || vnode.type.name === 'MyButton'
-            )
-    })
 
     // 弹窗内容插槽
     const content = () => {
@@ -77,10 +72,8 @@ const MyConfirm = (props) => {
                 if (mybtn) {
                     Object.assign(_itemProps, { updateVisible, children: mybtn, updateDisabled })
                 }
-            } else {
-                // 普通按钮
             }
-            console.log(_itemProps);
+            // 普通按钮
             return <item.type {..._itemProps} />
         })
         return <Row justify="end" style={{ paddingTop: '6px' }}>

@@ -1,8 +1,10 @@
 import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm } from '../../components'
-import { Button, Space, Tooltip, Menu,Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm, MyUpload } from '../../components'
+import { Button, Space, Tooltip, Menu, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
 const { RangePicker } = DatePicker
+import { http, POST_UPLOAD } from '../../http'
+
 const Setting = () => {
     const useResolve = () => {
         return new Promise((resolve, reject) => {
@@ -30,6 +32,11 @@ const Setting = () => {
         })
     }
 
+    const handleUpload = (formData, config) => {
+        return http.post(POST_UPLOAD, formData, config)
+    }
+
+
     const options = [
         { id: '1', name: '选项一' },
         { id: 2, name: '选项二', disabled: true },
@@ -48,7 +55,8 @@ const Setting = () => {
                     },
                     radio: 1,
                     checkbox: ['1', 2],
-                    select: ['1', 2]
+                    select: ['1', 2],
+                    image: 'https://static-nk.liux.co/image8/13462fa/28194a0700023d15_400_400.jpg'
                 })
             })
         })
@@ -124,9 +132,20 @@ const Setting = () => {
                     <Select.Option value="123" key="123">123</Select.Option>
                 </MySelect>
             </Descriptions.Item>
-            
+            <Descriptions.Item label="确定操作">
+                <MyConfirm title="确定要删除吗" onConfirm={useResolve} type="primary" danger>
+                    删除
+                </MyConfirm>
+            </Descriptions.Item>
             <Descriptions.Item label="表单">
                 <Form form={form} onFinish={onFinish}>
+                    <Form.Item label="上传" name="image" rules={[{ required: true }]}>
+                        <MyUpload action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} />
+                    </Form.Item>
+                    {/* 只有上传行为的按钮不会重新 */}
+                    <MyUpload action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} >
+                      只有上传行为的按钮  <Button type="primary">上传</Button>
+                    </MyUpload>
                     <Form.Item label="姓名" name="input" rules={[{ required: true }]}>
                         <MyInput pattern={/^\d*$/} ></MyInput>
                     </Form.Item>

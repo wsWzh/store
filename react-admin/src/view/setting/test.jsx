@@ -1,5 +1,5 @@
-import { Descriptions, Button, Popover } from 'antd'
-import { MyConfirm } from '@/components'
+import { Descriptions, Button, Popover, Form } from 'antd'
+import { MyUpload } from '@/components'
 const useResolve = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -8,15 +8,12 @@ const useResolve = () => {
     })
 }
 
-const Test=()=>{
-    return <div>
-        <MyConfirm onConfirm={useResolve} type="primary" danger Confirm={()=><div>
-            123
-        </div>}>
-           删除
-        </MyConfirm>
-
-    </div>
+const Test = () => {
+    return <Form>
+        <Form.Item name="load">
+            <MyUpload accept="image/png,image/jpeg" />
+        </Form.Item>
+    </Form>
 }
 
 export default Test;

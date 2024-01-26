@@ -65,7 +65,6 @@
           </my-tips>
           <my-confirm status="danger" width="230px" title="你果真要删除它吗？" @confirm="useResolve">
             <a-button>删除</a-button>
-            <a-button>登录</a-button>
           </my-confirm>
           <my-confirm type="primary" title="请选择审核状态">
             <template #default>

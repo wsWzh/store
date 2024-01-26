@@ -9,7 +9,7 @@ const accepts = {
     'image/gif': 'gif',
 }
 
-/**
+/**modelValue不设置时 代表只有上传行为 不会出现文件列表
  * 上传按钮
  */
 export default {
@@ -98,6 +98,7 @@ export default {
 
         // 处理上传
         const customRequest = (options) => {
+            console.log(options);
             const { fileItem, onProgress, onSuccess, onError } = options
             const formData = new FormData()
             formData.append(props.name, fileItem.file)
@@ -140,12 +141,11 @@ export default {
             }
             return value.split(',').map(fileInit)
         }
-        const cs = (fileItem)=>{
-            console.log(fileItem,123);
-        }
+
         return () => {
 
             const { modelValue, action, name, accept, responseUrlKey } = props
+            console.log(modelValue);
 
             const _attrs = {
                 class: 'my-upload',
@@ -160,7 +160,6 @@ export default {
                 accept,
                 name,
                 responseUrlKey,
-                onSuccess:cs
             }
 
             if (typeOf(action, 'string')) {

@@ -1,0 +1,3 @@
+.ant-upload-list-item-container::before{
+   position: absolute;
+}
