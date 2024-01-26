@@ -6,12 +6,12 @@ import React, { useState, useEffect } from 'react';
  * 配合子组件的 onError 、 onSuccess 事件提示信息
  * delay弹窗延时 success,error是否显示弹窗 传入string时为弹窗的提示内容
  * btnDisabled 多个按钮共同的disabled
- * updateDisabled 更新按钮disabled
+ * updateVisible 通知父组件MyTips的弹窗状态
  * @param { delay, success, error} props
  * @returns
  */
 const MyTips = (props) => {
-    const { children, delay, success, error, updateDisabled, btnDisabled } = props
+    const { children, delay, success, error, updateVisible, btnDisabled } = props
 
     // 提示窗口的背景色
     const [color, setColor] = useState('')
@@ -28,8 +28,14 @@ const MyTips = (props) => {
     // 是否显示气泡
     const [open, setOpen] = useState(false)
 
+    const changeOpen = bool => {
+        setOpen(bool)
+        setDisabled(bool)//设置子组件按钮
+        updateVisible(bool)//通知父组件
+    }
+
     useEffect(()=>{
-      updateDisabled &&  updateDisabled(open)
+    //   updateDisabled &&  updateDisabled(open)
     },[open])
 
     const showTips = info => {
@@ -40,8 +46,8 @@ const MyTips = (props) => {
         typeOf(info, 'error') ? setColor('#F7676F') : setColor('#25C550')
 
         return new Promise(resolve => {
-            setTimeout(() => setOpen(true), 1)//防止按钮loading导致弹窗错位
-            setTimeout(() => { setOpen(false); resolve(info) }, delay + 1)
+            setTimeout(() => {changeOpen(true)}, 1)//防止按钮loading导致弹窗错位
+            setTimeout(() => { changeOpen(false), resolve(info) }, delay + 1)
         })
     }
 
@@ -78,7 +84,7 @@ const MyTips = (props) => {
         const tipsProps = {
             ...props,
             btnDisabled: disabled,
-            updateDisabled: syncDisabled
+            updateVisible: syncDisabled
         }
 
         const Items = children.map((item, key) => {
@@ -101,8 +107,9 @@ const MyTips = (props) => {
     if (typeOf(children.type, 'function') ||children.type.render) {
         //给子组件注入额外的props 为什么updateDisabled不能是syncDisabled syncDisabled是每个子节点自身的处理disabled的函数
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
-        // _children = React.cloneElement(children,)
-        const _childrenProps = { ...children.props, onSuccess, onError, disabled: btnDisabled, updateDisabled }
+        // _children = React.cloneElement(children,) updateLoading: updateVisible
+      
+        const _childrenProps = { ...children.props, onSuccess, onError, disabled: disabled||btnDisabled}
         _children = <children.type {..._childrenProps}/>
     }
 
@@ -125,7 +132,7 @@ MyTips.defaultProps = {
     delay: 1500, // 信息窗停留时间
     success: false, // 开/关 成功提示 (字符串时替换提示信息)
     error: false,//开/关 错误提示 (字符串时替换提示信息)
-    updateDisabled:()=>{}
+    updateVisible:()=>{}
 }
 
 export default MyTips;

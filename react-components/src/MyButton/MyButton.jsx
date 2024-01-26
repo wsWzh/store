@@ -6,6 +6,7 @@ import { typeOf, reduceProps } from '@wzh-/utils';
  * my-button 添加了 loading
  * loading : onClick 事件返回的是一个 promise 时自动触发 loading 效果
  * success ,error 配合MyTips提示
+ * updateLoading 通知父组件Button的loding状态
  * @param {success, error, onClick} props
  * @returns
  */
