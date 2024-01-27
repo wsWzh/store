@@ -12,7 +12,18 @@ import React, { useState, useEffect } from 'react';
  * @returns
  */
 const MyTips = (props) => {
-    const { children, delay, success, error, updateVisible, updateDisabled,btnDisabled } = props
+    const {
+        children,
+        delay,
+        success,
+        error,
+        updateVisible,
+        updateDisabled,
+        btnDisabled,
+        id,
+        onChange,
+        value
+    } = props
 
     // 提示窗口的背景色
     const [color, setColor] = useState('')
@@ -22,7 +33,7 @@ const MyTips = (props) => {
 
     const [disabled, setDisabled] = useState(false)
 
-    const syncDisabled=bool=>{
+    const syncDisabled = bool => {
         setDisabled(bool)
         updateDisabled(bool)
     }
@@ -45,7 +56,7 @@ const MyTips = (props) => {
         typeOf(info, 'error') ? setColor('#F7676F') : setColor('#25C550')
 
         return new Promise(resolve => {
-            setTimeout(() => {changeOpen(true)}, 1)//防止按钮loading导致弹窗错位
+            setTimeout(() => { changeOpen(true) }, 1)//防止按钮loading导致弹窗错位
             setTimeout(() => { changeOpen(false), resolve(info) }, delay + 1)
         })
     }
@@ -103,13 +114,17 @@ const MyTips = (props) => {
     let _children = children//普通标签
 
     // 组件
-    if (typeOf(children.type, 'function') ||children.type.render) {
+    if (typeOf(children.type, 'function') || children.type.render) {
         //给子组件注入额外的props 为什么updateDisabled不能是syncDisabled syncDisabled是每个子节点自身的处理disabled的函数
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
         // _children = React.cloneElement(children,) updateLoading: updateVisible
 
         const _childrenProps = { ...children.props, onSuccess, onError, disabled: disabled || btnDisabled, updateLoading: updateDisabled }
-        _children = <children.type {..._childrenProps}/>
+        if(id){
+            // 有id说明是表单需要把id,onChange,value传给子组件
+            Object.assign(_childrenProps,{id,onChange,value})
+        }
+        _children = <children.type {..._childrenProps} />
     }
 
 
@@ -131,8 +146,8 @@ MyTips.defaultProps = {
     delay: 1500, // 信息窗停留时间
     success: false, // 开/关 成功提示 (字符串时替换提示信息)
     error: false,//开/关 错误提示 (字符串时替换提示信息)
-    updateVisible:()=>{},
-    updateDisabled:()=>{}
+    updateVisible: () => { },
+    updateDisabled: () => { }
 }
 
 export default MyTips;
