@@ -8,3 +8,4 @@ export { MyCheckbox } from './src/MyCheckbox';
 export { MySelect } from './src/MySelect';
 export { MyConfirm } from './src/MyConfirm';
 export { MyUpload } from './src/MyUpload';
+export { MyDownload } from './src/MyDownload';

@@ -9,3 +9,7 @@ export const GET_TOKEN = '/get/token'
 
 //上传
 export const POST_UPLOAD = '/post/upload'
+
+// 下载
+export const GET_DOWNLOAD = '/get/download'
+
