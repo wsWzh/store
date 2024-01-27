@@ -2,7 +2,7 @@ import { Layout, Menu, Button } from 'antd';
 import { useMemo, useState } from 'react';
 import { SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { empty } from '@wzh-/utils';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, matchRoutes } from 'react-router-dom';
 import routes from '../router'
 import { useMessage } from '../utils';
 import { getStore } from '../stores'
@@ -34,23 +34,8 @@ const MyLayoutAside = (props) => {
     const message = useMessage()
     const { pathname } = useLocation()
     const nav = useNavigate()
-
     const menuItems = getStore(GET_MENUS, state => state.data)
 
-    const matchs = useMemo(() => {
-        let matchs = []
-
-        const getMatchs = (str) => {
-            const newStr = str.replace(/\/[^\/]*$/, '')
-            if (newStr) {
-                matchs.push(newStr)
-                getMatchs(newStr)
-            }
-        }
-        getMatchs(pathname)
-
-        return matchs
-    }, [pathname])
 
     const getMenuItem = (item, lv) => {
 
@@ -73,24 +58,13 @@ const MyLayoutAside = (props) => {
         return menuItems.map(i => getMenuItem(i, 0))
     }, [menuItems])
 
-
-    const [selectedKeys, setSelectedKeys] = useState([pathname])
-    const onSelect = (item) => {
-        const { key } = item
-        if (empty(routesMap[key])) {
-            message.error('该页面不存在')
-            return
-        }
-        setSelectedKeys(key)
-        nav(key)
-    }
-    const rootSubmenuKeys = menuItems.map(i => i.routePath);
-    const [openKeys, setOpenKeys] = useState(matchs)
+    //打开的菜单
+    const [openKeys, setOpenKeys] = useState()
     const onOpenChange = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-
         // 手风琴效果
         if (accordion) {
+            const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+            const rootSubmenuKeys = menuItems.map(i => i.routePath);
             if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
                 setOpenKeys(keys)
             } else {
@@ -101,6 +75,25 @@ const MyLayoutAside = (props) => {
             setOpenKeys(keys)
         }
     }
+
+    // 选中的菜单
+    const selectedKeys = useMemo(() => {
+        const matched = matchRoutes(routes, pathname);
+        const matchedKyes = matched.map(item => item.route.routePath)
+        setOpenKeys(matchedKyes)
+        return pathname
+    }, [pathname])
+
+    const onSelect = (item) => {
+        const { key } = item
+        if (empty(routesMap[key])) {
+            message.error('该页面不存在')
+            return
+        }
+        nav(key)
+    }
+
+
 
     // 导航栏伸缩
     const [collapsed, setCollapsed] = useState(false);

@@ -1,5 +1,5 @@
 import { Descriptions, Button, Popover, Form, Upload } from 'antd'
-import { MyUpload, MyDownload, MyTips } from '@/components'
+import { MyUpload, MyDownload, MyTips, MyCrumbSlot  } from '@/components'
 import { GET_DOWNLOAD, http } from '../../http'
 
 const useResolve = () => {
@@ -22,7 +22,6 @@ const Test = () => {
         </MyTips>
         <MyTips success error>
             <MyUpload action={useResolve} origin="https://static-nk.liux.co" maxCount={3} BtnSlot={<Button type="primary">上传</Button>}>
-
         </MyUpload>
             <Upload>
                 <Button >Upload</Button>

@@ -3,6 +3,7 @@ import { lazy } from 'react'
 export default {
     path: '/member',
     name: 'Member',
+    routePath: '/member',
     meta: { title: '用户管理' },
     component: lazy(() => import('@/layout/outletPage')),
     children: [
