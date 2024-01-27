@@ -140,12 +140,15 @@ const Setting = () => {
             <Descriptions.Item label="表单">
                 <Form form={form} onFinish={onFinish}>
                     <Form.Item label="上传" name="image" rules={[{ required: true }]}>
-                        <MyUpload action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} />
+                        <MyTips error success>
+                            <MyUpload multiple action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} />
+                        </MyTips>
                     </Form.Item>
-                    {/* 只有上传行为的按钮不会重新 */}
-                    <MyUpload action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} >
-                      只有上传行为的按钮  <Button type="primary">上传</Button>
-                    </MyUpload>
+                    <MyTips success error>
+                        <MyUpload action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} BtnSlot={<Button type="primary">上传</Button>}>
+
+                        </MyUpload>
+                    </MyTips>
                     <Form.Item label="姓名" name="input" rules={[{ required: true }]}>
                         <MyInput pattern={/^\d*$/} ></MyInput>
                     </Form.Item>

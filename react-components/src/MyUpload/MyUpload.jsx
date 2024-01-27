@@ -13,11 +13,11 @@ const accepts = {
     'image/gif': 'gif',
 }
 /**
- * 不设置value(不是value为空)时代表只有上传行为 不用处理flieList 不会出现文件列表
+ * 不设置value时需要设置BtnSlot代表只有上传行为 不用处理flieList 不会出现文件列表
  * responseUrlKey接口返回字段
  * name提交字段
  * action请求函数返回一个promise
- * children是单按钮时使用按钮上传
+ * BtnSlot是按钮时使用按钮上传
  * @param {*} props
  * @returns
  */
@@ -35,15 +35,26 @@ const MyUpload = (props) => {
         action,
         responseUrlKey,
         name,
-        children,
-        disabled
+        disabled,
+        BtnSlot,
+        multiple
     } = props
 
+    const [isMax, setIsMax] = useState(false)
 
     // 上传前校验
-    const beforeUpload = useCallback((file, fileList) => {
+    const beforeUpload = useCallback((file, currentList) => {
         const { type, size, name } = file
 
+        const total = currentList.length + fileList.length
+        if (total > maxCount) {
+            setIsMax(true)
+            const message = `文件上传数量不能大于${maxCount}，请重新上传`
+            const error = new Error(message)
+            onError(error)
+            return Promise.reject(error)
+        }
+        setIsMax(false)
         if (size > maxSize * 1024 * 1024) {
             const message = `文件大小不能超过${maxSize < 1 ? maxSize * 1024 + 'KB' : maxSize + 'MB'}`
             const error = new Error(message)
@@ -75,30 +86,34 @@ const MyUpload = (props) => {
     // 需要一直更新fileList不然只触发一次
     const _onChage = ({ file, fileList, event }) => {
 
-        if (!props.hasOwnProperty('value')) {
+        if (isMax) {
             return
         }
-        // event听说可以控制上传进度
+        if (BtnSlot) {
+            return
+        }
 
-        // 全部done才更新外部值
         if (fileList.some(item => item.status !== 'done')) {
             return setFileList(fileList)
         }
+
+        // 全部done才更新
+        // 最后一次需要设置接口返回的图片
+        // 有可能会出现上传的图片和接口返回的图片不一致
         const isArray = typeOf(value, 'array')
         const items = fileList.map(file => {
             const { url, response } = file
             return response?.[responseUrlKey] || url
         })
+
         const newValue = isArray ? items : items.join(',')
-        // 最后一次需要设置接口返回的图片
-        // 有可能会出现上传的图片和接口返回的图片不一致
         setFileList(asyncFileList(newValue))
         onChange(newValue)
     }
 
     const [loading, setLoading] = useState(false)
     const changeLoading = bool => {
-        if (empty(children)) {
+        if (empty(BtnSlot)) {
             return
         }
         setLoading(bool)
@@ -115,7 +130,7 @@ const MyUpload = (props) => {
             const percent = event.total > 0 ? (event.loaded / event.total) : undefined
             onProgress(parseInt(percent), event)
         }
-        setLoading(true)
+        changeLoading(true)
         return action(formData, { onUploadProgress }).then(res => {
             const file = res?.[0] || res?.result?.[0] || {}
             onSuccess(res)//通知mytips
@@ -148,7 +163,8 @@ const MyUpload = (props) => {
 
     useEffect(() => {
 
-        if (!props.hasOwnProperty('value')) {
+        // 按钮上传不处理文件列表
+        if (BtnSlot) {
             return
         }
 
@@ -161,21 +177,9 @@ const MyUpload = (props) => {
 
 
     const uploadButton = (
-        <button
-            style={{
-                border: 0,
-                background: 'none',
-            }}
-            type="button"
-        >
+        <button style={{ border: 0, background: 'none', }} type="button">
             <PlusOutlined />
-            <div
-                style={{
-                    marginTop: 8,
-                }}
-            >
-                Upload
-            </div>
+            <div style={{ marginTop: 8, }} >  Upload</div>
         </button>
     );
 
@@ -185,24 +189,22 @@ const MyUpload = (props) => {
         customRequest,
         onChange: _onChage,
         beforeUpload,
-        listType: empty(children) ? "picture-card" : '',
+        listType: BtnSlot ? '' : "picture-card",
         fileList,
         maxCount,
-        disabled
+        disabled,
+        multiple
     }
 
-    const _children = () => {
-        const slot = typeOf(children, 'array') ? children : [children]
-        return slot.map(item => {
-            if (isButton(item)) {
-                return <item.type {...{ ...item.props, disabled: disabled || loading, loading,key:'upload-btn' }} />
-            }
-            return item
-        })
+    const _BtnSlot = () => {
+        if (!BtnSlot) {
+            return
+        }
+        return <BtnSlot.type {...{ ...BtnSlot.props, loading, disabled: disabled || loading }} />
     }
 
     return <Upload {..._props}>
-        {children ? _children() : maxCount > fileList.length ? uploadButton : ''}
+        {BtnSlot ? _BtnSlot() : maxCount > fileList.length ? uploadButton : ''}
     </Upload>
 }
 

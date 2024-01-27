@@ -41,7 +41,7 @@
           </my-tips>
         </a-form-item>
         <a-form-item label="图片上传">
-          <my-tips error position="right">
+          <my-tips success error position="top">
             <my-upload v-model="params.image" multiple :limit="3" :action="handleUpload"
               origin="https://static-nk.liux.co" style="width: unset" />
           </my-tips>

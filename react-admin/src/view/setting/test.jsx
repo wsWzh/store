@@ -1,5 +1,7 @@
-import { Descriptions, Button, Popover, Form } from 'antd'
-import { MyUpload } from '@/components'
+import { Descriptions, Button, Popover, Form, Upload } from 'antd'
+import { MyUpload, MyDownload, MyTips } from '@/components'
+import { GET_DOWNLOAD, http } from '../../http'
+
 const useResolve = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -8,12 +10,26 @@ const useResolve = () => {
     })
 }
 
+const handleDownload = () => {
+    return http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true })
+}
+
+
 const Test = () => {
-    return <Form>
-        <Form.Item name="load">
-            <MyUpload accept="image/png,image/jpeg" />
-        </Form.Item>
-    </Form>
+    return <div>
+        <MyTips success error>
+            <MyDownload onClick={handleDownload}>下载</MyDownload>
+        </MyTips>
+        <MyTips success error>
+            <MyUpload action={useResolve} origin="https://static-nk.liux.co" maxCount={3} BtnSlot={<Button type="primary">上传</Button>}>
+
+        </MyUpload>
+            <Upload>
+                <Button >Upload</Button>
+            </Upload>
+        </MyTips>
+
+    </div>
 }
 
 export default Test;

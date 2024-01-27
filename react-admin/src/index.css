@@ -41,3 +41,7 @@ body {
     overflow: auto;
     padding: 20px;
 }
+.my-upload{
+    display: block;
+    width: fit-content;
+}
