@@ -5,6 +5,7 @@ import { empty, typeOf } from '@wzh-/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import './MyUpload.css'
 import { isButton } from '../_utils';
+import { useVNodeWithProps } from '../_hook';
 
 // 提示语用后缀
 const accepts = {
@@ -200,7 +201,7 @@ const MyUpload = (props) => {
         if (!BtnSlot) {
             return
         }
-        return <BtnSlot.type {...{ ...BtnSlot.props, loading, disabled: disabled || loading }} />
+        return useVNodeWithProps(BtnSlot, { loading, disabled: disabled || loading })
     }
 
     return <Upload {..._props}>

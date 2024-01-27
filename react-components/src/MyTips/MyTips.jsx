@@ -1,6 +1,7 @@
-import { empty, typeOf } from '@wzh-/utils';
+import { typeOf } from '@wzh-/utils';
 import { Tooltip, Space } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useVNodeWithProps } from '../_hook';
 /**
  * 通用操作提示
  * 配合子组件的 onError 、 onSuccess 事件提示信息
@@ -119,12 +120,12 @@ const MyTips = (props) => {
         // updateDisabled来源于最外层的my-tips处理的是同一个disabled
         // _children = React.cloneElement(children,) updateLoading: updateVisible
 
-        const _childrenProps = { ...children.props, onSuccess, onError, disabled: disabled || btnDisabled, updateLoading: updateDisabled }
+        const _childrenProps = { onSuccess, onError, disabled: disabled || btnDisabled, updateLoading: updateDisabled }
         if(id){
             // 有id说明是表单需要把id,onChange,value传给子组件
             Object.assign(_childrenProps,{id,onChange,value})
         }
-        _children = <children.type {..._childrenProps} />
+        _children = useVNodeWithProps(children, _childrenProps)
     }
 
 

@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react'
 import { MyTips, MyButton } from '../../index'
 import { typeOf, empty } from '@wzh-/utils'
 import { isButton } from '../_utils'
+import { useVNodeWithProps } from '../_hook'
 
 /**
  * 确认操作气泡卡片
@@ -74,7 +75,7 @@ const MyConfirm = (props) => {
                 }
             }
             // 普通按钮
-            return <item.type {..._itemProps} />
+            return useVNodeWithProps(item, _itemProps)
         })
         return <Row justify="end" style={{ paddingTop: '6px' }}>
             <Space>
@@ -100,7 +101,7 @@ const MyConfirm = (props) => {
 
         const Btn = slotsDefault.find(isButton);
         if (Btn) {
-            return <Btn.type  {...{ ...Btn.props, ...btnProps }} />
+            return useVNodeWithProps(Btn, btnProps )
         } else {
 
             const _childrenProps = {

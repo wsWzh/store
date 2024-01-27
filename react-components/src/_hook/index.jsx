@@ -33,11 +33,25 @@ export const useOptions = (options, formatter = "label,value") => {
 
 
 /**
- *
  * @param {object} props 要处理的props
  * @param {array} keys 要删除的指定key数组
  * @returns {object} newProps
  */
-export const useDeleteProps=(props,keys=[])=>{
-    return reduceProps(props,({key})=>keys.includes(key))
+export const useDeleteProps = (props, keys = []) => {
+    return reduceProps(props, ({ key }) => keys.includes(key))
+}
+
+/**
+ * 给vnode添加额外的props
+ * 传入的props会覆盖旧的
+ * 返回合并props后的vnode
+ * @param {vnode} vnode
+ * @param {object} props
+ * @returns vnode
+ */
+export const useVNodeWithProps = (vnode, props) => {
+    if (!vnode.type) {
+        return
+    }
+    return <vnode.type {...{ ...vnode.props, ...props }} />
 }
