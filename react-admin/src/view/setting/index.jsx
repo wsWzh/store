@@ -1,6 +1,6 @@
 import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm, MyUpload, MyCrumbSlot } from '../../components'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm, MyUpload } from '../../components'
 import { Button, Space, Tooltip, Menu, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
 const { RangePicker } = DatePicker
 import { http, POST_UPLOAD } from '../../http'

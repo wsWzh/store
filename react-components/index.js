@@ -9,4 +9,5 @@ export { MySelect } from './src/MySelect';
 export { MyConfirm } from './src/MyConfirm';
 export { MyUpload } from './src/MyUpload';
 export { MyDownload } from './src/MyDownload';
-export { MyCrumb } from './src/MyCrumb/index.jsx';
+export { MyCrumb } from './src/MyCrumb';
+export { MyTable, MyPagination } from './src/MyTable'

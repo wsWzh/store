@@ -88,8 +88,7 @@ export default {
         const selectedKeys = computed(() => {
             const { selections, rowKey } = props
             return selections?.map?.(item => item[rowKey])
-        }
-        )
+        })
 
         // 复选框变更时返回选中的数据对象 concat保证了不会丢失不是当前页的选项
         const doSelectedKeysChange = keyItems => {
@@ -133,7 +132,7 @@ export default {
 
 
         return () => {
-            console.log('更新咯');
+
             const { rowKey, selections, columns, bordered } = props
 
             // 重写render 将reload(刷新数据)注入render

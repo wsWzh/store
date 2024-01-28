@@ -41,7 +41,41 @@ body {
     overflow: auto;
     padding: 20px;
 }
-.my-upload{
+
+.my-upload {
     display: block;
     width: fit-content;
+}
+
+.my-table ,
+.my-table>div,
+.my-table>div>.ant-spin-container,
+.my-table>div>.ant-spin-container>.ant-table,
+.my-table>div>.ant-spin-container>.ant-table>.ant-table-container{
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.my-table{
+    table{
+        height: 100%;
+    }
+}
+
+
+.ant-table-body {
+    max-height: unset !important;
+    flex: 1;
+}
+
+.ant-form-inline>.ant-form-item,
+.ant-form-inline>.ant-col>.ant-form-item{
+    margin-bottom: 8px;
+    margin-right: 8px;
+}
+
+.my-date-range{
+    width: 100%;
 }

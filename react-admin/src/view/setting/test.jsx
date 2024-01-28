@@ -1,5 +1,5 @@
 import { Descriptions, Button, Popover, Form, Upload } from 'antd'
-import { MyUpload, MyDownload, MyTips, MyCrumbSlot  } from '@/components'
+import { MyUpload, MyDownload, MyTips  } from '@/components'
 import { GET_DOWNLOAD, http } from '../../http'
 
 const useResolve = () => {
@@ -16,7 +16,7 @@ const handleDownload = () => {
 
 
 const Test = () => {
-    return <div>
+    return <div className='outlet-main'>
         <MyTips success error>
             <MyDownload onClick={handleDownload}>下载</MyDownload>
         </MyTips>
