@@ -1,4 +1,5 @@
 import { Button } from 'antd'
+import { Link } from "react-router-dom";
 
 export const columns = [
   {
@@ -32,9 +33,12 @@ export const columns = [
     width: 150,
     align: 'center',
     slotName: 'actions',
-    render: ({ record }, { reload }) => <>
-      <Button onClick={reload}>刷新</Button>
-      <Button onClick={reload}>编辑</Button>
-    </>
+    render: ({ record }, { reload }) => {
+
+      return <>
+        <Button onClick={reload}>刷新</Button>
+        <Link to='/member/detail'>编辑</Link>
+      </>
+    }
   }
 ]

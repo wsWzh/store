@@ -72,6 +72,7 @@ const Member = () => {
             historySelect
             columns={columns}
             ref={tableRef}
+            history
         />
     </Layout>
 }

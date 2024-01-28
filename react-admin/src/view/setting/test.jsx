@@ -1,4 +1,4 @@
-import { Descriptions, Button, Popover, Form, Upload, Layout ,Col} from 'antd'
+import { Descriptions, Button, Popover, Form, Upload, Layout, Col } from 'antd'
 import { MyUpload, MyDownload, MyTips, MySelect } from '../../components'
 import { GET_DOWNLOAD, http, GET_OPTIONS } from '../../http'
 import { getStore } from '../../stores'
@@ -18,7 +18,7 @@ const handleDownload = () => {
 
 const Test = () => {
 
-    const options = getStore(GET_OPTIONS)?.getter()
+    const options = getStore(GET_OPTIONS, state => state.getter())
 
     return <Layout className='outlet-main'>
         <Form>

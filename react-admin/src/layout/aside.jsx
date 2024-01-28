@@ -79,12 +79,12 @@ const MyLayoutAside = (props) => {
     // 选中的菜单
     const selectedKeys = useMemo(() => {
         const matched = matchRoutes(routes, pathname);
-        const matchedKyes = matched.map(item => item.route.routePath)
+        const matchedKyes = matched.map(item => item.route.meta.key || item.route.routePath)
         setOpenKeys(matchedKyes)
-        return pathname
+        return matchedKyes.at(-1)
     }, [pathname])
 
-    const onSelect = (item) => {
+    const onClick = (item) => {
         const { key } = item
         if (empty(routesMap[key])) {
             message.error('该页面不存在')
@@ -103,7 +103,7 @@ const MyLayoutAside = (props) => {
         <Sider className='my-aside' collapsed={collapsed} collapsedWidth={60}>
             <Menu
                 mode="inline"
-                onSelect={onSelect}
+                onClick={onClick}
                 selectedKeys={selectedKeys}
                 onOpenChange={onOpenChange}
                 openKeys={openKeys}

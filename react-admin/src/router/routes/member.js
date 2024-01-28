@@ -13,6 +13,12 @@ export default {
             routePath: '/member/list',
             meta: { title: '用户列表' },
             component: lazy(() => import('@/view/member')),
+        },
+        {
+            path: 'detail',
+            routePath: '/member/detail',
+            meta: { title: '用户详情', key:'/member/list' },
+            component: lazy(() => import('@/view/member/detail')),
         }
     ]
 }
