@@ -16,7 +16,6 @@ const createStore = url => {
             action: async (params) => {
                 const value = await http.get(url, params)
                 const datetime = Date.now() + storageTimeOut
-                console.log(Date.now(), datetime);
                 const data = { value, datetime }
                 sessionStorage.setItem(url, JSON.stringify(data))
                 set(state => ({ data }))

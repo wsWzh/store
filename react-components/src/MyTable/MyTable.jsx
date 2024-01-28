@@ -190,7 +190,7 @@ const MyTable = (props, ref) => {
         wrapperCol: { flex: 1 },
         labelCol: { flex: '80px' },
         variant: "filled",
-        children: searchSlot({ search, form })
+        children: searchSlot({ search, form ,loading})
     }
 
     const paginationProps = {

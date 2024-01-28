@@ -21,7 +21,7 @@ const Member = () => {
         }
     ])
 
-    const searchSlot = ({ search, form }) => {
+    const searchSlot = ({ search, form, loading }) => {
         return <>
             <Col span={6}>
                 <Form.Item name="name" label="名称">
@@ -51,8 +51,8 @@ const Member = () => {
             </Col>
             <Form.Item>
                 <Space>
-                    <Button type="primary" onClick={search}>查询</Button>
-                    <Button onClick={() => search(null)}>重置</Button>
+                    <Button type="primary" onClick={search} loading={loading}>查询</Button>
+                    <Button onClick={() => search(null)} loading={loading}>重置</Button>
                     <Button onClick={() => search(null)}>新增</Button>
                 </Space>
             </Form.Item>
