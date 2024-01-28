@@ -1,4 +1,4 @@
-import { reduceProps, typeOf } from "@wzh-/utils"
+import { reduceProps, typeOf ,empty} from "@wzh-/utils"
 import { useMemo } from "react"
 import { formatValue } from "../_utils"
 
@@ -10,24 +10,30 @@ import { formatValue } from "../_utils"
  * @returns {array}formatOptions 根据formatter生成的新选项
  */
 export const useOptions = (options, formatter = "label,value") => {
-    const formatOptions = options.map(option => {
-        if (typeOf(formatter, 'string')) {
-            const items = formatter.split(',')
-            const value = formatValue(option[items[0]])
-            const label = option[items[1]]
-            return { ...option, label, value }
+    const formatOptions= useMemo(()=>{
+        if(empty(options)){
+            return []
         }
-        if (typeOf(formatter, 'function')) {
-            const _option = formatter(option)
-            if (typeOf(_option, 'array')) {
-                const value = formatValue(_option[0])
-                const label = _option[1]
-                const disabled = option.disabled
-                return { disabled, label, value }
+        return options.map(option => {
+            if (typeOf(formatter, 'string')) {
+                const items = formatter.split(',')
+                const value = formatValue(option[items[0]])
+                const label = option[items[1]]
+                return { ...option, label, value }
             }
-            return { /*_*/ }
-        }
-    })
+            if (typeOf(formatter, 'function')) {
+                const _option = formatter(option)
+                if (typeOf(_option, 'array')) {
+                    const value = formatValue(_option[0])
+                    const label = _option[1]
+                    const disabled = option.disabled
+                    return { disabled, label, value }
+                }
+                return { /*_*/ }
+            }
+        })
+    },[options])
+
     return formatOptions
 }
 

@@ -1,6 +1,7 @@
-import { Descriptions, Button, Popover, Form, Upload } from 'antd'
-import { MyUpload, MyDownload, MyTips  } from '@/components'
-import { GET_DOWNLOAD, http } from '../../http'
+import { Descriptions, Button, Popover, Form, Upload, Layout ,Col} from 'antd'
+import { MyUpload, MyDownload, MyTips, MySelect } from '../../components'
+import { GET_DOWNLOAD, http, GET_OPTIONS } from '../../http'
+import { getStore } from '../../stores'
 
 const useResolve = () => {
     return new Promise((resolve, reject) => {
@@ -16,19 +17,18 @@ const handleDownload = () => {
 
 
 const Test = () => {
-    return <div className='outlet-main'>
-        <MyTips success error>
-            <MyDownload onClick={handleDownload}>下载</MyDownload>
-        </MyTips>
-        <MyTips success error>
-            <MyUpload action={useResolve} origin="https://static-nk.liux.co" maxCount={3} BtnSlot={<Button type="primary">上传</Button>}>
-        </MyUpload>
-            <Upload>
-                <Button >Upload</Button>
-            </Upload>
-        </MyTips>
 
-    </div>
+    const options = getStore(GET_OPTIONS)?.getter()
+
+    return <Layout className='outlet-main'>
+        <Form>
+            <Col span={6}>
+                <Form.Item label='测试zustand数据持久化'>
+                    <MySelect options={options} formatter="key,name" />
+                </Form.Item>
+            </Col>
+        </Form>
+    </Layout>
 }
 
 export default Test;

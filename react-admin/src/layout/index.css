@@ -42,6 +42,10 @@ h5 {
     overflow: auto;
 }
 
+.my-aside>.ant-layout-sider-children>.ant-menu{
+    padding-bottom: 32px;
+}
+
 .ant-layout-has-sider>.ant-layout {
     overflow-x: hidden;
 }

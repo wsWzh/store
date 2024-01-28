@@ -1,12 +1,20 @@
 import useMenuStore from "./modules/menu"
 import useUserStore from "./modules/user"
+import constantStoresMap from "./modules/constant"
 
-const storesMap = [useMenuStore, useUserStore].reduce((map, item) => {
+const customStoresMap = [useMenuStore, useUserStore].reduce((map, item) => {
     const { Storekey } = item
-    return {...map,...{[Storekey]:item}}
+    return { ...map, ...{ [Storekey]: item } }
 }, {})
 
-export const getStore = (key,fn) => {
+const storesMap = {
+    ...constantStoresMap,
+    ...customStoresMap
+}
+
+console.log(storesMap,'stores');
+
+export const getStore = (key, fn) => {
     return storesMap[key](fn)
 }
 
