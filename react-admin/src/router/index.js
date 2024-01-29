@@ -30,6 +30,8 @@ const routes = generateRouter([
     }
 ])
 
+console.log(routes,'routes');
+
 // 路由组件
 export function Routes() {
     return useRoutes(routes);

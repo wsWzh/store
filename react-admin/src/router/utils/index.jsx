@@ -33,43 +33,36 @@ const RouteGuard = ({ route, children }) => {
         return children
     }
 
-    //默认为true不然会先显示页面闪一下才显示错误页
-    const [error, setError] = useState(true)
-    const [Loading, setLoading] = useState(false)
-
-    const useLoading = () => {
-        setLoading(true)
-        return () => setLoading(false)
-    }
+    const [error, setError] = useState(false)
+    const [Loading, setLoading] = useState(true)
 
     // 拦截刚需数据
     const needStores = needItems.map(item => getStore(item))
 
-    const getNeedDat = async () => {
-        // Loading开始
-        const closeLoading = useLoading()
-        try {
-            for (const item of needStores) {
-                const { data, action } = item
-                if (empty(data)) {
-                    await action()
-                }
-            }
-            setError(false)
-        } catch (error) {
-            console.log('error');
-            setError(error)
-        } finally {
-            // loading结束
-            closeLoading()
-        }
-    }
-
     useEffect(() => {
-        getNeedDat()
+        const getNeedData = async () => {
+            try {
+                for (const item of needStores) {
+                    const { data, action } = item
+                    if (empty(data)) {
+                        await action()
+                    }
+                }
+                setError(false)
+            } catch (error) {
+                console.log('error', error);
+                setError(error)
+                return Promise.reject(error)
+            }finally{
+                // Loading结束
+                setLoading(false)
+            }
+        }
+
+        getNeedData()
     }, [])
 
-    return Loading ? <LoadingPage /> : (error ? <ErrorPage {...error} /> : children)
+    return Loading ? <LoadingPage /> : (!error ? children: <ErrorPage {...error} /> )
 }
 
 const handelRoute = (route) => {

@@ -15,6 +15,9 @@ const storesMap = {
 console.log(storesMap,'stores');
 
 export const getStore = (key, fn) => {
-    return storesMap[key](fn)
+    if(storesMap[key]){
+        return storesMap[key](fn)
+    }
+    return console.log(key,'store不存在');
 }
 
