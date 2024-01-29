@@ -1,26 +1,28 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import Root from './App.jsx'
 import './index.css'
-import { ConfigProvider, App as AntdApp } from 'antd';
+import { ConfigProvider, App, theme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import { HashRouter, BrowserRouter } from "react-router-dom";
+import { HashRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-
-const theme = {
-  components: {
-    Layout: { bodyBg: "#fff", siderBg: "#fff" },
-    Menu: { itemBorderRadius: 0, subMenuItemBg: "#fff" }
-  }
+const customTheme = {
+    components: {
+        Layout: { bodyBg: "#fff", siderBg: "#fff" },
+        Menu: { itemBorderRadius: 0, subMenuItemBg: "#fff" }
+    }
 }
 
+// holderRender处理ant message 、modal 、notification静态方法
+ConfigProvider.config({
+    holderRender: (children) => ( <>{children}</>),
+})
+
 root.render(
-  <AntdApp>
-    <ConfigProvider locale={zhCN} theme={theme}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </ConfigProvider>
-  </AntdApp>
+
+    <HashRouter>
+        <ConfigProvider locale={zhCN} theme={customTheme}>
+            <Root />
+        </ConfigProvider>
+    </HashRouter>
 )

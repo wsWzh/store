@@ -1,8 +1,7 @@
-import { DatePicker, Form } from 'antd';
+import { DatePicker, Form, Input } from 'antd';
 import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import localeData from 'dayjs/plugin/localeData';
-import { notEmpty } from '@wzh-/utils';
 import { useMemo } from 'react'
 dayjs.extend(weekday); dayjs.extend(localeData);
 
@@ -23,7 +22,7 @@ const MyDateRange = (props) => {
     let handleFormValue, handelFormChange
 
     // 只处理在form表单的第一个日期框的回显和更新
-    const isStart = (!isForm && endName)
+    const isStart = !!(!isForm && endName)
     if (isStart) {
         handleFormValue = () => {
             let dateRange = []
@@ -97,7 +96,7 @@ const MyDateRange = (props) => {
                 <MyDateRange endName={endName} form={form} />
             </Form.Item>
             <Form.Item name={endName} style={{ position: 'absolute', zIndex: -1, opacity: 0 }}>
-                <MyDateRange />
+               <Input />
             </Form.Item>
         </>
 

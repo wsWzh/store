@@ -1,12 +1,17 @@
 import { Row, Image } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 
 const Home = () => {
-    const nav = useNavigate()
+    const navgate = useNavigate()
+    let [searchParams, setSearchParams] = useSearchParams();
+    const onNav = () => {
+        const goto = searchParams.get('goto')  || '/'
+        navgate(goto, { replace:true })
+    }
     return <>
         <Row align="middle" justify="center" style={{ height: '100%' }}>
-            <Image onClick={() => nav('/member/list')} width="100px" src="logo.png" preview={false} />✨🍍
+            <Image onClick={onNav} width="100px" src="logo.png" preview={false} />✨🍍
         </Row>
     </>
 }

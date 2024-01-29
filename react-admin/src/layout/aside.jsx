@@ -1,10 +1,9 @@
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu,message } from 'antd';
 import { useMemo, useState } from 'react';
 import { SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { empty } from '@wzh-/utils';
+import { empty } from '../utils';
 import { useNavigate, useLocation, matchRoutes } from 'react-router-dom';
 import routes from '../router'
-import { useMessage } from '../utils';
 import { getStore } from '../stores'
 import { GET_MENUS } from '../http';
 
@@ -31,7 +30,6 @@ const routesMap = getRoutesMap(routes)
  */
 const MyLayoutAside = (props) => {
     const { accordion } = props
-    const message = useMessage()
     const { pathname } = useLocation()
     const nav = useNavigate()
     const menuItems = getStore(GET_MENUS, state => state.data)
