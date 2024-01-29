@@ -6,7 +6,7 @@ const Home = () => {
     const navgate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
     const onNav = () => {
-        const goto = searchParams.get('goto')  || '/'
+        const goto = searchParams.get('goto') || '/member/list'
         navgate(goto, { replace:true })
     }
     return <>

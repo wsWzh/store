@@ -11,7 +11,7 @@ export default {
             path: 'list',
             name: 'MemberList',
             routePath: '/member/list',
-            meta: { title: '用户列表' },
+            meta: { title: '用户列表', keepAlive: true },
             component: lazy(() => import('@/view/member')),
         },
         {

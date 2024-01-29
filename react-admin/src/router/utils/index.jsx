@@ -5,6 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import ErrorPage from '../../view/error/500';
 import { getStore } from '../../stores';
 import { GET_MENUS, GET_USER_INFO } from '../../http';
+import KeepAlive from 'react-activation'
 
 const LoadingPage = () => {
     return <Row justify="center" align="middle" style={{ flex: 1 }}>
@@ -27,19 +28,19 @@ const needItems = [GET_USER_INFO, GET_MENUS]
 // 路由守卫
 const RouteGuard = ({ route, children }) => {
     const { name } = route
-
-    // 白名单放行
-    if (witelist.includes(name)) {
-        return children
-    }
-
     const [error, setError] = useState(false)
+    // 默认为true 不然会闪一下
     const [Loading, setLoading] = useState(true)
 
     // 拦截刚需数据
     const needStores = needItems.map(item => getStore(item))
 
     useEffect(() => {
+        // 白名单放行 不能放在外面判断 有条件的调用hook
+        if (witelist.includes(name)) {
+            return setLoading(false)
+        }
+
         const getNeedData = async () => {
             try {
                 for (const item of needStores) {
@@ -53,24 +54,31 @@ const RouteGuard = ({ route, children }) => {
                 console.log('error', error);
                 setError(error)
                 return Promise.reject(error)
-            }finally{
+            } finally {
                 // Loading结束
                 setLoading(false)
             }
         }
-
         getNeedData()
     }, [])
-
-    return Loading ? <LoadingPage /> : (!error ? children: <ErrorPage {...error} /> )
+    if (Loading) {
+        return <LoadingPage />
+    }
+    if (error) {
+        return <ErrorPage />
+    }
+    return children
 }
 
+
 const handelRoute = (route) => {
-    return <Suspense fallback={LoadingPage()}>
-        <RouteGuard route={route}>
-            <route.component />
-        </RouteGuard>
-    </Suspense>
+    return (
+        <Suspense fallback={LoadingPage()}>
+            <RouteGuard route={route}>
+                <route.component />
+            </RouteGuard>
+        </Suspense>
+    )
 }
 
 
@@ -79,8 +87,12 @@ export const generateRouter = (routes) => {
     return routes.map(route => {
         if (route.children) {
             route.children = generateRouter(route.children)
+            route.element = handelRoute(route)
+        }else{
+            // 只缓存最后一级
+            route.element = <KeepAlive cacheKey={route.path} id={route.path}>{handelRoute(route)}</KeepAlive>
         }
-        route.element = handelRoute(route)
+
         return route
     })
 }

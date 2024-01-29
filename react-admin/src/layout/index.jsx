@@ -7,18 +7,20 @@ import { MyCrumb } from '../components'
 import { Button } from 'antd'
 
 const Index = () => {
-    return <Layout className='my-layout'>
-        <MyLayoutHeader />
-        <Layout>
-            <MyLayoutAside accordion />
-            <Layout>
-                <MyCrumb>
-                    <Button>测试面包屑组件</Button>
-                </MyCrumb>
-                <Outlet />
+    return (
+            <Layout className='my-layout'>
+                <MyLayoutHeader />
+                <Layout>
+                    <MyLayoutAside accordion />
+                    <Layout>
+                        <MyCrumb>
+                            <Button>测试面包屑组件</Button>
+                        </MyCrumb>
+                        <Outlet />
+                    </Layout>
+                </Layout>
             </Layout>
-        </Layout>
-    </Layout>
+    )
 }
 
 export default Index;

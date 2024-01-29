@@ -1,8 +1,9 @@
-import { Descriptions, Button, Popover, Form, Upload, Layout, Col } from 'antd'
+import { Descriptions, Button, Popover, Form, Upload, Layout, Col, Input } from 'antd'
 import { MyUpload, MyDownload, MyTips, MySelect, MyButton } from '../../components'
 import { GET_DOWNLOAD, http, GET_OPTIONS, GET_TOKEN } from '../../http'
 import { getStore } from '../../stores'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import KeepAlive from 'react-activation'
 
 const useResolve = () => {
     return new Promise((resolve, reject) => {
@@ -36,6 +37,10 @@ const PropsCom = React.memo((props) => {
     </>
 })
 
+const KeepCom=()=>{
+    return <Input/>
+}
+
 
 const Test = () => {
     console.log('父组件更新');
@@ -52,28 +57,41 @@ const Test = () => {
         setNumber(number + 1)
     }, [])
 
+    const [show,setShow]=useState(true)
+
+
     return <Layout className='outlet-main'>
-        <Form layout="inline">
-            <Col span={6}>
-                <Form.Item label='测试zustand数据持久化'>
-                    <MySelect options={options} formatter="key,name" />
-                </Form.Item>
-            </Col>
-            <Col span={6}>
-                <Form.Item label='测试401拦截'>
-                    <MyButton onClick={onLogin}>触发401</MyButton>
-                </Form.Item>
-            </Col>
-            <Col span={6}>
-                <Form.Item label='测试props类型对组件的更新'>
-                    <PropsCom number={number3} fn={propsfn} obj={obj} />
-                    <PropsCom number={number2} fn={propsfn} obj={obj2} />
-                    <Button onClick={() => setNumber(number + 1)}>更新number</Button>
-                    <Button onClick={() => obj.a = 1}>更新obj</Button>
-                </Form.Item>
-            </Col>
-        </Form>
-    </Layout>
+            <Form layout="inline" labelCol={{ flex: "200px" }}>
+                <Col span={12}>
+                    <Form.Item label='测试zustand数据持久化'>
+                        <MySelect options={options} formatter="key,name" />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item label='测试401拦截'>
+                        <MyButton onClick={onLogin}>触发401</MyButton>
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item label='测试props类型对组件的更新'>
+                        <PropsCom number={number3} fn={propsfn} obj={obj} />
+                        <PropsCom number={number2} fn={propsfn} obj={obj2} />
+                        <Button onClick={() => setNumber(number + 1)}>更新number</Button>
+                        <Button onClick={() => obj.a = 1}>更新obj</Button>
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item label='测试缓存组件'>
+                        <Button onClick={() => setShow(!show)}>{show ? '隐藏' : '显示'}</Button>
+                        没有缓存的组件
+                        {show && <KeepCom />}
+                        使用KeepAlive缓存的组件
+
+                            <KeepCom />
+                    </Form.Item>
+                </Col>
+            </Form>
+        </Layout>
 }
 
 export default Test;

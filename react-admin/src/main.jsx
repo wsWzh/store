@@ -4,6 +4,7 @@ import { ConfigProvider } from 'antd';
 import { Routes } from './router'
 import zhCN from 'antd/locale/zh_CN';
 import { HashRouter } from 'react-router-dom'
+import { AliveScope } from 'react-activation'
 
 function Root() {
     return <Routes />
@@ -23,9 +24,11 @@ ConfigProvider.config({
 })
 
 root.render(
-    <HashRouter>
-        <ConfigProvider locale={zhCN} theme={customTheme}>
-            <Root />
-        </ConfigProvider>
-    </HashRouter>
+    <AliveScope>
+        <HashRouter>
+            <ConfigProvider locale={zhCN} theme={customTheme}>
+                <Root />
+            </ConfigProvider>
+        </HashRouter>
+    </AliveScope>
 )

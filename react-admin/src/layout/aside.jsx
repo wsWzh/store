@@ -97,22 +97,20 @@ const MyLayoutAside = (props) => {
     const [collapsed, setCollapsed] = useState(false);
 
     return <>
-
-        <Sider className='my-aside' collapsed={collapsed} collapsedWidth={60}>
-            <Menu
-                mode="inline"
-                onClick={onClick}
-                selectedKeys={selectedKeys}
-                onOpenChange={onOpenChange}
-                openKeys={openKeys}
-                items={items}
-            />
-            <div onClick={() => setCollapsed(!collapsed)} className={`collapsed-btn ${collapsed ? 'collapsed' : ''}`}>
-                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </div>
-        </Sider>
+            <Sider className='my-aside' collapsed={collapsed} collapsedWidth={60}>
+                <Menu
+                    mode="inline"
+                    onClick={onClick}
+                    selectedKeys={selectedKeys}
+                    onOpenChange={onOpenChange}
+                    openKeys={openKeys}
+                    items={items}
+                />
+                <div onClick={() => setCollapsed(!collapsed)} className={`collapsed-btn ${collapsed ? 'collapsed' : ''}`}>
+                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                </div>
+            </Sider>
     </>
-
 }
 
 

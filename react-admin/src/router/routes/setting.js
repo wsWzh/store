@@ -12,7 +12,7 @@ export default {
             path: 'basics',
             name: 'BasicsComponents',
             routePath: '/components/basics',
-            meta: { title: '基础组件' },
+            meta: { title: '基础组件',keepAlive:true },
             component: lazy(() => import('@/view/setting')),
             redirect: '/components/basics',
         },
@@ -20,7 +20,7 @@ export default {
             path: 'test',
             name: 'BasicsComponents',
             routePath: '/components/test',
-            meta: { title: '基础组件' },
+            meta: { title: '测试组件' ,},
             component: lazy(() => import('@/view/setting/test')),
         }
     ]
