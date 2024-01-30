@@ -1,11 +1,16 @@
 {
-  "name": "react-components",
+  "name": "@wzh-/react-components",
   "version": "1.0.0",
-  "description": "",
+  "description": "基于Ant-Design,二次封装的组件",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "pub": "npm publish"
   },
+    "keywords": [
+      "ant",
+      "react",
+      "components"
+    ],
   "author": "",
   "license": "ISC",
   "dependencies": {

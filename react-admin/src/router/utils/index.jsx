@@ -81,8 +81,6 @@ const handelRoute = (route) => {
     )
 }
 
-
-
 export const generateRouter = (routes) => {
     return routes.map(route => {
         if (route.children) {
