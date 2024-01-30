@@ -18,9 +18,9 @@ export default {
         },
         {
             path: 'test',
-            name: 'BasicsComponents',
+            name: 'TestComponents',
             routePath: '/components/test',
-            meta: { title: '测试组件' ,},
+            meta: { title: '测试组件', keepAlive: true },
             component: lazy(() => import('@/view/setting/test')),
         }
     ]

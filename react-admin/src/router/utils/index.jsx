@@ -89,14 +89,14 @@ export const generateRouter = (routes) => {
             route.children = generateRouter(route.children)
             route.element = handelRoute(route)
         }else{
-            // 只缓存最后一级
-            route.element = <KeepAlive cacheKey={route.path} id={route.path}>{handelRoute(route)}</KeepAlive>
+            route.element = handelRoute(route)
+            // 只缓存最后一级有keepAlive标识
+            const { meta,name } = route
+            if(meta.keepAlive){
+                route.element = <KeepAlive cacheKey={name} name={name}>{route.element}</KeepAlive>
+            }
         }
 
         return route
     })
 }
-
-
-
-

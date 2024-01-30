@@ -61,13 +61,13 @@ const Setting = () => {
             })
         })
     }
-    // useEffect(() => {
-    //     getDetail().then(res => {
-    //         form.setFieldsValue(res);
-    //         setParams(res)
-    //     })
-    //     console.log('useEffect');
-    // }, [])
+    useEffect(() => {
+        getDetail().then(res => {
+            form.setFieldsValue(res);
+            setParams(res)
+        })
+        console.log('useEffect');
+    }, [])
 
     const [params, setParams] = useState({})
     const [form] = Form.useForm();
