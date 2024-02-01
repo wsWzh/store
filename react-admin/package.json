@@ -23,6 +23,7 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "@wzh-/axios": "~1.0.4",
     "@wzh-/utils": "~1.0.4",
+    "@wzh-/react-components": "1.0.0",
     "antd": "^5.13.1",
     "vite": "^5.0.8"
   }
