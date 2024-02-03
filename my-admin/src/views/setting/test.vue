@@ -36,7 +36,8 @@
         <a-col :span="8">
           <a-form-item label="组件的v-model">
             {{ testArr }}
-            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading" v-model="testValue" />
+            <testModelValue :arr="testArr" @update:loading="changeLoading" v-model:loading="loading"
+              v-model="testValue" />
             {{ testValue
             }}
           </a-form-item>
@@ -164,6 +165,21 @@
             </a-space>
           </a-form-item>
         </a-col>
+        <a-col :span="8">
+          <a-form-item label="测试属性合并">
+            <propsCom>
+              <a-button @click="async">测试组件onclick合并为数组</a-button>
+            </propsCom>
+            <a-trigger trigger="click" :unmount-on-close="false">
+              <my-button @click="async">Click Me</my-button>
+              <template #content>
+                <div class="demo-basic">
+                  <a-empty />
+                </div>
+              </template>
+            </a-trigger>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
   </a-layout>
@@ -174,6 +190,7 @@ import asyncStatus from './components/asyncStatus.vue'; //同步状态组件
 import mySlots from './components/mySlots.vue'; //测试预设插槽组件
 import fnComponent from './components/fnComponent.vue';//组件的方法
 import testModelValue from './components/testModelValue.vue';//组件的v-model
+import propsCom from './components/propsCom.vue';//组件的属性合并
 import { getStore } from '@/stores'
 import { GET_OPTIONS, POST_CHANGE, POST_ERROR, http } from '@/http'
 import Axios from 'axios'
@@ -186,6 +203,7 @@ defineOptions({
 const model = ref({})
 
 const async = async () => {
+  console.log(1);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({ message: '我去，居然成功了' })
