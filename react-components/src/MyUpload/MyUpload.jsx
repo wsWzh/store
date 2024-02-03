@@ -41,26 +41,26 @@ const MyUpload = (props) => {
         multiple
     } = props
 
-    const [isMax, setIsMax] = useState(false)
+    const [isError, setIsError] = useState(false)
 
     // 上传前校验
     const beforeUpload = useCallback((file, currentList) => {
         const { type, size, name } = file
-
+        setIsError(false)
         const total = currentList.length + fileList.length
         if (total > maxCount) {
-            setIsMax(true)
             const message = `文件上传数量不能大于${maxCount}，请重新上传`
             const error = new Error(message)
             onError(error)
+            setIsError(true)
             return Promise.reject(error)
         }
-        setIsMax(false)
         if (size > maxSize * 1024 * 1024) {
             const message = `文件大小不能超过${maxSize < 1 ? maxSize * 1024 + 'KB' : maxSize + 'MB'}`
             const error = new Error(message)
             // 通知tips
             onError(error)
+            setIsError(true)
             return Promise.reject(error)
         }
         if (empty(accept)) {
@@ -78,6 +78,7 @@ const MyUpload = (props) => {
             const message = `请选择${suffixItems.toString().replace(/,/g, '、')}的文件`
             const error = new Error(message)
             onError(error)
+            setIsError(true)
             return Promise.reject(error)
         }
         return true
@@ -87,12 +88,13 @@ const MyUpload = (props) => {
     // 需要一直更新fileList不然只触发一次
     const _onChage = ({ file, fileList, event }) => {
 
-        if (isMax) {
+        if (isError) {
             return
         }
         if (BtnSlot) {
             return
         }
+
 
         if (fileList.some(item => item.status !== 'done')) {
             return setFileList(fileList)
@@ -143,13 +145,14 @@ const MyUpload = (props) => {
 
     }
 
-    // 格式化filelist
+    // 格式化file
     const fileInit = filePath => {
         const url = /^https?:\/\//.test(filePath) ? filePath : origin + filePath
         // status: 'uploading' 时percent才生效 设置status初始值为done 不然会影响onChange的判断
         return typeOf(filePath, 'object') ? filePath : { url, status: 'done' }
     }
 
+    // 转为组件能识别的fileList
     const asyncFileList = value => {
         if (empty(value)) {
             return []
@@ -180,7 +183,7 @@ const MyUpload = (props) => {
     const uploadButton = (
         <button style={{ border: 0, background: 'none', }} type="button">
             <PlusOutlined />
-            <div style={{ marginTop: 8, }} >  Upload</div>
+            <div style={{ marginTop: 8, }}> Upload</div>
         </button>
     );
 

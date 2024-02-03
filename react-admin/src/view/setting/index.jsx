@@ -84,8 +84,8 @@ const Setting = () => {
 
                 <Descriptions.Item label="按钮">
                     <Space>
-                        <MyButton type="primary" onClick={useResolve}>加载按钮 </MyButton>
-                        <MyTips success >
+                        <MyButton type="primary" onClick={useResolve}>加载按钮</MyButton>
+                        <MyTips success>
                             <MyButton type="primary" onClick={useResolve}>成功提示</MyButton>
                         </MyTips>
                         <MyTips error>
@@ -115,7 +115,7 @@ const Setting = () => {
                     </Space>
                 </Descriptions.Item>
                 <Descriptions.Item label="日期范围">
-                    <MyDateRange showTime end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} />
+                    <MyDateRange style={{width:'400px'}}  end={params.end} start={params.start} update={(start, end) => setParams({ ...params, start, end })} />
                 </Descriptions.Item>
                 <Descriptions.Item label="单选">
                     <MyRadio options={options} formatter="id,name" value={params.radio} update={radio => setParams({ ...params, radio })}>
@@ -140,13 +140,13 @@ const Setting = () => {
                 </Descriptions.Item>
                 <Descriptions.Item label="表单">
                     <Form form={form} onFinish={onFinish}>
-                        <Form.Item label="上传" name="image" rules={[{ required: true }]}>
+                        <Form.Item label="图片上传" name="image" rules={[{ required: true }]}>
                             <MyTips error success>
-                                <MyUpload multiple action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} />
+                                <MyUpload accept="image/jpeg" multiple action={handleUpload} origin="https://static-nk.liux.co" maxCount={3} />
                             </MyTips>
                         </Form.Item>
                         <MyTips success error>
-                            <MyUpload action={handleUpload} BtnSlot={<Button type="primary">上传</Button>} />
+                          <MyUpload action={handleUpload} BtnSlot={<Button type="primary">上传</Button>} />
                         </MyTips>
                         <Form.Item label="姓名" name="input" rules={[{ required: true }]}>
                             <MyInput pattern={/^\d*$/} ></MyInput>

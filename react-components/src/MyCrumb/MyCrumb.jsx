@@ -2,7 +2,7 @@ import { Row, Breadcrumb, Space } from 'antd'
 import routes from '@/router'
 import { matchRoutes, useLocation, Link } from 'react-router-dom';
 
-const style = { height: '50px', padding: "0 20px", borderBottom: 'solid 1px #eee' }
+const style = { height: '50px', padding: "0 20px", borderBottom: 'solid 1px #eee',flexShrink: 0}
 
 
 const MyCrumb = (props) => {

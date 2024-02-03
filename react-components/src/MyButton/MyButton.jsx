@@ -13,7 +13,7 @@ import { useDeleteProps } from '../_hook';
  */
 const MyButton = (props) => {
 
-    const { onSuccess, onError, updateLoading} = props
+    const { onSuccess, onError} = props
 
     const basicProps = JSON.parse(JSON.stringify(props))
 
@@ -21,10 +21,8 @@ const MyButton = (props) => {
 
     const useLoading = () => {
         setLoading(true)
-        updateLoading(true)
         return () => {
             setLoading(false)
-            updateLoading(false)
         }
     }
 
