@@ -1,9 +1,9 @@
 import { Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm, MyUpload } from '../../components'
+import { MyButton, MyTips, MySwitch, MyInput, MyDateRange, MyRadio, MyCheckbox, MySelect, MyConfirm, MyUpload, MyDownload } from '../../components'
 import { Button, Space, Tooltip, Menu, Form, Input, DatePicker, Radio, Checkbox, Select } from 'antd'
 const { RangePicker } = DatePicker
-import { http, POST_UPLOAD } from '../../http'
+import { http, POST_UPLOAD, GET_DOWNLOAD } from '../../http'
 
 const Setting = () => {
     const useResolve = () => {
@@ -34,6 +34,10 @@ const Setting = () => {
 
     const handleUpload = (formData, config) => {
         return http.post(POST_UPLOAD, formData, config)
+    }
+
+    const handleDownload = () => {
+        return http({ url: GET_DOWNLOAD, responseType: 'blob', intact: true, delay :5000})
     }
 
 
@@ -137,6 +141,13 @@ const Setting = () => {
                     <MyConfirm title="确定要删除吗" onConfirm={useResolve} type="primary" danger>
                         删除
                     </MyConfirm>
+                </Descriptions.Item>
+                <Descriptions.Item label="下载">
+                    <MyTips success>
+                        <MyDownload type="primary" onClick={handleDownload}>
+                            下载
+                        </MyDownload>
+                    </MyTips>
                 </Descriptions.Item>
                 <Descriptions.Item label="表单">
                     <Form form={form} onFinish={onFinish}>

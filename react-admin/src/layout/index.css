@@ -44,6 +44,8 @@ h5 {
 
 .my-aside>.ant-layout-sider-children>.ant-menu{
     padding-bottom: 32px;
+    box-sizing: border-box;
+    width: 205px;
 }
 
 .ant-layout-has-sider>.ant-layout {

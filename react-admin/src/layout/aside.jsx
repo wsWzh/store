@@ -77,7 +77,8 @@ const MyLayoutAside = (props) => {
     // 选中的菜单
     const selectedKeys = useMemo(() => {
         const matched = matchRoutes(routes, pathname);
-        const matchedKyes = matched.map(item => item.route.meta.key || item.route.routePath)
+        console.log(matched,'matched');
+        const matchedKyes = matched.map(item => item.route?.meta?.key || item.route.routePath)
         setOpenKeys(matchedKyes)
         return matchedKyes.at(-1)
     }, [pathname])

@@ -2,7 +2,7 @@ import { Descriptions, Button, Popover, Form, Upload, Layout, Col, Input } from 
 import { MyUpload, MyDownload, MyTips, MySelect, MyButton } from '../../components'
 import { GET_DOWNLOAD, http, GET_OPTIONS, GET_TOKEN } from '../../http'
 import { getStore } from '../../stores'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import KeepAlive from 'react-activation'
 
 const useResolve = () => {
@@ -28,7 +28,6 @@ const onLogin = (params) => {
 // 子组件通过调用父组件传入的方法,如果该方法重新修改了父组件的state值会触发父组件更新
 const PropsCom = React.memo((props) => {
     console.log('更新了', props);
-    console.log(React);
     const [n, setN] = useState(0)
     return <>
         <div>测试组件更新</div>
@@ -39,6 +38,31 @@ const PropsCom = React.memo((props) => {
 
 const KeepCom=()=>{
     return <Input/>
+}
+
+const EventCom=()=>{
+    const ref = useRef()
+    const onClick = useCallback((e) => {
+        // e不是原生的一个 事件对象, 而是 React 根据 W3C 规范定义出来的一个合成事件
+        // 想要访问原生的事件对象, 可通过 nativeEvent 属性来获取
+        // 原生事件上阻止事件冒泡, 那么事件就无法冒泡到 document, 那么合成事件自然无法执行
+        console.log('点击了',e);
+        e.preventDefault();
+    },[]);
+
+    useEffect(() => {
+        // 绑定原生事件
+        console.log(ref);
+        ref.current.addEventListener('click', event => { event.stopPropagation(); console.log('[ 原生事件 ]',event);});
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            onClick={onClick} // React 事件
+        >事件机制</div>
+    );
+
 }
 
 
@@ -90,6 +114,11 @@ const Test = () => {
                             <KeepCom />
                     </Form.Item>
                 </Col>
+            <Col span={12}>
+                <Form.Item label='事件机制'>
+                   <EventCom />
+                </Form.Item>
+            </Col>
             </Form>
         </Layout>
 }

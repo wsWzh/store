@@ -11,6 +11,7 @@ export function beforeRequest(config) {
         return config
     }
     //不处理传参 json传参Object 浏览器请求头自动生成Content-Type: "application/json"
+    // 默认情况下，axios将 JavaScript 对象序列化为 JSON
     if (type === 'json') {
         return config
     }

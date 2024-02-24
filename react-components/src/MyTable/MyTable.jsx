@@ -1,6 +1,6 @@
-import { Form, Table, Row, Button, Space } from 'antd'
+import { Form, Table, Button, Space } from 'antd'
 import { useSearchParams } from 'react-router-dom'
-import React, { useState, useMemo, useEffect, useImperativeHandle, useCallback, useRef, Children } from 'react'
+import React, { useState, useMemo, useEffect, useImperativeHandle } from 'react'
 import { empty, reduceProps, typeOf } from '@wzh-/utils'
 import { useDeleteProps } from '../_hook'
 import MyPagination from './MyPagination.jsx'
@@ -30,7 +30,7 @@ const MyTable = (props, ref) => {
         rowSelection = {},//表格行是否可选择
         searchSlot,
         historySelect,
-        bordered=false
+        bordered = false
     } = props
 
     const [loading, setLoading] = useState(false)
@@ -45,12 +45,15 @@ const MyTable = (props, ref) => {
 
     let query
     useEffect(() => {
-        if (history) {
-            // fromEntries 键值对数组转为对象
-            // [['a', 1], ['b', 2], ['c', 3]]=>{ a: 1, b: 2, c: 3 }
-            query = Object.fromEntries([...searchParams]);
-            form.setFieldsValue(useDeleteProps(query, ['pageSize', 'pageNo']))
-        }
+        setTimeout(() => {
+            if (history) {
+                // fromEntries 键值对数组转为对象
+                // [['a', 1], ['b', 2], ['c', 3]]=>{ a: 1, b: 2, c: 3 }
+                query = Object.fromEntries([...searchParams]);
+                form.setFieldsValue(useDeleteProps(query, ['pageSize', 'pageNo']))
+            }
+            load && search()
+        })
     }, [])
 
     const [dataInfo, setDataInfo] = useState({})
@@ -80,7 +83,7 @@ const MyTable = (props, ref) => {
         }
         const formParams = form.getFieldsValue()
         const _params = reduceProps({ ...query, ...formParams, ...params }, ({ key, value }) => empty(value))
-        if(history){
+        if (history) {
             // 记录参数 不增加路由记录
             setSearchParams(_params, { replace: true })
         }
@@ -96,15 +99,12 @@ const MyTable = (props, ref) => {
         return search({ pageNo, pageSize })
     }
 
-    useEffect(() => {
-        load && search()
-    }, [])
 
     // render注入reload
     const _columns = useMemo(() => {
         return columns.map(item => {
-            if (item.render) {
-                const fn = item.render
+            const fn = item.render
+            if (fn) {
                 item.render = (text, record, index) => fn({ text, record, index }, { reload })
             }
         })
@@ -190,7 +190,7 @@ const MyTable = (props, ref) => {
         wrapperCol: { flex: 1 },
         labelCol: { flex: '80px' },
         variant: "filled",
-        children: searchSlot({ search, form ,loading})
+        children: searchSlot({ search, form, loading })
     }
 
     const paginationProps = {

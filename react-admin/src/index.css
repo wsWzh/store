@@ -47,6 +47,8 @@ body {
     width: fit-content;
 }
 
+.ka-wrapper,
+.ka-content,
 .my-table ,
 .my-table>div,
 .my-table>div>.ant-spin-container,

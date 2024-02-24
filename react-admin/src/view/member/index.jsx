@@ -33,7 +33,6 @@ const Member = () => {
                     <Input />
                 </Form.Item>
             </Col>
-
             <Col span={6}>
                 <Form.Item name="name3" label="名称3">
                     <Input />
@@ -62,19 +61,19 @@ const Member = () => {
     const tableRef = useRef(null)
 
     return <Layout className='outlet-main'>
-            以选择{selections.length}项
-            <MyTable
-                selections={selections}
-                updateSelections={setSelections}
-                bordered
-                onRequest={requestApi}
-                searchSlot={searchSlot}
-                historySelect
-                columns={columns}
-                ref={tableRef}
-                history
-            />
-        </Layout>
+        以选择{selections.length}项
+        <MyTable
+            selections={selections}
+            updateSelections={setSelections}
+            bordered
+            onRequest={requestApi}
+            searchSlot={searchSlot}
+            historySelect
+            columns={columns}
+            ref={tableRef}
+            history
+        />
+    </Layout>
 
 }
 
